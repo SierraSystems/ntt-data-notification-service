@@ -5,8 +5,10 @@ import ca.bc.gov.splunknotificationservice.Model.SplunkAlert;
 import ca.bc.gov.splunknotificationservice.Model.TeamsMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+@Service
 public class WebHookServiceImpl implements WebHookService {
     private final String teamsUrl = "";
     private final String rocketUrl = "";

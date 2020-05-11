@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -16,7 +16,7 @@ public class AlertNotificationController {
     WebHookService webHookService;
 
     @PostMapping(value = "alert", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> alert(@RequestParam SplunkAlert splunkAlert) {
+    public ResponseEntity<String> alert(@RequestBody SplunkAlert splunkAlert) {
         return webHookService.postMessage(splunkAlert);
     }
 }
