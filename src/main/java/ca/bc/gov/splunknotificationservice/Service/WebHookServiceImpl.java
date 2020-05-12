@@ -5,6 +5,7 @@ import ca.bc.gov.splunknotificationservice.Controller.AlertNotificationControlle
 import ca.bc.gov.splunknotificationservice.Model.RocketMessage;
 import ca.bc.gov.splunknotificationservice.Model.SplunkAlert;
 import ca.bc.gov.splunknotificationservice.Model.TeamsMessage;
+import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class WebHookServiceImpl implements WebHookService {
     SplunkProperites splunkProperites;
     Logger logger = LoggerFactory.getLogger(WebHookServiceImpl.class);
     public ResponseEntity<String> postMessage(SplunkAlert splunkAlert) {
+        Gson gson = new Gson();
+        String jsonInString = gson.toJson(splunkAlert);
+        logger.info(jsonInString);
         logger.info("Posting message to Teams");
         post(splunkProperites.getTeamsUrl(), mapTeams(splunkAlert));
         logger.info("Posting message to Rocket Chat");
