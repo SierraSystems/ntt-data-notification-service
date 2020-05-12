@@ -1,14 +1,13 @@
 package ca.bc.gov.splunknotificationservice.Service;
 
 import ca.bc.gov.splunknotificationservice.Configuration.SplunkProperites;
-import ca.bc.gov.splunknotificationservice.Controller.AlertNotificationController;
-import ca.bc.gov.splunknotificationservice.Model.RocketMessage;
-import ca.bc.gov.splunknotificationservice.Model.SplunkAlert;
-import ca.bc.gov.splunknotificationservice.Model.TeamsCard;
-import ca.bc.gov.splunknotificationservice.Model.TeamsFact;
-import ca.bc.gov.splunknotificationservice.Model.TeamsMessage;
-import ca.bc.gov.splunknotificationservice.Model.TeamsPotentialActions;
-import ca.bc.gov.splunknotificationservice.Model.TeamsSection;
+import ca.bc.gov.splunknotificationservice.Model.Rocket.RocketMessage;
+import ca.bc.gov.splunknotificationservice.Model.Splunk.SplunkAlert;
+import ca.bc.gov.splunknotificationservice.Model.Teams.TeamsCard;
+import ca.bc.gov.splunknotificationservice.Model.Teams.TeamsFact;
+import ca.bc.gov.splunknotificationservice.Model.Teams.TeamsMessage;
+import ca.bc.gov.splunknotificationservice.Model.Teams.TeamsPotentialActions;
+import ca.bc.gov.splunknotificationservice.Model.Teams.TeamsSection;
 import com.google.gson.Gson;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -66,7 +65,7 @@ public class WebHookServiceImpl implements WebHookService {
     private RocketMessage mapRocket(SplunkAlert splunkAlert) {
         RocketMessage  rocketMessage = new RocketMessage();
         String text = String.format(ROCKETCHATTEMPLATE, splunkAlert.getSearch_name(), splunkAlert.getResults_link());
-        rocketMessage.setText(text);
+        rocketMessage.setText(text + " Raw: " + splunkAlert.getResult().get_raw());
         rocketMessage.setAlias(splunkProperites.getRocketMessageAlias());
         return rocketMessage;
     }

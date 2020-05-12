@@ -1,4 +1,4 @@
-package ca.bc.gov.splunknotificationservice.Model;
+package ca.bc.gov.splunknotificationservice.Model.Splunk;
 
 public class SplunkAlert {
     private String 	sid;
@@ -6,7 +6,7 @@ public class SplunkAlert {
     private String search_name;
     private String owner;
     private String app;
-    private Object result;
+    private SplunkResult result;
 
     public String getSid() {return sid;}
 
@@ -28,8 +28,8 @@ public class SplunkAlert {
 
     public void setApp(String app) {this.app = app;}
 
-    public Object getResult() {return result;}
+    public SplunkResult getResult() {return result;}
 
-    public void setResult(Object result) {this.result = result;}
+    public void setResult(SplunkResult result) {this.result = result;}
 
 }

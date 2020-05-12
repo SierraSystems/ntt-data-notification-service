@@ -1,4 +1,4 @@
-package ca.bc.gov.splunknotificationservice.Model;
+package ca.bc.gov.splunknotificationservice.Model.Rocket;
 
 public class RocketMessage {
     private String alias;
