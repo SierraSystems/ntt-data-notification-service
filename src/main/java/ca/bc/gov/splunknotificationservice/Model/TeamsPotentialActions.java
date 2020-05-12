@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class TeamsPotentialActions {
   private String type;
   private String name;
+  private ArrayList<String> target;
   private ArrayList<TeamsInput> inputs;
   private ArrayList<TeamsAction> actions;
 
@@ -25,6 +26,14 @@ public class TeamsPotentialActions {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public ArrayList<String> getTarget() {
+    return target;
+  }
+
+  public void setTarget(ArrayList<String> target) {
+    this.target = target;
   }
 
   public ArrayList<TeamsInput> getInputs() {
