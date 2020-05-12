@@ -28,25 +28,20 @@ public class WebHookServiceImpl implements WebHookService {
     @Autowired
     SplunkProperites splunkProperites;
     Logger logger = LoggerFactory.getLogger(WebHookServiceImpl.class);
-    public ResponseEntity<String> postMessage(SplunkAlert splunkAlert) {
+    public ResponseEntity<String> postMessage(SplunkAlert splunkAlert, String rocketUrl, String teamsUrl) {
         Gson gson = new Gson();
         String jsonInString = gson.toJson(splunkAlert);
         logger.info(jsonInString);
 
-        if (splunkProperites.getTeamsEnabled()) {
-            logger.info("Posting message to Teams");
-            post(splunkProperites.getTeamsUrl(), mapTeams(splunkAlert));
-        }
-
-        if (splunkProperites.getRocketEnabled()) {
+        if (rocketUrl != null) {
             logger.info("Posting message to Rocket Chat");
-            post(splunkProperites.getRocketUrl(), mapRocket(splunkAlert));
+            post(rocketUrl, mapRocket(splunkAlert));
         }
 
-        if (splunkProperites.getTeamsCardsEnabled()) {
+        if (teamsUrl != null) {
             logger.info("Posting card to teams");
             //replace with map card
-            post(splunkProperites.getTeamsUrl(), mapTeamsCard(splunkAlert));
+            post(teamsUrl, mapTeamsCard(splunkAlert));
         }
         //TODO: Does splunk care about return?
         return new ResponseEntity<>("Success", HttpStatus.OK);
