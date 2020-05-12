@@ -24,7 +24,7 @@ import org.springframework.web.client.RestTemplate;
 @EnableConfigurationProperties(SplunkProperites.class)
 public class WebHookServiceImpl implements WebHookService {
 
-    private static final String ROCKETCHATTEMPLATE = "%s : %s";
+    private static final String ROCKETCHATTEMPLATE = "App: %s \n Search: %s \n Owner: %s \n Link: %s ";
     @Autowired
     SplunkProperites splunkProperites;
     Logger logger = LoggerFactory.getLogger(WebHookServiceImpl.class);
@@ -64,8 +64,8 @@ public class WebHookServiceImpl implements WebHookService {
 
     private RocketMessage mapRocket(SplunkAlert splunkAlert) {
         RocketMessage  rocketMessage = new RocketMessage();
-        String text = String.format(ROCKETCHATTEMPLATE, splunkAlert.getSearch_name(), splunkAlert.getResults_link());
-        rocketMessage.setText(text + " Raw: " + splunkAlert.getResult().get_raw());
+        String text = String.format(ROCKETCHATTEMPLATE, splunkAlert.getApp(), splunkAlert.getSearch_name(), splunkAlert.getOwner(), splunkAlert.getResults_link());
+        rocketMessage.setText(text);
         rocketMessage.setAlias(splunkProperites.getRocketMessageAlias());
         return rocketMessage;
     }
