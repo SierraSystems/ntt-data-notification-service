@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -20,7 +21,9 @@ public class AlertNotificationController {
     Logger logger = LoggerFactory.getLogger(AlertNotificationController.class);
 
     @PostMapping(value = "alert", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> alert(@RequestBody SplunkAlert splunkAlert) {
-        return webHookService.postMessage(splunkAlert);
+    public ResponseEntity<String> alert(@RequestParam(required = false) String rocketUrl,
+                                        @RequestParam(required = false) String teamsUrl,
+                                        @RequestBody SplunkAlert splunkAlert) {
+        return webHookService.postMessage(splunkAlert, rocketUrl, teamsUrl);
     }
 }

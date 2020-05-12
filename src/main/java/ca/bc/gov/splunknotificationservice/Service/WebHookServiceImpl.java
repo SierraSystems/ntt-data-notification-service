@@ -24,29 +24,23 @@ import org.springframework.web.client.RestTemplate;
 @EnableConfigurationProperties(SplunkProperites.class)
 public class WebHookServiceImpl implements WebHookService {
 
-    private static final String ROCKETCHATTEMPLATE = "%s : %s";
+    private static final String ROCKETCHATTEMPLATE = "App: %s \n Search: %s \n Owner: %s \n Link: %s ";
     @Autowired
     SplunkProperites splunkProperites;
     Logger logger = LoggerFactory.getLogger(WebHookServiceImpl.class);
-    public ResponseEntity<String> postMessage(SplunkAlert splunkAlert) {
+    public ResponseEntity<String> postMessage(SplunkAlert splunkAlert, String rocketUrl, String teamsUrl) {
         Gson gson = new Gson();
         String jsonInString = gson.toJson(splunkAlert);
         logger.info(jsonInString);
 
-        if (splunkProperites.getTeamsEnabled()) {
-            logger.info("Posting message to Teams");
-            post(splunkProperites.getTeamsUrl(), mapTeams(splunkAlert));
-        }
-
-        if (splunkProperites.getRocketEnabled()) {
+        if (rocketUrl != null) {
             logger.info("Posting message to Rocket Chat");
-            post(splunkProperites.getRocketUrl(), mapRocket(splunkAlert));
+            post(rocketUrl, mapRocket(splunkAlert));
         }
 
-        if (splunkProperites.getTeamsCardsEnabled()) {
+        if (teamsUrl != null) {
             logger.info("Posting card to teams");
-            //replace with map card
-            post(splunkProperites.getTeamsUrl(), mapTeamsCard(splunkAlert));
+            post(teamsUrl, mapTeamsCard(splunkAlert));
         }
         //TODO: Does splunk care about return?
         return new ResponseEntity<>("Success", HttpStatus.OK);
@@ -64,17 +58,12 @@ public class WebHookServiceImpl implements WebHookService {
 
     private RocketMessage mapRocket(SplunkAlert splunkAlert) {
         RocketMessage  rocketMessage = new RocketMessage();
-        String text = String.format(ROCKETCHATTEMPLATE, splunkAlert.getSearch_name(), splunkAlert.getResults_link());
-        rocketMessage.setText(text + " Raw: " + splunkAlert.getResult().get_raw());
+        String text = String.format(ROCKETCHATTEMPLATE, splunkAlert.getApp(), splunkAlert.getSearch_name(), splunkAlert.getOwner(), splunkAlert.getResults_link());
+        rocketMessage.setText(text);
         rocketMessage.setAlias(splunkProperites.getRocketMessageAlias());
         return rocketMessage;
     }
-    private TeamsMessage mapTeams(SplunkAlert splunkAlert) {
-        TeamsMessage teamsMessage = new TeamsMessage();
-        teamsMessage.setText(splunkAlert.getResults_link());
-        teamsMessage.setSummary(splunkAlert.getSearch_name());
-        return teamsMessage;
-    }
+
     private TeamsCard mapTeamsCard(SplunkAlert splunkAlert) {
         TeamsCard teamsCard = new TeamsCard();
         teamsCard.setType("MessageCard");
