@@ -40,7 +40,6 @@ public class WebHookServiceImpl implements WebHookService {
 
         if (teamsUrl != null) {
             logger.info("Posting card to teams");
-            //replace with map card
             post(teamsUrl, mapTeamsCard(splunkAlert));
         }
         //TODO: Does splunk care about return?
@@ -64,12 +63,7 @@ public class WebHookServiceImpl implements WebHookService {
         rocketMessage.setAlias(splunkProperites.getRocketMessageAlias());
         return rocketMessage;
     }
-    private TeamsMessage mapTeams(SplunkAlert splunkAlert) {
-        TeamsMessage teamsMessage = new TeamsMessage();
-        teamsMessage.setText(splunkAlert.getResults_link());
-        teamsMessage.setSummary(splunkAlert.getSearch_name());
-        return teamsMessage;
-    }
+
     private TeamsCard mapTeamsCard(SplunkAlert splunkAlert) {
         TeamsCard teamsCard = new TeamsCard();
         teamsCard.setType("MessageCard");
