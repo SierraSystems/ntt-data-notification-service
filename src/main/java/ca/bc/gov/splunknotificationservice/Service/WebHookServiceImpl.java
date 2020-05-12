@@ -4,7 +4,14 @@ import ca.bc.gov.splunknotificationservice.Configuration.SplunkProperites;
 import ca.bc.gov.splunknotificationservice.Controller.AlertNotificationController;
 import ca.bc.gov.splunknotificationservice.Model.RocketMessage;
 import ca.bc.gov.splunknotificationservice.Model.SplunkAlert;
+import ca.bc.gov.splunknotificationservice.Model.TeamsCard;
+import ca.bc.gov.splunknotificationservice.Model.TeamsFact;
 import ca.bc.gov.splunknotificationservice.Model.TeamsMessage;
+import ca.bc.gov.splunknotificationservice.Model.TeamsPotentialActions;
+import ca.bc.gov.splunknotificationservice.Model.TeamsSection;
+import com.google.gson.Gson;
+import java.text.MessageFormat;
+import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +30,9 @@ public class WebHookServiceImpl implements WebHookService {
     SplunkProperites splunkProperites;
     Logger logger = LoggerFactory.getLogger(WebHookServiceImpl.class);
     public ResponseEntity<String> postMessage(SplunkAlert splunkAlert) {
+        Gson gson = new Gson();
+        String jsonInString = gson.toJson(splunkAlert);
+        logger.info(jsonInString);
 
         if (splunkProperites.getTeamsEnabled()) {
             logger.info("Posting message to Teams");
@@ -37,7 +47,7 @@ public class WebHookServiceImpl implements WebHookService {
         if (splunkProperites.getTeamsCardsEnabled()) {
             logger.info("Posting card to teams");
             //replace with map card
-            post(splunkProperites.getTeamsUrl(), mapTeams(splunkAlert));
+            post(splunkProperites.getTeamsUrl(), mapTeamsCard(splunkAlert));
         }
         //TODO: Does splunk care about return?
         return new ResponseEntity<>("Success", HttpStatus.OK);
@@ -65,5 +75,61 @@ public class WebHookServiceImpl implements WebHookService {
         teamsMessage.setText(splunkAlert.getResults_link());
         teamsMessage.setSummary(splunkAlert.getSearch_name());
         return teamsMessage;
+    }
+    private TeamsCard mapTeamsCard(SplunkAlert splunkAlert) {
+        TeamsCard teamsCard = new TeamsCard();
+        teamsCard.setType("MessageCard");
+        teamsCard.setContext("http://schema.org/extensions");
+        teamsCard.setThemeColor("0076D7");
+        teamsCard.setSummary(splunkAlert.getSearch_name());
+
+        TeamsSection teamsSection = new TeamsSection();
+        teamsSection.setActivityTitle(splunkAlert.getSearch_name());
+        teamsSection.setActivitySubtitle(MessageFormat.format("From {0}", splunkAlert.getApp()));
+        teamsSection.setActivityImage("https://teamsnodesample.azurewebsites.net/static/img/image4.png");
+
+        TeamsFact teamsFactApp = new TeamsFact();
+        teamsFactApp.setName("App");
+        teamsFactApp.setValue(splunkAlert.getApp());
+
+        TeamsFact teamsFactSearch = new TeamsFact();
+        teamsFactSearch.setName("Search");
+        teamsFactSearch.setValue(splunkAlert.getSearch_name());
+
+        TeamsFact teamsFactOwner = new TeamsFact();
+        teamsFactOwner.setName("Owner");
+        teamsFactOwner.setValue(splunkAlert.getOwner());
+
+        TeamsFact teamsFactLink = new TeamsFact();
+        teamsFactLink.setName("Link");
+        teamsFactLink.setValue(splunkAlert.getResults_link());
+
+        ArrayList<TeamsFact> facts = new ArrayList<TeamsFact>();
+        facts.add(teamsFactApp);
+        facts.add(teamsFactSearch);
+        facts.add(teamsFactOwner);
+        facts.add(teamsFactLink);
+
+        teamsSection.setFacts(facts);
+        teamsSection.setMarkdown(true);
+
+        ArrayList<TeamsSection> sections = new ArrayList<TeamsSection>();
+        sections.add(teamsSection);
+
+        teamsCard.setSections(sections);
+
+        TeamsPotentialActions potentialActionsLink = new TeamsPotentialActions();
+        potentialActionsLink.setType("ViewAction");
+        potentialActionsLink.setName("View in Splunk");
+        ArrayList<String> link = new ArrayList<String>();
+        link.add(splunkAlert.getResults_link());
+        potentialActionsLink.setTarget(link);
+
+        ArrayList<TeamsPotentialActions> potentialActions = new ArrayList<TeamsPotentialActions>();
+        potentialActions.add(potentialActionsLink);
+
+        teamsCard.setPotentialAction(potentialActions);
+
+        return  teamsCard;
     }
 }
