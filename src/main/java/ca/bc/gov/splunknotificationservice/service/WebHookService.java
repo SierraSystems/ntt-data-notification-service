@@ -1,6 +1,6 @@
-package ca.bc.gov.splunknotificationservice.Service;
+package ca.bc.gov.splunknotificationservice.service;
 
-import ca.bc.gov.splunknotificationservice.Model.Splunk.SplunkAlert;
+import ca.bc.gov.splunknotificationservice.model.splunk.SplunkAlert;
 import org.springframework.http.ResponseEntity;
 
 public interface WebHookService {

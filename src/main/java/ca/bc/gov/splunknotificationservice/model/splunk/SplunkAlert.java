@@ -1,4 +1,4 @@
-package ca.bc.gov.splunknotificationservice.Model.Splunk;
+package ca.bc.gov.splunknotificationservice.model.splunk;
 
 public class SplunkAlert {
     private String 	sid;

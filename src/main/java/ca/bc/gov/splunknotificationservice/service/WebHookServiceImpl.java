@@ -1,13 +1,13 @@
-package ca.bc.gov.splunknotificationservice.Service;
+package ca.bc.gov.splunknotificationservice.service;
 
-import ca.bc.gov.splunknotificationservice.Configuration.SplunkProperites;
-import ca.bc.gov.splunknotificationservice.Model.Rocket.RocketMessage;
-import ca.bc.gov.splunknotificationservice.Model.Splunk.SplunkAlert;
-import ca.bc.gov.splunknotificationservice.Model.Teams.TeamsCard;
-import ca.bc.gov.splunknotificationservice.Model.Teams.TeamsFact;
-import ca.bc.gov.splunknotificationservice.Model.Teams.TeamsMessage;
-import ca.bc.gov.splunknotificationservice.Model.Teams.TeamsPotentialActions;
-import ca.bc.gov.splunknotificationservice.Model.Teams.TeamsSection;
+import ca.bc.gov.splunknotificationservice.configuration.SplunkProperites;
+import ca.bc.gov.splunknotificationservice.model.rocket.RocketMessage;
+import ca.bc.gov.splunknotificationservice.model.splunk.SplunkAlert;
+import ca.bc.gov.splunknotificationservice.model.teams.TeamsCard;
+import ca.bc.gov.splunknotificationservice.model.teams.TeamsFact;
+import ca.bc.gov.splunknotificationservice.model.teams.TeamsPotentialActions;
+import ca.bc.gov.splunknotificationservice.model.teams.TeamsSection;
+import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -33,12 +33,12 @@ public class WebHookServiceImpl implements WebHookService {
         String jsonInString = gson.toJson(splunkAlert);
         logger.info(jsonInString);
 
-        if (rocketUrl != null) {
+        if (Strings.isNullOrEmpty(rocketUrl)) {
             logger.info("Posting message to Rocket Chat");
             post(rocketUrl, mapRocket(splunkAlert));
         }
 
-        if (teamsUrl != null) {
+        if (Strings.isNullOrEmpty(teamsUrl)) {
             logger.info("Posting card to teams");
             post(teamsUrl, mapTeamsCard(splunkAlert));
         }
@@ -58,9 +58,9 @@ public class WebHookServiceImpl implements WebHookService {
 
     private RocketMessage mapRocket(SplunkAlert splunkAlert) {
         RocketMessage  rocketMessage = new RocketMessage();
-        String text = String.format(ROCKETCHATTEMPLATE, splunkAlert.getApp(), splunkAlert.getSearch_name(), splunkAlert.getOwner(), splunkAlert.getResults_link());
+        String text = String.format(ROCKETCHATTEMPLATE, splunkAlert.getResult().getSource(), splunkAlert.getSearch_name(), splunkAlert.getOwner(), splunkAlert.getResults_link());
         rocketMessage.setText(text);
-        rocketMessage.setAlias(splunkProperites.getRocketMessageAlias());
+        rocketMessage.setAlias(splunkAlert.getSearch_name());
         return rocketMessage;
     }
 
@@ -73,12 +73,12 @@ public class WebHookServiceImpl implements WebHookService {
 
         TeamsSection teamsSection = new TeamsSection();
         teamsSection.setActivityTitle(splunkAlert.getSearch_name());
-        teamsSection.setActivitySubtitle(MessageFormat.format("From {0}", splunkAlert.getApp()));
+        teamsSection.setActivitySubtitle(MessageFormat.format("From {0}", splunkAlert.getResult().getSource()));
         teamsSection.setActivityImage("https://teamsnodesample.azurewebsites.net/static/img/image4.png");
 
         TeamsFact teamsFactApp = new TeamsFact();
         teamsFactApp.setName("App");
-        teamsFactApp.setValue(splunkAlert.getApp());
+        teamsFactApp.setValue(splunkAlert.getResult().getSource());
 
         TeamsFact teamsFactSearch = new TeamsFact();
         teamsFactSearch.setName("Search");
@@ -92,7 +92,7 @@ public class WebHookServiceImpl implements WebHookService {
         teamsFactLink.setName("Link");
         teamsFactLink.setValue(splunkAlert.getResults_link());
 
-        ArrayList<TeamsFact> facts = new ArrayList<TeamsFact>();
+        ArrayList<TeamsFact> facts = new ArrayList<>();
         facts.add(teamsFactApp);
         facts.add(teamsFactSearch);
         facts.add(teamsFactOwner);
@@ -101,7 +101,7 @@ public class WebHookServiceImpl implements WebHookService {
         teamsSection.setFacts(facts);
         teamsSection.setMarkdown(true);
 
-        ArrayList<TeamsSection> sections = new ArrayList<TeamsSection>();
+        ArrayList<TeamsSection> sections = new ArrayList<>();
         sections.add(teamsSection);
 
         teamsCard.setSections(sections);
@@ -109,11 +109,11 @@ public class WebHookServiceImpl implements WebHookService {
         TeamsPotentialActions potentialActionsLink = new TeamsPotentialActions();
         potentialActionsLink.setType("ViewAction");
         potentialActionsLink.setName("View in Splunk");
-        ArrayList<String> link = new ArrayList<String>();
+        ArrayList<String> link = new ArrayList<>();
         link.add(splunkAlert.getResults_link());
         potentialActionsLink.setTarget(link);
 
-        ArrayList<TeamsPotentialActions> potentialActions = new ArrayList<TeamsPotentialActions>();
+        ArrayList<TeamsPotentialActions> potentialActions = new ArrayList<>();
         potentialActions.add(potentialActionsLink);
 
         teamsCard.setPotentialAction(potentialActions);
