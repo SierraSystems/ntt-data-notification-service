@@ -60,7 +60,7 @@ public class WebHookServiceImpl implements WebHookService {
         RocketMessage  rocketMessage = new RocketMessage();
         String text = String.format(ROCKETCHATTEMPLATE, splunkAlert.getResult().getSource(), splunkAlert.getSearch_name(), splunkAlert.getOwner(), splunkAlert.getResults_link());
         rocketMessage.setText(text);
-        rocketMessage.setAlias(splunkProperites.getRocketMessageAlias());
+        rocketMessage.setAlias(splunkAlert.getSearch_name());
         return rocketMessage;
     }
 
