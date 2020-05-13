@@ -1,7 +1,7 @@
-package ca.bc.gov.splunknotificationservice.Controller;
+package ca.bc.gov.splunknotificationservice.controller;
 
-import ca.bc.gov.splunknotificationservice.Model.Splunk.SplunkAlert;
-import ca.bc.gov.splunknotificationservice.Service.WebHookService;
+import ca.bc.gov.splunknotificationservice.model.splunk.SplunkAlert;
+import ca.bc.gov.splunknotificationservice.service.WebHookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
