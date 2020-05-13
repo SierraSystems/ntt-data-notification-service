@@ -3,6 +3,7 @@ package ca.bc.gov.splunknotificationservice.model.splunk;
 public class SplunkResult {
     private String _raw;
     private String source;
+    private String message;
 
     public String get_raw() { return _raw; }
 
@@ -11,4 +12,8 @@ public class SplunkResult {
     public String getSource() { return source; }
 
     public void setSource(String source) { this.source = source; }
+
+    public String getMessage() { return message; }
+
+    public void setMessage(String message) { this.message = message; }
 }
