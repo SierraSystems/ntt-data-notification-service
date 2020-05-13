@@ -1,0 +1,37 @@
+
+version: '3.7'
+services:
+
+  #############################################################################################
+  ###                                 SPLUNK DEV BOX                                        ###
+  #############################################################################################
+  dps-splunk:
+    image: splunk/splunk:7.3.2
+    environment:
+      - SPLUNK_PASSWORD=admin
+      - SPLUNK_START_ARGS=--accept-license
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+      - "8088:8088"
+      - "8089:8089"
+      - "9997:9997"
+    networks:
+      - ops-net
+
+  #############################################################################################
+  ###                            SPLUNK notification service                                  ###
+  #############################################################################################
+  splunk-notification-service:
+    build:
+      context: .
+      args:
+        - SERVICE_NAME=splunk-notification-service
+    ports:
+      - "6060:8080"
+    networks:
+      - ops-net
+
+networks: 
+  ops-net:
+    driver: "bridge"
