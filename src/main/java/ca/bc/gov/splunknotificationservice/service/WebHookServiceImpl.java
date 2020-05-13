@@ -33,12 +33,12 @@ public class WebHookServiceImpl implements WebHookService {
         String jsonInString = gson.toJson(splunkAlert);
         logger.info(jsonInString);
 
-        if (Strings.isNullOrEmpty(rocketUrl)) {
+        if (!Strings.isNullOrEmpty(rocketUrl)) {
             logger.info("Posting message to Rocket Chat");
             post(rocketUrl, mapRocket(splunkAlert));
         }
 
-        if (Strings.isNullOrEmpty(teamsUrl)) {
+        if (!Strings.isNullOrEmpty(teamsUrl)) {
             logger.info("Posting card to teams");
             post(teamsUrl, mapTeamsCard(splunkAlert));
         }
