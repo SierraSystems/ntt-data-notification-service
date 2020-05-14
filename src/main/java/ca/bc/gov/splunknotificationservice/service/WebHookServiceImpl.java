@@ -97,6 +97,10 @@ public class WebHookServiceImpl implements WebHookService {
         teamsFactOwner.setName("Owner");
         teamsFactOwner.setValue(splunkAlert.getOwner());
 
+        TeamsFact teamsFactMessage = new TeamsFact();
+        teamsFactMessage.setName("Message");
+        teamsFactMessage.setValue(splunkAlert.getResult().getMessage());
+
         TeamsFact teamsFactLink = new TeamsFact();
         teamsFactLink.setName("Link");
         teamsFactLink.setValue(splunkAlert.getResults_link());
@@ -105,7 +109,8 @@ public class WebHookServiceImpl implements WebHookService {
         facts.add(teamsFactApp);
         facts.add(teamsFactSearch);
         facts.add(teamsFactOwner);
-        facts.add(teamsFactLink);
+        facts.add(teamsFactMessage);
+//        facts.add(teamsFactLink);
 
         teamsSection.setFacts(facts);
         teamsSection.setMarkdown(true);
