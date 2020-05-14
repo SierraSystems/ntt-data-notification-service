@@ -3,6 +3,7 @@ package ca.bc.gov.splunknotificationservice.service;
 import ca.bc.gov.splunknotificationservice.configuration.SplunkProperites;
 import ca.bc.gov.splunknotificationservice.model.rocket.RocketMessage;
 import ca.bc.gov.splunknotificationservice.model.splunk.SplunkAlert;
+import ca.bc.gov.splunknotificationservice.model.splunk.SplunkWebHookUrls;
 import ca.bc.gov.splunknotificationservice.model.teams.TeamsCard;
 import ca.bc.gov.splunknotificationservice.model.teams.TeamsFact;
 import ca.bc.gov.splunknotificationservice.model.teams.TeamsPotentialActions;
@@ -11,6 +12,8 @@ import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Base64;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +31,16 @@ public class WebHookServiceImpl implements WebHookService {
     @Autowired
     SplunkProperites splunkProperites;
     Logger logger = LoggerFactory.getLogger(WebHookServiceImpl.class);
-    public ResponseEntity<String> postMessage(SplunkAlert splunkAlert, String rocketUrl, String teamsUrl) {
+    public ResponseEntity<String> postMessage(SplunkAlert splunkAlert, String routes) {
         Gson gson = new Gson();
-        String jsonInString = gson.toJson(splunkAlert);
-        logger.info(jsonInString);
+
+        byte[] decodedRoutesBytes = Base64.getUrlDecoder().decode(routes);
+        String decodedRoutesUrl = new String(decodedRoutesBytes);
+
+        SplunkWebHookUrls splunkWebHookUrls = gson.fromJson(decodedRoutesUrl, SplunkWebHookUrls.class);
+
+        String rocketUrl = splunkWebHookUrls.getRocketUrl();
+        String teamsUrl =  splunkWebHookUrls.getTeamsUrl();
 
         if (!Strings.isNullOrEmpty(rocketUrl)) {
             logger.info("Posting message to Rocket Chat");
@@ -43,7 +52,7 @@ public class WebHookServiceImpl implements WebHookService {
             post(teamsUrl, mapTeamsCard(splunkAlert));
         }
         //TODO: Does splunk care about return?
-        return new ResponseEntity<>("Success", HttpStatus.OK);
+        return new ResponseEntity<>("Success", HttpStatus.CREATED);
     }
 
     private void post(String url, Object postObj) {
