@@ -27,7 +27,7 @@ import org.springframework.web.client.RestTemplate;
 @EnableConfigurationProperties(SplunkProperites.class)
 public class WebHookServiceImpl implements WebHookService {
 
-    private static final String ROCKETCHATTEMPLATE = "App: %s \n Search: %s \n Owner: %s \n Link: %s ";
+    private static final String ROCKETCHATTEMPLATE = "App: %s \n Search: %s \n Owner: %s \n Message: %s \n Link: %s ";
     @Autowired
     SplunkProperites splunkProperites;
     Logger logger = LoggerFactory.getLogger(WebHookServiceImpl.class);
@@ -67,7 +67,7 @@ public class WebHookServiceImpl implements WebHookService {
 
     private RocketMessage mapRocket(SplunkAlert splunkAlert) {
         RocketMessage  rocketMessage = new RocketMessage();
-        String text = String.format(ROCKETCHATTEMPLATE, splunkAlert.getResult().getSource(), splunkAlert.getSearch_name(), splunkAlert.getOwner(), splunkAlert.getResults_link());
+        String text = String.format(ROCKETCHATTEMPLATE, splunkAlert.getResult().getSource(), splunkAlert.getSearch_name(), splunkAlert.getOwner(), splunkAlert.getResult().getMessage(), splunkAlert.getResults_link());
         rocketMessage.setText(text);
         rocketMessage.setAlias(splunkAlert.getSearch_name());
         return rocketMessage;
@@ -97,6 +97,10 @@ public class WebHookServiceImpl implements WebHookService {
         teamsFactOwner.setName("Owner");
         teamsFactOwner.setValue(splunkAlert.getOwner());
 
+        TeamsFact teamsFactMessage = new TeamsFact();
+        teamsFactMessage.setName("Message");
+        teamsFactMessage.setValue(splunkAlert.getResult().getMessage());
+
         TeamsFact teamsFactLink = new TeamsFact();
         teamsFactLink.setName("Link");
         teamsFactLink.setValue(splunkAlert.getResults_link());
@@ -105,7 +109,7 @@ public class WebHookServiceImpl implements WebHookService {
         facts.add(teamsFactApp);
         facts.add(teamsFactSearch);
         facts.add(teamsFactOwner);
-        facts.add(teamsFactLink);
+        facts.add(teamsFactMessage);
 
         teamsSection.setFacts(facts);
         teamsSection.setMarkdown(true);
