@@ -5,5 +5,5 @@ import org.springframework.http.ResponseEntity;
 
 public interface WebHookService {
 
-    public ResponseEntity<String> postMessage(SplunkAlert splunkAlert, String routes);
+    public ResponseEntity<String> postMessage(SplunkAlert splunkAlert, String token, String routes);
 }

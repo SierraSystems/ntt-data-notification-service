@@ -32,6 +32,6 @@ public class AlertNotificationController {
             logger.error("Token failed to validate");
             return new ResponseEntity<>("Token validation failed", HttpStatus.UNAUTHORIZED);
         }
-        return webHookService.postMessage(splunkAlert, routes);
+        return webHookService.postMessage(splunkAlert, token, routes);
     }
 }
