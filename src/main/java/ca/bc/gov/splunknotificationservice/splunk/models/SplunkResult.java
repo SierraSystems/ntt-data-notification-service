@@ -5,6 +5,7 @@ public class SplunkResult {
     private String source;
     private String message;
 
+
     public String get_raw() { return _raw; }
 
     public void set_raw(String _raw) { this._raw = _raw; }
