@@ -6,6 +6,7 @@ import ca.bc.gov.splunknotificationservice.splunk.models.SplunkWebHookUrls;
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
@@ -39,31 +40,17 @@ public class WebHookServiceImpl implements WebHookService {
         byte[] decodedRoutesBytes = Base64.getUrlDecoder().decode(routes);
         String decodedRoutesUrl = new String(decodedRoutesBytes);
 
-        SplunkWebHookUrls splunkWebHookUrls = gson.fromJson(decodedRoutesUrl, SplunkWebHookUrls.class);
+        List<SplunkWebHookUrls> splunkWebHookUrls = new ArrayList<>();
 
-        String rocketUrl = splunkWebHookUrls.getRocketUrl();
-        String teamsUrl =  splunkWebHookUrls.getTeamsUrl();
+        splunkWebHookUrls.stream().forEach(url -> {
 
-        if (!Strings.isNullOrEmpty(rocketUrl)) {
-
-            Optional<ChannelService> channelService = channelServices.stream().filter(x -> x.getChatApp() == ChatApp.ROCKET_CHAT).findFirst();
+            Optional<ChannelService> channelService = channelServices.stream().filter(x -> x.getChatApp() == url.getChatApp()).findFirst();
 
             channelService.ifPresent(service -> {
-                post(rocketUrl, service.generatePayload(splunkAlert));
+                post(url.getUrl(), service.generatePayload(splunkAlert));
             });
 
-            logger.info("Posting message to Rocket Chat");
-        }
-
-        if (!Strings.isNullOrEmpty(teamsUrl)) {
-
-            Optional<ChannelService> channelService = channelServices.stream().filter(x -> x.getChatApp() == ChatApp.TEAMS).findFirst();
-
-            channelService.ifPresent(service -> {
-                post(teamsUrl, service.generatePayload(splunkAlert));
-            });
-
-        }
+        });
 
         //TODO: Does splunk care about return?
         return new ResponseEntity<>("Success", HttpStatus.CREATED);

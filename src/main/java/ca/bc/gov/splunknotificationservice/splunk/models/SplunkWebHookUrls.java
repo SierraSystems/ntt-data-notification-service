@@ -1,22 +1,25 @@
 package ca.bc.gov.splunknotificationservice.splunk.models;
 
+import ca.bc.gov.splunknotificationservice.service.ChatApp;
+
 public class SplunkWebHookUrls {
-    private String rocketUrl;
-    private String teamsUrl;
 
-    public String getRocketUrl() {
-        return rocketUrl;
+    private ChatApp chatApp;
+    private String Url;
+
+    public ChatApp getChatApp() {
+        return chatApp;
     }
 
-    public void setRocketUrl(String rocketUrl) {
-        this.rocketUrl = rocketUrl;
+    public void setChatApp(ChatApp chatApp) {
+        this.chatApp = chatApp;
     }
 
-    public String getTeamsUrl() {
-        return teamsUrl;
+    public String getUrl() {
+        return Url;
     }
 
-    public void setTeamsUrl(String teamsUrl) {
-        this.teamsUrl = teamsUrl;
+    public void setUrl(String url) {
+        Url = url;
     }
 }
