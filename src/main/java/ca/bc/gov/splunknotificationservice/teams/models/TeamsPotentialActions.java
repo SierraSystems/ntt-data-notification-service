@@ -1,4 +1,4 @@
-package ca.bc.gov.splunknotificationservice.model.teams;
+package ca.bc.gov.splunknotificationservice.teams.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
