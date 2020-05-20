@@ -1,7 +1,7 @@
 package ca.bc.gov.splunknotificationservice.controller;
 
 import ca.bc.gov.splunknotificationservice.configuration.SplunkProperites;
-import ca.bc.gov.splunknotificationservice.model.splunk.SplunkAlert;
+import ca.bc.gov.splunknotificationservice.splunk.models.SplunkAlert;
 import ca.bc.gov.splunknotificationservice.service.WebHookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

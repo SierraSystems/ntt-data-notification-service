@@ -1,7 +1,9 @@
-package ca.bc.gov.splunknotificationservice.service;
+package ca.bc.gov.splunknotificationservice.rocket;
 
-import ca.bc.gov.splunknotificationservice.model.rocket.RocketMessage;
-import ca.bc.gov.splunknotificationservice.model.splunk.SplunkAlert;
+import ca.bc.gov.splunknotificationservice.rocket.models.RocketMessage;
+import ca.bc.gov.splunknotificationservice.service.ChannelService;
+import ca.bc.gov.splunknotificationservice.service.ChatApp;
+import ca.bc.gov.splunknotificationservice.splunk.models.SplunkAlert;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -1,17 +1,11 @@
 package ca.bc.gov.splunknotificationservice.service;
 
 import ca.bc.gov.splunknotificationservice.configuration.SplunkProperites;
-import ca.bc.gov.splunknotificationservice.model.rocket.RocketMessage;
-import ca.bc.gov.splunknotificationservice.model.splunk.SplunkAlert;
-import ca.bc.gov.splunknotificationservice.model.splunk.SplunkWebHookUrls;
-import ca.bc.gov.splunknotificationservice.model.teams.TeamsCard;
-import ca.bc.gov.splunknotificationservice.model.teams.TeamsFact;
-import ca.bc.gov.splunknotificationservice.model.teams.TeamsPotentialActions;
-import ca.bc.gov.splunknotificationservice.model.teams.TeamsSection;
+import ca.bc.gov.splunknotificationservice.splunk.models.SplunkAlert;
+import ca.bc.gov.splunknotificationservice.splunk.models.SplunkWebHookUrls;
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
-import java.text.MessageFormat;
-import java.util.ArrayList;
+
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
