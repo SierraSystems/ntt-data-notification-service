@@ -37,6 +37,7 @@ public class WebHookServiceImpl implements WebHookService {
 
     public ResponseEntity<String> postMessage(SplunkAlert splunkAlert, String routes) {
         Gson gson = new Gson();
+        ChannelServiceFactory channelServiceFactory = new ChannelServiceFactory();
 
         byte[] decodedRoutesBytes = Base64.getUrlDecoder().decode(routes);
         String decodedRoutesUrl = new String(decodedRoutesBytes);
@@ -45,8 +46,9 @@ public class WebHookServiceImpl implements WebHookService {
 
         splunkWebHookParams.getSplunkWebHookUrls().stream().forEach(url -> {
 
-            Optional<ChannelService> channelService = channelServices.stream().filter(x -> x.getChatApp() == url.getChatApp()).findFirst();
-            
+//            Optional<ChannelService> channelService = channelServices.stream().filter(x -> x.getChatApp() == url.getChatApp()).findFirst();
+            Optional<ChannelService> channelService = channelServiceFactory.getChanelService(url.getChatApp());
+
             channelService.ifPresent(service -> {
                 post(url.getUrl(), service.generatePayload(splunkAlert));
             });
