@@ -15,5 +15,31 @@ function getStarted() {
     }`;
     console.log(btoa(string).replace('+', '-').replace('/', '_').replace(/=+$/, ''));
 
+    // try getting token from yml
+    // Get document, or throw exception on error
+//    try {
+//        const doc = jsyaml.safeLoad(fs.readFileSync('../application.yml', 'utf8'));
+//        console.log(doc);
+//    } catch (e) {
+//        console.log(e);
+//    }
+
     //http://192.168.56.1:8888/splunk/alert/3ac241ab-4448-4f1a-b925-29ac7fe6e37e/
+
+    let webHookUrls = {
+        "splunkWebHookUrls": []
+    };
+
+    for (i = 0; i < $('.teams-url').length; i++) {
+        // Create object
+        const chatAppUrl = {
+            "chatApp": "TEAMS",
+            "url": $('.teams-url').eq(i).val()
+        };
+
+        // Push object to the array
+        webHookUrls.splunkWebHookUrls.push(chatAppUrl);
+    }
+    //print the array or use it for your further logic
+    console.log(webHookUrls);
 }
