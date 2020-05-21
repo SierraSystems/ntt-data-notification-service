@@ -1,6 +1,7 @@
 package ca.bc.gov.splunknotificationservice.controller;
 
 import ca.bc.gov.splunknotificationservice.configuration.SplunkProperites;
+import ca.bc.gov.splunknotificationservice.service.ChannelService;
 import ca.bc.gov.splunknotificationservice.splunk.models.SplunkAlert;
 import ca.bc.gov.splunknotificationservice.service.WebHookService;
 import org.slf4j.Logger;
@@ -11,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @EnableConfigurationProperties(SplunkProperites.class)
@@ -28,7 +31,7 @@ public class AlertNotificationController {
     public ResponseEntity<String> alert(@PathVariable("token") String token,
                                         @PathVariable("routes") String routes,
                                         @RequestBody SplunkAlert splunkAlert) {
-        if (!token.equals(splunkProperites.getToken())) {
+        if (!splunkProperites.getTokens().contains(token)) {
             logger.error("Token failed to validate");
             return new ResponseEntity<>("Token validation failed", HttpStatus.UNAUTHORIZED);
         }
