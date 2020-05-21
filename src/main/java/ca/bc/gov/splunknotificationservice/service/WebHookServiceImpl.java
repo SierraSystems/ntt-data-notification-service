@@ -2,6 +2,7 @@ package ca.bc.gov.splunknotificationservice.service;
 
 import ca.bc.gov.splunknotificationservice.configuration.SplunkProperites;
 import ca.bc.gov.splunknotificationservice.splunk.models.SplunkAlert;
+import ca.bc.gov.splunknotificationservice.splunk.models.SplunkWebHookParams;
 import ca.bc.gov.splunknotificationservice.splunk.models.SplunkWebHookUrls;
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
@@ -36,15 +37,17 @@ public class WebHookServiceImpl implements WebHookService {
 
     public ResponseEntity<String> postMessage(SplunkAlert splunkAlert, String routes) {
         Gson gson = new Gson();
+        ChannelServiceFactory channelServiceFactory = new ChannelServiceFactory();
 
         byte[] decodedRoutesBytes = Base64.getUrlDecoder().decode(routes);
         String decodedRoutesUrl = new String(decodedRoutesBytes);
 
-        List<SplunkWebHookUrls> splunkWebHookUrls = new ArrayList<>();
+        SplunkWebHookParams splunkWebHookParams = gson.fromJson(decodedRoutesUrl, SplunkWebHookParams.class);
 
-        splunkWebHookUrls.stream().forEach(url -> {
+        splunkWebHookParams.getSplunkWebHookUrls().stream().forEach(url -> {
 
-            Optional<ChannelService> channelService = channelServices.stream().filter(x -> x.getChatApp() == url.getChatApp()).findFirst();
+//            Optional<ChannelService> channelService = channelServices.stream().filter(x -> x.getChatApp() == url.getChatApp()).findFirst();
+            Optional<ChannelService> channelService = channelServiceFactory.getChanelService(url.getChatApp());
 
             channelService.ifPresent(service -> {
                 post(url.getUrl(), service.generatePayload(splunkAlert));

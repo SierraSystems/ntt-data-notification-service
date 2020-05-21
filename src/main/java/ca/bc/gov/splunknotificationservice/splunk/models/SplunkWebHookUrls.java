@@ -5,7 +5,7 @@ import ca.bc.gov.splunknotificationservice.service.ChatApp;
 public class SplunkWebHookUrls {
 
     private ChatApp chatApp;
-    private String Url;
+    private String url;
 
     public ChatApp getChatApp() {
         return chatApp;
@@ -16,10 +16,10 @@ public class SplunkWebHookUrls {
     }
 
     public String getUrl() {
-        return Url;
+        return url;
     }
 
     public void setUrl(String url) {
-        Url = url;
+        this.url = url;
     }
 }
