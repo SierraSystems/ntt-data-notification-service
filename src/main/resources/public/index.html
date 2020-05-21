@@ -5,13 +5,6 @@
     <body>
     <script src="./index.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="yaml.js">
-
-        YAML.load('../application.yml', function(result)
-{
-    console.log(result);
-});
-    </script>
         <div>
             <h1>Welcome to NTT Data Services Splunk Notification Service!</h1>
         </div>
@@ -19,13 +12,20 @@
             <label>Enter Microsoft Teams URL</label>
             <br />
             <input type="text" class="teams-url">
+            <button type="button" onclick="createNewTeamsUrlInput()">
+                Add additional Teams URL
+            </button>
+            <div id="add-teams-url-here"></div>
             <br />
             <br />
-    
+
             <label>Enter Rocket.Chat URL</label>
             <br />
             <input type="text" class="rocket-chat-url">
-            <div></div>
+            <button type="button" onclick="createNewRocketChatUrlInput()">
+                Add additional Rocket.Chat URL
+            </button>
+            <div id="add-rocket-chat-url-here"></div>
             <br />
             <br />
         </div>
