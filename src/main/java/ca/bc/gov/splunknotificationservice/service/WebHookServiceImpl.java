@@ -144,11 +144,11 @@ public class WebHookServiceImpl implements WebHookService {
         statusInput.setTitle("Update Status");
 
         TeamsChoice assigned = new TeamsChoice();
-        assigned.setDisplay("Active");
+        assigned.setDisplay("In Progress");
         assigned.setValue("1");
 
         TeamsChoice inProgress = new TeamsChoice();
-        inProgress.setDisplay("In Progress");
+        inProgress.setDisplay("In Review");
         inProgress.setValue("2");
 
         TeamsChoice closed = new TeamsChoice();
@@ -171,6 +171,10 @@ public class WebHookServiceImpl implements WebHookService {
         statusAction.setType("HttpPOST");
         statusAction.setName("OK");
         statusAction.setTarget("https://webhook.site/b1990094-ff1a-4668-b19e-e3bbddf8a717");
+
+        Gson teamsCardGson = new Gson();
+
+        statusAction.setBody(teamsCardGson.toJson(teamsCard, TeamsCard.class).toString());
 
         ArrayList<TeamsAction> actions = new ArrayList<>();
         actions.add(statusAction);

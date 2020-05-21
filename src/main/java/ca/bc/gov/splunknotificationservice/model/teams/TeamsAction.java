@@ -6,6 +6,7 @@ public class TeamsAction {
   private String type;
   private String name;
   private String target;
+  private String body;
 
   @JsonProperty("@type")
   public String getType() {
@@ -31,5 +32,13 @@ public class TeamsAction {
 
   public void setTarget(String target) {
     this.target = target;
+  }
+
+  public String getBody() {
+    return body;
+  }
+
+  public void setBody(String body) {
+    this.body = body;
   }
 }
