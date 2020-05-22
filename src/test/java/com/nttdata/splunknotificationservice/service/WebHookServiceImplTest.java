@@ -2,6 +2,7 @@ package com.nttdata.splunknotificationservice.service;
 
 import com.google.gson.Gson;
 import com.nttdata.splunknotificationservice.controller.AlertNotificationController;
+import com.nttdata.splunknotificationservice.rocket.RocketChannelService;
 import com.nttdata.splunknotificationservice.splunk.models.SplunkAlert;
 import com.nttdata.splunknotificationservice.splunk.models.SplunkResult;
 import com.nttdata.splunknotificationservice.splunk.models.SplunkWebHookParams;
@@ -56,13 +57,15 @@ public class WebHookServiceImplTest {
         baseUrl = String.format("http://localhost:%s",
                 mockBackEnd.getPort());
 
-        Mockito.when(channelServiceFactory.getChanelService(any())).thenReturn(java.util.Optional.of(new TeamsChannelService()));
+
     }
 
 
-    @DisplayName("Success - WebHookServiceImpl")
+    @DisplayName("Success - WebHookServiceImpl TEAMS")
     @Test
-    void testSuccess() {
+    void testTEAMSSuccess() {
+        Mockito.when(channelServiceFactory.getChanelService(any())).thenReturn(java.util.Optional.of(new TeamsChannelService()));
+
         MockResponse mockResponse = new MockResponse();
         mockResponse.setBody("{\"test\":\"test\"}");
         mockResponse.addHeader("content-type: application/json;");
@@ -71,6 +74,42 @@ public class WebHookServiceImplTest {
 
         SplunkWebHookUrls splunkWebHookUrl = new SplunkWebHookUrls();
         splunkWebHookUrl.setChatApp(ChatApp.TEAMS);
+        splunkWebHookUrl.setUrl(baseUrl);
+        List<SplunkWebHookUrls> splunkWebHookUrls = Arrays.asList(splunkWebHookUrl);
+
+        SplunkWebHookParams splunkWebHookParams = new SplunkWebHookParams();
+        splunkWebHookParams.setSplunkWebHookUrls(splunkWebHookUrls);
+        Gson gson = new Gson();
+        String encodedString = Base64.getUrlEncoder().encodeToString(gson.toJson(splunkWebHookParams).getBytes());
+
+        SplunkAlert splunkAlert = new SplunkAlert();
+        splunkAlert.setApp("TEST");
+        splunkAlert.setOwner("TEST");
+        SplunkResult splunkResult = new SplunkResult();
+        splunkResult.setMessage("AMESSAGE");
+        splunkResult.setSource("ASOURCE");
+        splunkAlert.setResult(splunkResult);
+        splunkAlert.setResults_link("TEST");
+        splunkAlert.setSid("TEST");
+        splunkAlert.setSearch_name("");
+
+        ResponseEntity<String> result = webHookService.postMessage(splunkAlert,encodedString);
+
+        Assertions.assertEquals(HttpStatus.CREATED, result.getStatusCode());
+    }
+    @DisplayName("Success - WebHookServiceImpl ROCKET")
+    @Test
+    void testRocketSuccess() {
+        Mockito.when(channelServiceFactory.getChanelService(any())).thenReturn(java.util.Optional.of(new RocketChannelService()));
+
+        MockResponse mockResponse = new MockResponse();
+        mockResponse.setBody("{\"test\":\"test\"}");
+        mockResponse.addHeader("content-type: application/json;");
+        mockResponse.setResponseCode(200);
+        mockBackEnd.enqueue(mockResponse);
+
+        SplunkWebHookUrls splunkWebHookUrl = new SplunkWebHookUrls();
+        splunkWebHookUrl.setChatApp(ChatApp.ROCKET_CHAT);
         splunkWebHookUrl.setUrl(baseUrl);
         List<SplunkWebHookUrls> splunkWebHookUrls = Arrays.asList(splunkWebHookUrl);
 
