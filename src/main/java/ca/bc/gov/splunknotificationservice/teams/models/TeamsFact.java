@@ -1,4 +1,4 @@
-package ca.bc.gov.splunknotificationservice.model.teams;
+package ca.bc.gov.splunknotificationservice.teams.models;
 
 public class TeamsFact {
   private String name;

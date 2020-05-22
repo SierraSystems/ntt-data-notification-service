@@ -1,12 +1,12 @@
-package ca.bc.gov.splunknotificationservice.model.teams;
+package ca.bc.gov.splunknotificationservice.teams.models;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class TeamsSection {
   private String activityTitle;
   private String activitySubtitle;
   private String activityImage;
-  private ArrayList<TeamsFact> facts;
+  private List<TeamsFact> facts;
   private Boolean markdown;
 
   public String getActivityTitle() {
@@ -33,11 +33,11 @@ public class TeamsSection {
     this.activityImage = activityImage;
   }
 
-  public ArrayList<TeamsFact> getFacts() {
+  public List<TeamsFact> getFacts() {
     return facts;
   }
 
-  public void setFacts(ArrayList<TeamsFact> facts) {
+  public void setFacts(List<TeamsFact> facts) {
     this.facts = facts;
   }
 

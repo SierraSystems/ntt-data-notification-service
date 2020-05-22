@@ -1,15 +1,15 @@
-package ca.bc.gov.splunknotificationservice.model.teams;
+package ca.bc.gov.splunknotificationservice.teams.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.ArrayList;
+import java.util.List;
 
 public class TeamsCard {
   private String type;
   private String context;
   private String themeColor;
   private String summary;
-  private ArrayList<TeamsSection> sections;
-  private ArrayList<TeamsPotentialActions> potentialAction;
+  private List<TeamsSection> sections;
+  private List<TeamsPotentialActions> potentialAction;
 
   @JsonProperty("@type")
   public String getType() {
@@ -47,21 +47,21 @@ public class TeamsCard {
     this.summary = summary;
   }
 
-  public ArrayList<TeamsSection> getSections() {
+  public List<TeamsSection> getSections() {
     return sections;
   }
 
   public void setSections(
-      ArrayList<TeamsSection> sections) {
+      List<TeamsSection> sections) {
     this.sections = sections;
   }
 
-  public ArrayList<TeamsPotentialActions> getPotentialAction() {
+  public List<TeamsPotentialActions> getPotentialAction() {
     return potentialAction;
   }
 
   public void setPotentialAction(
-      ArrayList<TeamsPotentialActions> potentialAction) {
+      List<TeamsPotentialActions> potentialAction) {
     this.potentialAction = potentialAction;
   }
 }

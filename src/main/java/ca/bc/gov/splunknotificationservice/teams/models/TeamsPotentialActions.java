@@ -1,14 +1,14 @@
-package ca.bc.gov.splunknotificationservice.model.teams;
+package ca.bc.gov.splunknotificationservice.teams.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.ArrayList;
+import java.util.List;
 
 public class TeamsPotentialActions {
   private String type;
   private String name;
-  private ArrayList<String> target;
-  private ArrayList<TeamsInput> inputs;
-  private ArrayList<TeamsAction> actions;
+  private List<String> target;
+  private List<TeamsInput> inputs;
+  private List<TeamsAction> actions;
 
   @JsonProperty("@type")
   public String getType() {
@@ -28,28 +28,28 @@ public class TeamsPotentialActions {
     this.name = name;
   }
 
-  public ArrayList<String> getTarget() {
+  public List<String> getTarget() {
     return target;
   }
 
-  public void setTarget(ArrayList<String> target) {
+  public void setTarget(List<String> target) {
     this.target = target;
   }
 
-  public ArrayList<TeamsInput> getInputs() {
+  public List<TeamsInput> getInputs() {
     return inputs;
   }
 
-  public void setInputs(ArrayList<TeamsInput> inputs) {
+  public void setInputs(List<TeamsInput> inputs) {
     this.inputs = inputs;
   }
 
-  public ArrayList<TeamsAction> getActions() {
+  public List<TeamsAction> getActions() {
     return actions;
   }
 
   public void setActions(
-      ArrayList<TeamsAction> actions) {
+      List<TeamsAction> actions) {
     this.actions = actions;
   }
 }

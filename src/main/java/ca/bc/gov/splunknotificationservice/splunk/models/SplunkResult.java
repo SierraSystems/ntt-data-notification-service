@@ -1,9 +1,10 @@
-package ca.bc.gov.splunknotificationservice.model.splunk;
+package ca.bc.gov.splunknotificationservice.splunk.models;
 
 public class SplunkResult {
     private String _raw;
     private String source;
     private String message;
+
 
     public String get_raw() { return _raw; }
 

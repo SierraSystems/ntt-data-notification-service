@@ -2,19 +2,13 @@ package ca.bc.gov.splunknotificationservice.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.List;
+
 @ConfigurationProperties(prefix = "splunk")
 public class SplunkProperites {
-    private String teamsUrl;
-    private String rocketUrl;
+
     private String token;
-
-    public String getTeamsUrl() { return teamsUrl; }
-
-    public void setTeamsUrl(String teamsUrl) { this.teamsUrl = teamsUrl; }
-
-    public String getRocketUrl() { return rocketUrl; }
-
-    public void setRocketUrl(String rocketUrl) { this.rocketUrl = rocketUrl; }
+    private List<String> tokens;
 
     public String getToken() {
         return token;
@@ -23,4 +17,8 @@ public class SplunkProperites {
     public void setToken(String token) {
         this.token = token;
     }
+
+    public List<String> getTokens() { return tokens; }
+
+    public void setTokens(List<String> tokens) { this.tokens = tokens; }
 }
