@@ -42,10 +42,7 @@ public class WebHookServiceImpl implements WebHookService {
 
             Optional<ChannelService> channelService = channelServiceFactory.getChanelService(splunkWebHookUrls.getChatApp());
 
-            channelService.ifPresent(service -> {
-                post(splunkWebHookUrls.getUrl(), service.generatePayload(splunkAlert));
-            });
-
+            channelService.ifPresent(service -> post(splunkWebHookUrls.getUrl(), service.generatePayload(splunkAlert)));
         });
 
         //TODO: Does splunk care about return?
