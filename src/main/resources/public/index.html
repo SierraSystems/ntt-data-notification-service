@@ -8,6 +8,15 @@
     <script>
         $(document).ready(function(){
             $("#final-url-div").hide();
+            $(".url-error-teams").hide();
+            $(".url-error-rocket").hide();
+            $(".error").hide();
+
+            $("input").on("change paste keyup", function() {
+               $(".url-error-teams").hide();
+                $(".url-error-rocket").hide();
+                $(".error").hide();
+            });
         });
     </script>
         <div>
@@ -22,6 +31,7 @@
             </button>
             <br/>
             <div id="add-teams-url-here"></div>
+            <p class="url-error-teams" style="color: red">Please make sure you enter valid Teams urls.</p>
             <br />
 
             <label>Enter Rocket.Chat URL</label>
@@ -31,6 +41,7 @@
                 Add additional Rocket.Chat URL
             </button>
             <div id="add-rocket-chat-url-here"></div>
+            <p class="url-error-rocket" style="color: red">Please make sure you enter valid Rocket.Chat urls.</p>
             <br />
 
             <label>Enter Token</label>
@@ -44,8 +55,10 @@
             Generate URL for Splunk Notification
         </button>
 
+        <p class="error" style="color: red">Please enter at least one valid url.</p>
+
         <div id="final-url-div" style="word-wrap: break-word; width: 700px">
-            <h3>Your generated splunk webhook URL is:</h3>
+            <h3>Your generated splunk WebHook URL is:</h3>
             <p id="final-url"></p>
         </div>
     </body>
