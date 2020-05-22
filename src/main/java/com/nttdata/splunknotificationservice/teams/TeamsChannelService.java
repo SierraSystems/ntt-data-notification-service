@@ -1,12 +1,12 @@
-package ca.bc.gov.splunknotificationservice.teams;
+package com.nttdata.splunknotificationservice.teams;
 
-import ca.bc.gov.splunknotificationservice.service.ChannelService;
-import ca.bc.gov.splunknotificationservice.service.ChatApp;
-import ca.bc.gov.splunknotificationservice.splunk.models.SplunkAlert;
-import ca.bc.gov.splunknotificationservice.teams.models.TeamsCard;
-import ca.bc.gov.splunknotificationservice.teams.models.TeamsFact;
-import ca.bc.gov.splunknotificationservice.teams.models.TeamsPotentialActions;
-import ca.bc.gov.splunknotificationservice.teams.models.TeamsSection;
+import com.nttdata.splunknotificationservice.service.ChannelService;
+import com.nttdata.splunknotificationservice.service.ChatApp;
+import com.nttdata.splunknotificationservice.splunk.models.SplunkAlert;
+import com.nttdata.splunknotificationservice.teams.models.TeamsCard;
+import com.nttdata.splunknotificationservice.teams.models.TeamsFact;
+import com.nttdata.splunknotificationservice.teams.models.TeamsPotentialActions;
+import com.nttdata.splunknotificationservice.teams.models.TeamsSection;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
