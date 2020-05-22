@@ -59,6 +59,14 @@ public class TeamsChannelService implements ChannelService {
         facts.add(teamsFactOwner);
         facts.add(teamsFactMessage);
 
+        splunkAlert.getResult().getDetails().forEach((key, value) -> {
+            TeamsFact detailFact = new TeamsFact();
+            detailFact.setName(key);
+            detailFact.setValue(value.toString());
+
+            facts.add(detailFact);
+        });
+
         teamsSection.setFacts(facts);
         teamsSection.setMarkdown(true);
 
