@@ -1,6 +1,6 @@
-package ca.bc.gov.splunknotificationservice.service;
+package com.nttdata.splunknotificationservice.service;
 
-import ca.bc.gov.splunknotificationservice.splunk.models.SplunkAlert;
+import com.nttdata.splunknotificationservice.splunk.models.SplunkAlert;
 
 public interface ChannelService {
 

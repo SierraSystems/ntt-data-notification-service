@@ -1,4 +1,4 @@
-package ca.bc.gov.splunknotificationservice.configuration;
+package com.nttdata.splunknotificationservice.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

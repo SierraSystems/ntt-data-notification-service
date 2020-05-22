@@ -1,4 +1,4 @@
-package ca.bc.gov.splunknotificationservice.splunk.models;
+package com.nttdata.splunknotificationservice.splunk.models;
 
 import java.util.ArrayList;
 import java.util.List;

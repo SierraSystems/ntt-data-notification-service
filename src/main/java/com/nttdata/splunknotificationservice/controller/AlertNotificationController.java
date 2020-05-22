@@ -1,9 +1,8 @@
-package ca.bc.gov.splunknotificationservice.controller;
+package com.nttdata.splunknotificationservice.controller;
 
-import ca.bc.gov.splunknotificationservice.configuration.SplunkProperites;
-import ca.bc.gov.splunknotificationservice.service.ChannelService;
-import ca.bc.gov.splunknotificationservice.splunk.models.SplunkAlert;
-import ca.bc.gov.splunknotificationservice.service.WebHookService;
+import com.nttdata.splunknotificationservice.configuration.SplunkProperites;
+import com.nttdata.splunknotificationservice.splunk.models.SplunkAlert;
+import com.nttdata.splunknotificationservice.service.WebHookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @EnableConfigurationProperties(SplunkProperites.class)

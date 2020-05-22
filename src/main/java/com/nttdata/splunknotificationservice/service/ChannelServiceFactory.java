@@ -1,4 +1,4 @@
-package ca.bc.gov.splunknotificationservice.service;
+package com.nttdata.splunknotificationservice.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,8 +13,6 @@ public class ChannelServiceFactory {
   List<ChannelService> channelServices;
 
   public Optional<ChannelService> getChanelService(ChatApp chatApp) {
-    Optional<ChannelService> channelService = channelServices.stream().filter(x -> x.getChatApp() == chatApp).findFirst();
-
-    return channelService;
+    return channelServices.stream().filter(x -> x.getChatApp() == chatApp).findFirst();
   }
 }
