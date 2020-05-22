@@ -1,4 +1,4 @@
-package ca.bc.gov.splunknotificationservice.service;
+package com.nttdata.splunknotificationservice.service;
 
 public enum ChatApp {
 

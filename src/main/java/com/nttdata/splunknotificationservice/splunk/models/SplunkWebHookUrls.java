@@ -1,6 +1,6 @@
-package ca.bc.gov.splunknotificationservice.splunk.models;
+package com.nttdata.splunknotificationservice.splunk.models;
 
-import ca.bc.gov.splunknotificationservice.service.ChatApp;
+import com.nttdata.splunknotificationservice.service.ChatApp;
 
 public class SplunkWebHookUrls {
 

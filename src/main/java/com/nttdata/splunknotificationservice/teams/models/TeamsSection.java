@@ -1,4 +1,4 @@
-package ca.bc.gov.splunknotificationservice.teams.models;
+package com.nttdata.splunknotificationservice.teams.models;
 
 import java.util.List;
 
