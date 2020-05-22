@@ -1,0 +1,11 @@
+h1 {
+    font-family: 'Catamaran Light';
+    line-height: 1;
+    letter-spacing: 3.5px;
+    color: #ffffff;
+    background-color: #0079a1;
+}
+
+.text {
+    font-family: 'Catamaran';
+}

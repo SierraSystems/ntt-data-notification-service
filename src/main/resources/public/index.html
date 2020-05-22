@@ -1,6 +1,8 @@
 <html>
     <head>
         <title id="title">Splunk Notification Service</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Catamaran">
+        <link rel="stylesheet" href="./index.css">
     </head>
     <body>
     <script src="./index.js"></script>
@@ -14,32 +16,32 @@
             <h1>Welcome to NTT Data Services Splunk Notification Service!</h1>
         </div>
         <div>
-            <label>Enter Microsoft Teams URL</label>
+            <label class="text">Enter Microsoft Teams URL</label>
             <br />
             <input type="text" class="teams-url">
-            <button type="button" onclick="createNewUrlInput('teams-url')">
+            <button type="button" class="text" onclick="createNewUrlInput('teams-url')">
                 Add additional Teams URL
             </button>
             <div id="add-teams-url-here"></div>
             <br />
 
-            <label>Enter Rocket.Chat URL</label>
+            <label class="text">Enter Rocket.Chat URL</label>
             <br />
             <input type="text" class="rocket-chat-url">
-            <button type="button" onclick="createNewUrlInput('rocket-chat-url')">
+            <button type="button" class="text" onclick="createNewUrlInput('rocket-chat-url')">
                 Add additional Rocket.Chat URL
             </button>
             <div id="add-rocket-chat-url-here"></div>
             <br />
 
-            <label>Enter Token</label>
+            <label class="text">Enter Token</label>
             <br />
             <input type="text" class="token">
             <br />
             <br />
         </div>
 
-        <button type="button" onclick="generateUrl()">
+        <button type="button" class="text" onclick="generateUrl()">
             Generate URL for Splunk Notification
         </button>
 
