@@ -5,6 +5,11 @@
     <body>
     <script src="./index.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#final-url-div").hide();
+        });
+    </script>
         <div>
             <h1>Welcome to NTT Data Services Splunk Notification Service!</h1>
         </div>
@@ -17,7 +22,6 @@
             </button>
             <div id="add-teams-url-here"></div>
             <br />
-            <br />
 
             <label>Enter Rocket.Chat URL</label>
             <br />
@@ -27,11 +31,21 @@
             </button>
             <div id="add-rocket-chat-url-here"></div>
             <br />
+
+            <label>Enter Token</label>
+            <br />
+            <input type="text" class="token">
+            <br />
             <br />
         </div>
 
-        <button type="button" onclick="getStarted()">
+        <button type="button" onclick="generateUrl()">
             Generate URL for Splunk Notification
         </button>
+
+        <div id="final-url-div">
+            <h3>Your generated splunk webhook URL is:</h3>
+            <p id="final-url"></p>
+        </div>
     </body>
 </html>

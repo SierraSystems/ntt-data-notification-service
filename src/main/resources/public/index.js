@@ -53,5 +53,9 @@ function generateUrl() {
     const token = $(".token").val();
     const base64EncodedUrl = base64EncodeString(generateWebHookUrlString());
 
-    return `${baseUrl}${token}/${base64EncodedUrl}`;
+    const finalUrl = `${baseUrl}${token}/${base64EncodedUrl}`;
+
+    document.getElementById("final-url").innerHTML = finalUrl;
+    // display the url
+    $("#final-url-div").show();
 }
