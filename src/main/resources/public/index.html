@@ -1,3 +1,51 @@
 <html>
-<p>Test</p>
+    <head>
+        <title id="title">Splunk Notification Service</title>
+    </head>
+    <body>
+    <script src="./index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#final-url-div").hide();
+        });
+    </script>
+        <div>
+            <h1>Welcome to NTT Data Services Splunk Notification Service!</h1>
+        </div>
+        <div>
+            <label>Enter Microsoft Teams URL</label>
+            <br />
+            <input type="text" class="teams-url">
+            <button type="button" onclick="createNewUrlInput('teams-url')">
+                Add additional Teams URL
+            </button>
+            <div id="add-teams-url-here"></div>
+            <br />
+
+            <label>Enter Rocket.Chat URL</label>
+            <br />
+            <input type="text" class="rocket-chat-url">
+            <button type="button" onclick="createNewUrlInput('rocket-chat-url')">
+                Add additional Rocket.Chat URL
+            </button>
+            <div id="add-rocket-chat-url-here"></div>
+            <br />
+
+            <label>Enter Token</label>
+            <br />
+            <input type="text" class="token">
+            <br />
+            <br />
+        </div>
+
+        <button type="button" onclick="generateUrl()">
+            Generate URL for Splunk Notification
+        </button>
+
+        <div id="final-url-div" style="word-wrap: break-word; width: 700px">
+            <h3>Your generated splunk webhook URL is:</h3>
+            <p id="final-url"></p>
+        </div>
+    </body>
 </html>
