@@ -41,10 +41,10 @@ function base64EncodeString(string) {
     return btoa(string).replace('+', '-').replace('/', '_').replace(/=+$/, '');
 }
 
-function createNewTeamsUrlInput() {
+function createNewUrlInput(urlType) {
     let txtNewInputBox = document.createElement('div');
-    txtNewInputBox.innerHTML = "<input type='text' class='teams-url'><br />";
-    document.getElementById("add-teams-url-here").appendChild(txtNewInputBox);
+    txtNewInputBox.innerHTML = "<input type='text' class='" + urlType + "'><br />";
+    document.getElementById("add-" + urlType + "-here").appendChild(txtNewInputBox);
 }
 
 function createNewRocketChatUrlInput() {
