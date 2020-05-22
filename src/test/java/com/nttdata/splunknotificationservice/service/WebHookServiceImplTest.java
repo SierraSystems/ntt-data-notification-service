@@ -6,6 +6,7 @@ import com.nttdata.splunknotificationservice.splunk.models.SplunkAlert;
 import com.nttdata.splunknotificationservice.splunk.models.SplunkResult;
 import com.nttdata.splunknotificationservice.splunk.models.SplunkWebHookParams;
 import com.nttdata.splunknotificationservice.splunk.models.SplunkWebHookUrls;
+import com.nttdata.splunknotificationservice.teams.TeamsChannelService;
 import org.junit.jupiter.api.*;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -14,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -24,6 +26,8 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
+
 public class WebHookServiceImplTest {
     public static MockWebServer mockBackEnd;
     private String baseUrl;
@@ -32,6 +36,8 @@ public class WebHookServiceImplTest {
 
     @Mock
     ChannelServiceFactory channelServiceFactory;
+
+
 
     @BeforeAll
     static void setUp() throws IOException {
@@ -50,7 +56,7 @@ public class WebHookServiceImplTest {
         baseUrl = String.format("http://localhost:%s",
                 mockBackEnd.getPort());
 
-
+        Mockito.when(channelServiceFactory.getChanelService(any())).thenReturn(java.util.Optional.of(new TeamsChannelService()));
     }
 
 
