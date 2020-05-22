@@ -47,12 +47,6 @@ function createNewUrlInput(urlType) {
     document.getElementById("add-" + urlType + "-here").appendChild(txtNewInputBox);
 }
 
-function createNewRocketChatUrlInput() {
-    let txtNewInputBox = document.createElement('div');
-    txtNewInputBox.innerHTML = "<input type='text' class='rocket-chat-url'><br />";
-    document.getElementById("add-rocket-chat-url-here").appendChild(txtNewInputBox);
-}
-
 function generateUrl() {
     // temporarily for local dev
     const baseUrl = `http://${localIP}:${port}/splunk/alert/`;
