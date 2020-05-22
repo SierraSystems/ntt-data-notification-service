@@ -42,9 +42,16 @@ function base64EncodeString(string) {
 }
 
 function createNewUrlInput(urlType) {
+    const id = Math.floor(Math.random() * 100000);
     let txtNewInputBox = document.createElement('div');
-    txtNewInputBox.innerHTML = "<input type='text' class='" + urlType + "'><br />";
+    txtNewInputBox.setAttribute("id", id);
+    txtNewInputBox.innerHTML = "<br/><input type='text' style='margin-right: 4px' class='" + urlType + "'><button type='button' onclick='deleteUrl(" + id + ")'>Remove URL</button>";
     document.getElementById("add-" + urlType + "-here").appendChild(txtNewInputBox);
+}
+
+function deleteUrl(elementId) {
+    const element = document.getElementById(elementId);
+    element.parentNode.removeChild(element);
 }
 
 function generateUrl() {
