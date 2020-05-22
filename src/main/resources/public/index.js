@@ -50,8 +50,7 @@ function createNewUrlInput(urlType) {
 }
 
 function deleteUrl(elementId) {
-    // Removes an element from the document
-    var element = document.getElementById(elementId);
+    const element = document.getElementById(elementId);
     element.parentNode.removeChild(element);
 }
 
