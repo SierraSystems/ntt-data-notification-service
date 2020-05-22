@@ -34,7 +34,7 @@ public class TeamsChannelService implements ChannelService {
         TeamsSection teamsSection = new TeamsSection();
         teamsSection.setActivityTitle(splunkAlert.getSearch_name());
         teamsSection.setActivitySubtitle(MessageFormat.format("From {0}", splunkAlert.getResult().getSource()));
-        teamsSection.setActivityImage("https://teamsnodesample.azurewebsites.net/static/img/image4.png");
+        teamsSection.setActivityImage("https://user-images.githubusercontent.com/51387119/82707419-ddb1c600-9c30-11ea-8bfa-b3c624b23cdd.png");
 
         TeamsFact teamsFactApp = new TeamsFact();
         teamsFactApp.setName("App");

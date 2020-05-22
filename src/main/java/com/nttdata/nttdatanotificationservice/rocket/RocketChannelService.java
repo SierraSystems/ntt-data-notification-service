@@ -22,6 +22,7 @@ public class RocketChannelService implements ChannelService {
         String text = String.format(ROCKETCHATTEMPLATE, splunkAlert.getResult().getSource(), splunkAlert.getSearch_name(), splunkAlert.getOwner(), splunkAlert.getResult().getMessage(), splunkAlert.getResults_link());
         rocketMessage.setText(text);
         rocketMessage.setAlias(splunkAlert.getSearch_name());
+        rocketMessage.setAvatar("https://user-images.githubusercontent.com/51387119/82707419-ddb1c600-9c30-11ea-8bfa-b3c624b23cdd.png");
         return rocketMessage;
     }
 
