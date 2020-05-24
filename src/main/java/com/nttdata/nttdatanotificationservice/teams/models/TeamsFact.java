@@ -8,15 +8,14 @@ public class TeamsFact {
     return name;
   }
 
-  public void setName(String name) {
-    this.name = name;
-  }
-
   public String getValue() {
     return value;
   }
 
-  public void setValue(String value) {
+  public TeamsFact(String name, String value) {
+    this.name = name;
     this.value = value;
   }
+
+
 }
