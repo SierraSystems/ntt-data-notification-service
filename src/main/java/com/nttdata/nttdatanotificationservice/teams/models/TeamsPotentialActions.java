@@ -1,55 +1,58 @@
 package com.nttdata.nttdatanotificationservice.teams.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class TeamsPotentialActions {
   private String type;
   private String name;
-  private List<String> target;
-  private List<TeamsInput> inputs;
-  private List<TeamsAction> actions;
+  private List<String> target = new ArrayList<>();
+  private List<TeamsInput> inputs = new ArrayList<>();
+  private List<TeamsAction> actions = new ArrayList<>();
+
+  protected TeamsPotentialActions(String type, String name) {
+    this.type = type;
+    this.name = name;
+  }
 
   @JsonProperty("@type")
   public String getType() {
     return type;
   }
 
-  @JsonProperty("@type")
-  public void setType(String type) {
-    this.type = type;
-  }
-
   public String getName() {
     return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   public List<String> getTarget() {
     return target;
   }
 
-  public void setTarget(List<String> target) {
-    this.target = target;
-  }
-
   public List<TeamsInput> getInputs() {
     return inputs;
   }
 
-  public void setInputs(List<TeamsInput> inputs) {
-    this.inputs = inputs;
+  public void addTarget(String target) {
+    this.target.add(target);
+  }
+
+  public void addInput(TeamsInput input) {
+    this.inputs.add(input);
   }
 
   public List<TeamsAction> getActions() {
     return actions;
   }
 
-  public void setActions(
-      List<TeamsAction> actions) {
-    this.actions = actions;
+  public void addAction(TeamsAction action) {
+    this.actions.add(action);
   }
+
+
+  public static TeamsPotentialActions defaultTeamsPotentialActions(String type, String name) {
+    return new TeamsPotentialActions(type, name);
+  }
+
 }

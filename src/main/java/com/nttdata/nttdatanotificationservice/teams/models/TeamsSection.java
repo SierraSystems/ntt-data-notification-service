@@ -1,51 +1,58 @@
 package com.nttdata.nttdatanotificationservice.teams.models;
 
+import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TeamsSection {
+
+  private static final String ACTIVITY_IMAGE = "https://user-images.githubusercontent.com/51387119/82707419-ddb1c600-9c30-11ea-8bfa-b3c624b23cdd.png";
   private String activityTitle;
   private String activitySubtitle;
   private String activityImage;
-  private List<TeamsFact> facts;
+  private List<TeamsFact> facts = new ArrayList<>();
   private Boolean markdown;
+
+
+  private TeamsSection(String activityTitle, String activitySubtitle, String activityImage, Boolean markdown) {
+    this.activityTitle = activityTitle;
+    this.activitySubtitle = activitySubtitle;
+    this.activityImage = activityImage;
+    this.markdown = markdown;
+  }
 
   public String getActivityTitle() {
     return activityTitle;
-  }
-
-  public void setActivityTitle(String activityTitle) {
-    this.activityTitle = activityTitle;
   }
 
   public String getActivitySubtitle() {
     return activitySubtitle;
   }
 
-  public void setActivitySubtitle(String activitySubtitle) {
-    this.activitySubtitle = activitySubtitle;
-  }
-
   public String getActivityImage() {
     return activityImage;
-  }
-
-  public void setActivityImage(String activityImage) {
-    this.activityImage = activityImage;
   }
 
   public List<TeamsFact> getFacts() {
     return facts;
   }
 
-  public void setFacts(List<TeamsFact> facts) {
-    this.facts = facts;
+  public void addFact(TeamsFact fact) {
+    this.facts.add(fact);
   }
 
   public Boolean getMarkdown() {
     return markdown;
   }
 
-  public void setMarkdown(Boolean markdown) {
-    this.markdown = markdown;
+
+  public static TeamsSection defaultNttSection(String activityTitle, String activitySubtitle) {
+
+    String activitySubtitleFormated = MessageFormat.format("From {0}", activitySubtitle);
+
+    return new TeamsSection(activityTitle, activitySubtitleFormated, ACTIVITY_IMAGE, true);
+    
   }
+
+
 }

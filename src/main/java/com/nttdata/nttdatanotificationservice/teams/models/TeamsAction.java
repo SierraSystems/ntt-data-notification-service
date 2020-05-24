@@ -8,30 +8,23 @@ public class TeamsAction {
   private String target;
   private String body;
 
-  @JsonProperty("@type")
-  public String getType() {
-    return type;
+  private TeamsAction(String type, String name, String target) {
+    this.type = type;
+    this.name = name;
+    this.target = target;
   }
 
   @JsonProperty("@type")
-  public void setType(String type) {
-    this.type = type;
+  public String getType() {
+    return type;
   }
 
   public String getName() {
     return name;
   }
 
-  public void setName(String name) {
-    this.name = name;
-  }
-
   public String getTarget() {
     return target;
-  }
-
-  public void setTarget(String target) {
-    this.target = target;
   }
 
   public String getBody() {
@@ -41,4 +34,9 @@ public class TeamsAction {
   public void setBody(String body) {
     this.body = body;
   }
+
+  public static TeamsAction defaultTeamAction(String type, String name, String target) {
+    return new TeamsAction(type, name, target);
+  }
+
 }
