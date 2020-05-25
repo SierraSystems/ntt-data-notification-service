@@ -44,7 +44,7 @@ public class WebHookServiceImpl implements WebHookService {
     private void post(String url, Object postObj) {
         try {
             RestTemplate restTemplate = new RestTemplate();
-            String res = restTemplate.postForObject(url, postObj, String.class);
+            restTemplate.postForObject(url, postObj, String.class);
             logger.info("Success");
         } catch (Exception e) {
             logger.error("Exception in post", e);

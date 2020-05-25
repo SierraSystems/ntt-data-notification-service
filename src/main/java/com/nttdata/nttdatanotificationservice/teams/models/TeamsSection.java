@@ -6,7 +6,6 @@ import java.util.List;
 
 public class TeamsSection {
 
-  private static final String ACTIVITY_IMAGE = "https://user-images.githubusercontent.com/51387119/82707419-ddb1c600-9c30-11ea-8bfa-b3c624b23cdd.png";
   private String activityTitle;
   private String activitySubtitle;
   private String activityImage;
@@ -46,13 +45,11 @@ public class TeamsSection {
   }
 
 
-  public static TeamsSection defaultNttSection(String activityTitle, String activitySubtitle) {
+  public static TeamsSection defaultNttSection(String activityTitle, String activitySubtitle, String image) {
 
     String activitySubtitleFormated = MessageFormat.format("From {0}", activitySubtitle);
 
-    return new TeamsSection(activityTitle, activitySubtitleFormated, ACTIVITY_IMAGE, true);
+    return new TeamsSection(activityTitle, activitySubtitleFormated, image, true);
     
   }
-
-
 }
