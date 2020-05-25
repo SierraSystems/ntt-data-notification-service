@@ -1,5 +1,6 @@
 package com.nttdata.nttdatanotificationservice.teams.models;
 
+import com.nttdata.nttdatanotificationservice.Config;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,11 +46,11 @@ public class TeamsSection {
   }
 
 
-  public static TeamsSection defaultNttSection(String activityTitle, String activitySubtitle, String image) {
+  public static TeamsSection defaultNttSection(String activityTitle, String activitySubtitle) {
 
     String activitySubtitleFormated = MessageFormat.format("From {0}", activitySubtitle);
 
-    return new TeamsSection(activityTitle, activitySubtitleFormated, image, true);
+    return new TeamsSection(activityTitle, activitySubtitleFormated, Config.IMAGE, true);
     
   }
 }

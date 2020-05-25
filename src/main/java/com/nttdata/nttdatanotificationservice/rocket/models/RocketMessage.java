@@ -1,5 +1,7 @@
 package com.nttdata.nttdatanotificationservice.rocket.models;
 
+import com.nttdata.nttdatanotificationservice.Config;
+
 public class RocketMessage {
 
     private String alias;
@@ -24,7 +26,7 @@ public class RocketMessage {
 
     public void setText(String text) { this.text = text; }
 
-    public static RocketMessage defaultNttMessage(String alias, String image) {
-        return new RocketMessage(alias, image);
+    public static RocketMessage defaultNttMessage(String alias) {
+        return new RocketMessage(alias, Config.IMAGE);
     }
 }

@@ -48,7 +48,7 @@ public class TeamsChannelService implements ChannelService {
 
 
     private TeamsSection getTeamsSection(SplunkAlert splunkAlert) {
-        TeamsSection teamsSection = TeamsSection.defaultNttSection(splunkAlert.getSearch_name(), splunkAlert.getResult().getSource(), IMAGE);
+        TeamsSection teamsSection = TeamsSection.defaultNttSection(splunkAlert.getSearch_name(), splunkAlert.getResult().getSource());
 
         teamsSection.addFact(new TeamsFact("App", splunkAlert.getResult().getSource()));
         teamsSection.addFact(new TeamsFact("Search", splunkAlert.getSearch_name()));

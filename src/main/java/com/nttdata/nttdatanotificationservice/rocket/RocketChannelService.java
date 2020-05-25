@@ -18,7 +18,7 @@ public class RocketChannelService implements ChannelService {
 
     @Override
     public Object generatePayload(SplunkAlert splunkAlert) {
-        RocketMessage rocketMessage = RocketMessage.defaultNttMessage(splunkAlert.getSearch_name(), IMAGE);
+        RocketMessage rocketMessage = RocketMessage.defaultNttMessage(splunkAlert.getSearch_name());
         rocketMessage.setText(getRocketText(splunkAlert));
 
         return rocketMessage;
