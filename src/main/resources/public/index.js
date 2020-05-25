@@ -1,23 +1,16 @@
 // populate these two fields based on your local dev environment
 const localIP = "192.168.56.1";
 const port = "8888";
-
 const teamsUrlIdentifier = ".teams-url";
 const rocketChatUrlIdentifier = ".rocket-chat-url";
-let splunkWebHookUrls = [];
-let teamsRequiredFieldsPopulated = true;
-let rocketRequiredFieldsPopulated = true;
 
-function generateTeamsUrls() {
+function generateTeamsUrls(splunkWebHookUrls) {
     // loop through teams urls
     for (i = 0; i < $(teamsUrlIdentifier).length; i++) {
         const teamsUrlValue = $(teamsUrlIdentifier).eq(i).val();
 
         // if no teams url entered, return empty
-        if (!teamsUrlValue) {
-            teamsRequiredFieldsPopulated = false;
-            return "empty";
-        }
+        if (!teamsUrlValue) return "empty";
 
         // if teams url entered but incorrect, return false
         if (!validateUrl(teamsUrlValue) && teamsUrlValue) return false;
@@ -28,23 +21,25 @@ function generateTeamsUrls() {
             "url": $(teamsUrlIdentifier).eq(i).val()
         };
 
-        // Push object to the array
-        splunkWebHookUrls.push(chatAppUrl);
+        // Push object to the array if doesn't already exist
+        let shouldPushUrl = true;
+        splunkWebHookUrls.forEach(webhook => {
+            if (webhook.chatApp === chatAppUrl.chatApp && webhook.url === chatAppUrl.url) shouldPushUrl = false;
+        });
+
+        if (shouldPushUrl) splunkWebHookUrls.push(chatAppUrl);
     }
 
-    return true;
+    return splunkWebHookUrls;
 }
 
-function generateRocketChatUrls() {
+function generateRocketChatUrls(splunkWebHookUrls) {
     // loop through rocket chat urls
     for (i = 0; i < $(rocketChatUrlIdentifier).length; i++) {
         const rocketChatUrlValue = $(rocketChatUrlIdentifier).eq(i).val();
 
         // if no rocketchat url entered, return empty
-        if (!rocketChatUrlValue) {
-            rocketRequiredFieldsPopulated = false;
-            return "empty";
-        }
+        if (!rocketChatUrlValue) return "empty";
 
         // if rocketchat url entered but incorrect, return false
         if (!validateUrl(rocketChatUrlValue) && rocketChatUrlValue) return false;
@@ -55,30 +50,25 @@ function generateRocketChatUrls() {
             "url": $(rocketChatUrlIdentifier).eq(i).val()
         };
 
-        // Push object to the array
-        splunkWebHookUrls.push(chatAppUrl);
+        // Push object to the array if doesn't already exist
+        let shouldPushUrl = true;
+        splunkWebHookUrls.forEach(webhook => {
+            if (webhook.chatApp === chatAppUrl.chatApp && webhook.url === chatAppUrl.url) shouldPushUrl = false;
+        });
+
+        if (shouldPushUrl) splunkWebHookUrls.push(chatAppUrl);
     }
 
-    return true;
+    return splunkWebHookUrls;
 }
 
 function generateWebHookUrlString() {
     let webHookUrls = {};
+    let splunkWebHookUrls = [];
+    const generatedTeamsUrl = generateTeamsUrls(splunkWebHookUrls);
+    const generatedRocketUrl = generateRocketChatUrls(splunkWebHookUrls);
 
-    const generatedTeamsUrl = generateTeamsUrls();
-    const generatedRocketUrl = generateRocketChatUrls();
-
-    console.log(generatedTeamsUrl, generatedRocketUrl);
-
-    console.log(typeof generatedRocketUrl);
-    console.log(typeof generatedTeamsUrl);
-
-    if (generatedTeamsUrl === "empty" && generatedRocketUrl === "empty") {
-        console.log('first if');
-        $(".error").show();
-        return false;
-    } else if (typeof generatedTeamsUrl === "boolean" && typeof generatedRocketUrl === "boolean") {
-        console.log('second if')
+    if ((generatedTeamsUrl === "empty" && generatedRocketUrl === "empty") || (typeof generatedTeamsUrl === "boolean" && typeof generatedRocketUrl === "boolean")) {
         $(".error").show();
         return false;
     }
@@ -125,12 +115,7 @@ function generateUrl() {
     const token = $(".token").val();
     const webHookUrlString = generateWebHookUrlString();
 
-    // reset variable values
-    splunkWebHookUrls.length = 0;
-    teamsRequiredFieldsPopulated = true;
-    rocketRequiredFieldsPopulated = true;
-
-    // console.log(webHookUrlString);
+    console.log(webHookUrlString);
 
     if ($(".url-error-teams").is(":visible") || $(".url-error-rocket").is(":visible") || !webHookUrlString) return false;
 
