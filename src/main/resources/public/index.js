@@ -51,29 +51,29 @@ function generateWebHookUrlString() {
     let splunkWebHookUrls = [];
     const generatedTeamsUrl = generateUrls(teamsUrlIdentifier, "TEAMS");
     const generatedRocketUrl = generateUrls(rocketChatUrlIdentifier, "ROCKET_CHAT");
-    const noUrlsEntered = generatedTeamsUrl.length === 0 && generatedRocketUrl.length === 0;
 
-    if (noUrlsEntered) {
-        $(".url-error-teams").show();
-        return false;
+    const teamsErrorsExist = errorsExist(generatedTeamsUrl, ".url-error-teams");
+    const rocketErrorsExist = errorsExist(generatedRocketUrl, ".url-error-rocket");
+
+    if (!teamsErrorsExist && !rocketErrorsExist && (!isEmpty(generatedTeamsUrl) || !isEmpty(generatedRocketUrl))) {
+        if (!isEmpty(generatedTeamsUrl)) {
+            generatedTeamsUrl.forEach(urlVal => {
+                splunkWebHookUrls.push({ "chatApp": urlVal.chatApp, "url": urlVal.url });
+            });
+        }
+
+        if (!isEmpty(generatedRocketUrl)) {
+            generatedRocketUrl.forEach(urlVal => {
+                splunkWebHookUrls.push({ "chatApp": urlVal.chatApp, "url": urlVal.url });
+            });
+        }
+
+        webHookUrls.splunkWebHookUrls = splunkWebHookUrls;
+        return JSON.stringify(webHookUrls);
     }
 
-    generatedTeamsUrl.forEach(teamsUrl => {
-        if (teamsUrl.errorExists) {
-            $(".url-error-teams").show();
-            return false;
-        }
-    });
-
-    generatedRocketUrl.forEach(rocketUrl => {
-        if (rocketUrl.errorExists) {
-            $(".url-error-rocket").show();
-            return false;
-        }
-    });
-
-    webHookUrls.splunkWebHookUrls = splunkWebHookUrls;
-    return JSON.stringify(webHookUrls);
+    $(".error").show();
+    return false;
 }
 
 function generateFinalUrl() {
@@ -81,6 +81,8 @@ function generateFinalUrl() {
     const baseUrl = `http://${localIP}:${port}/splunk/alert/`;
     const token = $(".token").val();
     const webHookUrlString = generateWebHookUrlString();
+
+    console.log(webHookUrlString);
 
     if ($(".url-error-teams").is(":visible") || $(".url-error-rocket").is(":visible") || !webHookUrlString) return false;
 
@@ -104,7 +106,7 @@ function validateUrl(url) {
 }
 
 function checkForDuplicatesAndEmpty(array, obj) {
-    if (obj.url === "") return true;
+    if (!obj.url) return true;
 
     let duplicatesExist = false;
 
@@ -113,4 +115,19 @@ function checkForDuplicatesAndEmpty(array, obj) {
     });
 
     return duplicatesExist;
+}
+
+function errorsExist(array, type) {
+    array.forEach(url => {
+        if (url.errorExists) {
+            $(type).show();
+            return true;
+        }
+    });
+
+    return false;
+}
+
+function isEmpty(array) {
+    return array.length === 0;
 }
