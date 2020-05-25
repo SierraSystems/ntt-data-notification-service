@@ -2,6 +2,12 @@
 
 # splunk-notification-service
 
+A Service that pushes notification to different channels.
+
+Teams notification screenshot:
+
+![teams-message](docs/images/teams-notification.png)
+
 ## Run
 
 ```bash
