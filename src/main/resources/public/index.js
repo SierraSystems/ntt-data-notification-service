@@ -22,12 +22,7 @@ function generateUrls(splunkWebHookUrls, urlType, chatType) {
         };
 
         // Push object to the array if doesn't already exist
-        let shouldPushUrl = true;
-        splunkWebHookUrls.forEach(webhook => {
-            if (webhook.chatApp === chatAppUrl.chatApp && webhook.url === chatAppUrl.url) shouldPushUrl = false;
-        });
-
-        if (shouldPushUrl) splunkWebHookUrls.push(chatAppUrl);
+        if (!checkForDuplicates(splunkWebHookUrls, chatAppUrl)) splunkWebHookUrls.push(chatAppUrl);
     }
 
     return splunkWebHookUrls;
@@ -97,4 +92,14 @@ function validateUrl(url) {
     if (!url) return false;
 
     return /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(url);
+}
+
+function checkForDuplicates(array, obj) {
+    let duplicatesExist = false;
+
+    array.forEach(element => {
+        if (element.chatApp === obj.chatApp && element.url === obj.url) duplicatesExist = true;
+    });
+
+    return duplicatesExist;
 }
