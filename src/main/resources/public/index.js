@@ -4,21 +4,21 @@ const port = "8888";
 const teamsUrlIdentifier = ".teams-url";
 const rocketChatUrlIdentifier = ".rocket-chat-url";
 
-function generateTeamsUrls(splunkWebHookUrls) {
-    // loop through teams urls
-    for (i = 0; i < $(teamsUrlIdentifier).length; i++) {
-        const teamsUrlValue = $(teamsUrlIdentifier).eq(i).val();
+function generateUrls(splunkWebHookUrls, urlType, chatType) {
+    // loops through urls
+    for (let i = 0; i < $(urlType).length; i++) {
+        const urlValue = $(urlType).eq(i).val();
 
-        // if no teams url entered, return empty
-        if (!teamsUrlValue) return "empty";
+        // if no url entered, return empty
+        if (!urlValue) return "empty";
 
-        // if teams url entered but incorrect, return false
-        if (!validateUrl(teamsUrlValue) && teamsUrlValue) return false;
+        // if url entered but incorrect, return false
+        if (!validateUrl(urlValue)) return false;
 
         // Create object
         const chatAppUrl = {
-            "chatApp": "TEAMS",
-            "url": $(teamsUrlIdentifier).eq(i).val()
+            "chatApp": chatType,
+            "url": $(urlType).eq(i).val()
         };
 
         // Push object to the array if doesn't already exist
@@ -33,40 +33,28 @@ function generateTeamsUrls(splunkWebHookUrls) {
     return splunkWebHookUrls;
 }
 
-function generateRocketChatUrls(splunkWebHookUrls) {
-    // loop through rocket chat urls
-    for (i = 0; i < $(rocketChatUrlIdentifier).length; i++) {
-        const rocketChatUrlValue = $(rocketChatUrlIdentifier).eq(i).val();
+function generateFinalUrl() {
+    // temporarily for local dev
+    const baseUrl = `http://${localIP}:${port}/splunk/alert/`;
+    const token = $(".token").val();
+    const webHookUrlString = generateWebHookUrlString();
 
-        // if no rocketchat url entered, return empty
-        if (!rocketChatUrlValue) return "empty";
+    console.log(webHookUrlString);
 
-        // if rocketchat url entered but incorrect, return false
-        if (!validateUrl(rocketChatUrlValue) && rocketChatUrlValue) return false;
+    if ($(".url-error-teams").is(":visible") || $(".url-error-rocket").is(":visible") || !webHookUrlString) return false;
 
-        // Create object
-        const chatAppUrl = {
-            "chatApp": "ROCKET_CHAT",
-            "url": $(rocketChatUrlIdentifier).eq(i).val()
-        };
+    const finalUrl = `${baseUrl}${token}/${base64EncodeString(webHookUrlString)}`;
+    document.getElementById("final-url").innerHTML = finalUrl;
 
-        // Push object to the array if doesn't already exist
-        let shouldPushUrl = true;
-        splunkWebHookUrls.forEach(webhook => {
-            if (webhook.chatApp === chatAppUrl.chatApp && webhook.url === chatAppUrl.url) shouldPushUrl = false;
-        });
-
-        if (shouldPushUrl) splunkWebHookUrls.push(chatAppUrl);
-    }
-
-    return splunkWebHookUrls;
+    // display the url
+    $("#final-url-div").show();
 }
 
 function generateWebHookUrlString() {
     let webHookUrls = {};
     let splunkWebHookUrls = [];
-    const generatedTeamsUrl = generateTeamsUrls(splunkWebHookUrls);
-    const generatedRocketUrl = generateRocketChatUrls(splunkWebHookUrls);
+    const generatedTeamsUrl = generateUrls(splunkWebHookUrls, teamsUrlIdentifier, "TEAMS");
+    const generatedRocketUrl = generateUrls(splunkWebHookUrls, rocketChatUrlIdentifier, "ROCKET_CHAT");
 
     if ((generatedTeamsUrl === "empty" && generatedRocketUrl === "empty") || (typeof generatedTeamsUrl === "boolean" && typeof generatedRocketUrl === "boolean")) {
         $(".error").show();
@@ -106,22 +94,7 @@ function deleteUrl(elementId) {
 }
 
 function validateUrl(url) {
-  return /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(url);
-}
+    if (!url) return false;
 
-function generateUrl() {
-    // temporarily for local dev
-    const baseUrl = `http://${localIP}:${port}/splunk/alert/`;
-    const token = $(".token").val();
-    const webHookUrlString = generateWebHookUrlString();
-
-    console.log(webHookUrlString);
-
-    if ($(".url-error-teams").is(":visible") || $(".url-error-rocket").is(":visible") || !webHookUrlString) return false;
-
-    const finalUrl = `${baseUrl}${token}/${base64EncodeString(webHookUrlString)}`;
-    document.getElementById("final-url").innerHTML = finalUrl;
-
-    // display the url
-    $("#final-url-div").show();
+    return /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(url);
 }
