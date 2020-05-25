@@ -56,17 +56,8 @@ function generateWebHookUrlString() {
     const rocketErrorsExist = errorsExist(generatedRocketUrl, ".url-error-rocket");
 
     if (!teamsErrorsExist && !rocketErrorsExist && (!isEmpty(generatedTeamsUrl) || !isEmpty(generatedRocketUrl))) {
-        if (!isEmpty(generatedTeamsUrl)) {
-            generatedTeamsUrl.forEach(urlVal => {
-                splunkWebHookUrls.push({ "chatApp": urlVal.chatApp, "url": urlVal.url });
-            });
-        }
-
-        if (!isEmpty(generatedRocketUrl)) {
-            generatedRocketUrl.forEach(urlVal => {
-                splunkWebHookUrls.push({ "chatApp": urlVal.chatApp, "url": urlVal.url });
-            });
-        }
+        splunkWebHookUrls = populateSplunkWebHooks(generatedTeamsUrl, splunkWebHookUrls);
+        splunkWebHookUrls = populateSplunkWebHooks(generatedRocketUrl, splunkWebHookUrls);
 
         webHookUrls.splunkWebHookUrls = splunkWebHookUrls;
         return JSON.stringify(webHookUrls);
@@ -91,6 +82,16 @@ function generateFinalUrl() {
 
     // display the url
     $("#final-url-div").show();
+}
+
+function populateSplunkWebHooks(urlArray, webHooksArray) {
+    if (!isEmpty(urlArray)) {
+        urlArray.forEach(urlVal => {
+            webHooksArray.push({ "chatApp": urlVal.chatApp, "url": urlVal.url });
+        });
+    }
+
+    return webHooksArray;
 }
 
 
