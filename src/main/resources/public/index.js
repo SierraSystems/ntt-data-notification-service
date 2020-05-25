@@ -4,6 +4,23 @@ const port = "8888";
 const teamsUrlIdentifier = ".teams-url";
 const rocketChatUrlIdentifier = ".rocket-chat-url";
 
+
+// ######################## HTML Element Functions ########################### //
+function createNewUrlInput(urlType) {
+    const id = Math.floor(Math.random() * 100000);
+    let txtNewInputBox = document.createElement('div');
+    txtNewInputBox.setAttribute("id", id);
+    txtNewInputBox.innerHTML = "<br/><input type='text' style='margin-right: 4px' class='" + urlType + "'><button type='button' onclick='deleteUrl(" + id + ")'>Remove URL</button>";
+    document.getElementById("add-" + urlType + "-here").appendChild(txtNewInputBox);
+}
+
+function deleteUrl(elementId) {
+    const element = document.getElementById(elementId);
+    element.parentNode.removeChild(element);
+}
+
+
+// ######################## URL Generation Functions ########################### //
 function generateUrls(splunkWebHookUrls, urlType, chatType) {
     // loops through urls
     for (let i = 0; i < $(urlType).length; i++) {
@@ -18,7 +35,7 @@ function generateUrls(splunkWebHookUrls, urlType, chatType) {
         // Create object
         const chatAppUrl = {
             "chatApp": chatType,
-            "url": $(urlType).eq(i).val()
+            "url": urlValue
         };
 
         // Push object to the array if doesn't already exist
@@ -26,23 +43,6 @@ function generateUrls(splunkWebHookUrls, urlType, chatType) {
     }
 
     return splunkWebHookUrls;
-}
-
-function generateFinalUrl() {
-    // temporarily for local dev
-    const baseUrl = `http://${localIP}:${port}/splunk/alert/`;
-    const token = $(".token").val();
-    const webHookUrlString = generateWebHookUrlString();
-
-    console.log(webHookUrlString);
-
-    if ($(".url-error-teams").is(":visible") || $(".url-error-rocket").is(":visible") || !webHookUrlString) return false;
-
-    const finalUrl = `${baseUrl}${token}/${base64EncodeString(webHookUrlString)}`;
-    document.getElementById("final-url").innerHTML = finalUrl;
-
-    // display the url
-    $("#final-url-div").show();
 }
 
 function generateWebHookUrlString() {
@@ -70,22 +70,25 @@ function generateWebHookUrlString() {
     return JSON.stringify(webHookUrls);
 }
 
-// url safe UTF-8 base 64 encoding
+function generateFinalUrl() {
+    // temporarily for local dev
+    const baseUrl = `http://${localIP}:${port}/splunk/alert/`;
+    const token = $(".token").val();
+    const webHookUrlString = generateWebHookUrlString();
+
+    if ($(".url-error-teams").is(":visible") || $(".url-error-rocket").is(":visible") || !webHookUrlString) return false;
+
+    const finalUrl = `${baseUrl}${token}/${base64EncodeString(webHookUrlString)}`;
+    document.getElementById("final-url").innerHTML = finalUrl;
+
+    // display the url
+    $("#final-url-div").show();
+}
+
+
+// ######################## Helper Functions ########################### //
 function base64EncodeString(string) {
     return btoa(string).replace('+', '-').replace('/', '_').replace(/=+$/, '');
-}
-
-function createNewUrlInput(urlType) {
-    const id = Math.floor(Math.random() * 100000);
-    let txtNewInputBox = document.createElement('div');
-    txtNewInputBox.setAttribute("id", id);
-    txtNewInputBox.innerHTML = "<br/><input type='text' style='margin-right: 4px' class='" + urlType + "'><button type='button' onclick='deleteUrl(" + id + ")'>Remove URL</button>";
-    document.getElementById("add-" + urlType + "-here").appendChild(txtNewInputBox);
-}
-
-function deleteUrl(elementId) {
-    const element = document.getElementById(elementId);
-    element.parentNode.removeChild(element);
 }
 
 function validateUrl(url) {
