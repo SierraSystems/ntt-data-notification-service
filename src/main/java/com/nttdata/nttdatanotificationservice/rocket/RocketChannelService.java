@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class RocketChannelService implements ChannelService {
 
-    private static final String ROCKETCHATTEMPLATE = "App: %s \n Search: %s \n Owner: %s \n Message: %s \n Link: %s ";
+    private static final String ROCKETCHATTEMPLATE = "%s: %s \n";
 
     @Override
     public ChatApp getChatApp() {
@@ -18,12 +18,24 @@ public class RocketChannelService implements ChannelService {
 
     @Override
     public Object generatePayload(SplunkAlert splunkAlert) {
-        RocketMessage rocketMessage = new RocketMessage();
-        String text = String.format(ROCKETCHATTEMPLATE, splunkAlert.getResult().getSource(), splunkAlert.getSearch_name(), splunkAlert.getOwner(), splunkAlert.getResult().getMessage(), splunkAlert.getResults_link());
-        rocketMessage.setText(text);
-        rocketMessage.setAlias(splunkAlert.getSearch_name());
-        rocketMessage.setAvatar("https://user-images.githubusercontent.com/51387119/82707419-ddb1c600-9c30-11ea-8bfa-b3c624b23cdd.png");
+        RocketMessage rocketMessage = RocketMessage.defaultNttMessage(splunkAlert.getSearch_name());
+        rocketMessage.setText(getRocketText(splunkAlert));
+
         return rocketMessage;
     }
 
+    private String getRocketText(SplunkAlert splunkAlert) {
+        final String[] text = {String.format(ROCKETCHATTEMPLATE, "App", splunkAlert.getResult().getSource())};
+        text[0] = text[0].concat(String.format(ROCKETCHATTEMPLATE, "Search", splunkAlert.getSearch_name()));
+        text[0] = text[0].concat(String.format(ROCKETCHATTEMPLATE, "Owner", splunkAlert.getOwner()));
+
+        splunkAlert.getResult().getDetails().forEach((key, value) -> {
+            text[0] = text[0].concat(String.format(ROCKETCHATTEMPLATE, key, value.toString()));
+        });
+
+        text[0] = text[0].concat(String.format(ROCKETCHATTEMPLATE, "Message", splunkAlert.getResult().getMessage()));
+        text[0] = text[0].concat(String.format(ROCKETCHATTEMPLATE, "Link", splunkAlert.getResults_link()));
+
+        return text[0];
+    }
 }
