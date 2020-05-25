@@ -53,6 +53,11 @@ public class TeamsChannelService implements ChannelService {
         teamsSection.addFact(new TeamsFact("App", splunkAlert.getResult().getSource()));
         teamsSection.addFact(new TeamsFact("Search", splunkAlert.getSearch_name()));
         teamsSection.addFact(new TeamsFact("Owner", splunkAlert.getOwner()));
+
+        splunkAlert.getResult().getDetails().forEach((key, value) -> {
+            teamsSection.addFact(new TeamsFact(key, value.toString()));
+        });
+
         teamsSection.addFact(new TeamsFact("Message", splunkAlert.getResult().getMessage()));
         teamsSection.addFact(new TeamsFact("Status", "Open"));
         return teamsSection;

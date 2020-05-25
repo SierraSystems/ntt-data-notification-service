@@ -30,8 +30,10 @@ public class WebHookServiceImpl implements WebHookService {
         SplunkWebHookParams splunkWebHookParams = gson.fromJson(decodedRoutesUrl, SplunkWebHookParams.class);
 
         splunkWebHookParams.getSplunkWebHookUrls().stream().forEach(splunkWebHookUrls -> {
+            ChatApp chatApp = splunkWebHookUrls.getChatApp();
 
-            Optional<ChannelService> channelService = channelServiceFactory.getChanelService(splunkWebHookUrls.getChatApp());
+            Optional<ChannelService> channelService = channelServiceFactory.getChanelService(chatApp);
+            logger.info("Posting to {}", chatApp.toString());
 
             channelService.ifPresent(service -> post(splunkWebHookUrls.getUrl(), service.generatePayload(splunkAlert)));
         });
@@ -42,8 +44,8 @@ public class WebHookServiceImpl implements WebHookService {
     private void post(String url, Object postObj) {
         try {
             RestTemplate restTemplate = new RestTemplate();
-            String res = restTemplate.postForObject(url, postObj, String.class);
-            logger.info(res);
+            restTemplate.postForObject(url, postObj, String.class);
+            logger.info("Success");
         } catch (Exception e) {
             logger.error("Exception in post", e);
         }

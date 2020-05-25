@@ -1,12 +1,12 @@
 package com.nttdata.nttdatanotificationservice.teams.models;
 
+import com.nttdata.nttdatanotificationservice.Config;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TeamsSection {
 
-  private static final String ACTIVITY_IMAGE = "https://user-images.githubusercontent.com/51387119/82707419-ddb1c600-9c30-11ea-8bfa-b3c624b23cdd.png";
   private String activityTitle;
   private String activitySubtitle;
   private String activityImage;
@@ -50,9 +50,7 @@ public class TeamsSection {
 
     String activitySubtitleFormated = MessageFormat.format("From {0}", activitySubtitle);
 
-    return new TeamsSection(activityTitle, activitySubtitleFormated, ACTIVITY_IMAGE, true);
+    return new TeamsSection(activityTitle, activitySubtitleFormated, Config.IMAGE, true);
     
   }
-
-
 }
