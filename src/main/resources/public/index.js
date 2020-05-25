@@ -2,36 +2,25 @@
 const localIP = "192.168.56.1";
 const port = "8888";
 
-function generateWebHookUrlString() {
-    const teamsUrlIdentifier = ".teams-url";
-    const rocketChatUrlIdentifier = ".rocket-chat-url";
-    let webHookUrls = {};
-    let splunkWebHookUrls = [];
+const teamsUrlIdentifier = ".teams-url";
+const rocketChatUrlIdentifier = ".rocket-chat-url";
+let splunkWebHookUrls = [];
+let teamsRequiredFieldsPopulated = true;
+let rocketRequiredFieldsPopulated = true;
 
+function generateTeamsUrls() {
     // loop through teams urls
     for (i = 0; i < $(teamsUrlIdentifier).length; i++) {
-        // ensure url is valid
-        let isTeamsUrlValid = true;
-        let isRocketChatUrlValid = true;
         const teamsUrlValue = $(teamsUrlIdentifier).eq(i).val();
-        const rocketChatUrlValue = $(rocketChatUrlIdentifier).eq(i).val();
 
-        if (!teamsUrlValue && !rocketChatUrlValue) {
-            $(".error").show();
-            return false;
+        // if no teams url entered, return empty
+        if (!teamsUrlValue) {
+            teamsRequiredFieldsPopulated = false;
+            return "empty";
         }
 
-        if (!validateUrl(teamsUrlValue) && teamsUrlValue) {
-            $(".url-error-teams").show();
-            isTeamsUrlValid = false;
-        }
-
-        if (!validateUrl(rocketChatUrlValue) && rocketChatUrlValue) {
-            $(".url-error-rocket").show();
-            isRocketChatUrlValid = false;
-        }
-
-        if (!isTeamsUrlValid && !isRocketChatUrlValid) return false;
+        // if teams url entered but incorrect, return false
+        if (!validateUrl(teamsUrlValue) && teamsUrlValue) return false;
 
         // Create object
         const chatAppUrl = {
@@ -43,8 +32,23 @@ function generateWebHookUrlString() {
         splunkWebHookUrls.push(chatAppUrl);
     }
 
+    return true;
+}
+
+function generateRocketChatUrls() {
     // loop through rocket chat urls
     for (i = 0; i < $(rocketChatUrlIdentifier).length; i++) {
+        const rocketChatUrlValue = $(rocketChatUrlIdentifier).eq(i).val();
+
+        // if no rocketchat url entered, return empty
+        if (!rocketChatUrlValue) {
+            rocketRequiredFieldsPopulated = false;
+            return "empty";
+        }
+
+        // if rocketchat url entered but incorrect, return false
+        if (!validateUrl(rocketChatUrlValue) && rocketChatUrlValue) return false;
+
         // Create object
         const chatAppUrl = {
             "chatApp": "ROCKET_CHAT",
@@ -53,6 +57,40 @@ function generateWebHookUrlString() {
 
         // Push object to the array
         splunkWebHookUrls.push(chatAppUrl);
+    }
+
+    return true;
+}
+
+function generateWebHookUrlString() {
+    let webHookUrls = {};
+
+    const generatedTeamsUrl = generateTeamsUrls();
+    const generatedRocketUrl = generateRocketChatUrls();
+
+    console.log(generatedTeamsUrl, generatedRocketUrl);
+
+    console.log(typeof generatedRocketUrl);
+    console.log(typeof generatedTeamsUrl);
+
+    if (generatedTeamsUrl === "empty" && generatedRocketUrl === "empty") {
+        console.log('first if');
+        $(".error").show();
+        return false;
+    } else if (typeof generatedTeamsUrl === "boolean" && typeof generatedRocketUrl === "boolean") {
+        console.log('second if')
+        $(".error").show();
+        return false;
+    }
+
+    if (generatedTeamsUrl && !generatedRocketUrl) {
+        $(".url-error-rocket").show();
+        return false;
+    }
+
+    if (generatedRocketUrl && !generatedTeamsUrl) {
+        $(".url-error-teams").show();
+        return false;
     }
 
     webHookUrls.splunkWebHookUrls = splunkWebHookUrls;
@@ -87,17 +125,18 @@ function generateUrl() {
     const token = $(".token").val();
     const webHookUrlString = generateWebHookUrlString();
 
-    if (!webHookUrlString) return false;
+    // reset variable values
+    splunkWebHookUrls.length = 0;
+    teamsRequiredFieldsPopulated = true;
+    rocketRequiredFieldsPopulated = true;
 
-    if ($(".url-error-teams").is(":visible") || $(".url-error-rocket").is(":visible")) {
-        return false;
-    }
+    // console.log(webHookUrlString);
 
-    const base64EncodedUrl = base64EncodeString(webHookUrlString);
+    if ($(".url-error-teams").is(":visible") || $(".url-error-rocket").is(":visible") || !webHookUrlString) return false;
 
-    const finalUrl = `${baseUrl}${token}/${base64EncodedUrl}`;
-
+    const finalUrl = `${baseUrl}${token}/${base64EncodeString(webHookUrlString)}`;
     document.getElementById("final-url").innerHTML = finalUrl;
+
     // display the url
     $("#final-url-div").show();
 }
