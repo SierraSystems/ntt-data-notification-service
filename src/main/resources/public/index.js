@@ -68,7 +68,7 @@ function createNewUrlInput(urlType) {
     const id = Math.floor(Math.random() * 100000);
     let txtNewInputBox = document.createElement('div');
     txtNewInputBox.setAttribute("id", id);
-    txtNewInputBox.innerHTML = "<br/><input type='text' style='margin-right: 4px' class='" + urlType + "'><button type='button' onclick='deleteUrl(" + id + ")'>Remove URL</button>";
+    txtNewInputBox.innerHTML = "<br/><input type='text' style='margin-right: 4px' class='" + urlType + " text'><button type='button' class='text' onclick='deleteUrl(" + id + ")'>Remove URL</button>";
     document.getElementById("add-" + urlType + "-here").appendChild(txtNewInputBox);
 }
 
