@@ -11,11 +11,13 @@
             $(".url-error-teams").hide();
             $(".url-error-rocket").hide();
             $(".error").hide();
+            $(".token-error").hide();
 
             $("input").on("change paste keyup", function() {
                $(".url-error-teams").hide();
                 $(".url-error-rocket").hide();
                 $(".error").hide();
+                $(".token-error").hide();
             });
         });
     </script>
@@ -56,6 +58,7 @@
         </button>
 
         <p class="error" style="color: red">Please enter at least one valid url.</p>
+        <p class="token-error" style="color: red">Please enter a token.</p>
 
         <div id="final-url-div" style="word-wrap: break-word; width: 700px">
             <h3>Your generated splunk WebHook URL is:</h3>

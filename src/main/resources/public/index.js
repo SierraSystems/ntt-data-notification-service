@@ -73,7 +73,7 @@ function generateFinalUrl() {
     const token = $(".token").val();
     const webHookUrlString = generateWebHookUrlString();
 
-    console.log(webHookUrlString);
+    if (!validateToken(token)) return false;
 
     if ($(".url-error-teams").is(":visible") || $(".url-error-rocket").is(":visible") || !webHookUrlString) return false;
 
@@ -131,4 +131,11 @@ function errorsExist(array, type) {
 
 function isEmpty(array) {
     return array.length === 0;
+}
+
+function validateToken(token) {
+    if (!token) {
+        $(".token-error").show();
+        return false;
+    }
 }
