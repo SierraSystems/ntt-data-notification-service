@@ -21,50 +21,56 @@ function deleteUrl(elementId) {
 
 
 // ######################## URL Generation Functions ########################### //
-function generateUrls(splunkWebHookUrls, urlType, chatType) {
+function generateUrls(urlType, chatType) {
+    let webHooks = [];
+
     // loops through urls
     for (let i = 0; i < $(urlType).length; i++) {
+        let errorExists = false;
         const urlValue = $(urlType).eq(i).val();
 
-        // if no url entered, return empty
-        if (!urlValue) return "empty";
-
-        // if url entered but incorrect, return false
-        if (!validateUrl(urlValue)) return false;
+        // if url incorrect or empty, skip this url
+        if (!validateUrl(urlValue)) errorExists = true;
 
         // Create object
         const chatAppUrl = {
             "chatApp": chatType,
-            "url": urlValue
+            "url": urlValue,
+            "errorExists": errorExists
         };
 
         // Push object to the array if doesn't already exist
-        if (!checkForDuplicates(splunkWebHookUrls, chatAppUrl)) splunkWebHookUrls.push(chatAppUrl);
+        if (!checkForDuplicatesAndEmpty(webHooks, chatAppUrl)) webHooks.push(chatAppUrl);
     }
 
-    return splunkWebHookUrls;
+    return webHooks;
 }
 
 function generateWebHookUrlString() {
     let webHookUrls = {};
     let splunkWebHookUrls = [];
-    const generatedTeamsUrl = generateUrls(splunkWebHookUrls, teamsUrlIdentifier, "TEAMS");
-    const generatedRocketUrl = generateUrls(splunkWebHookUrls, rocketChatUrlIdentifier, "ROCKET_CHAT");
+    const generatedTeamsUrl = generateUrls(teamsUrlIdentifier, "TEAMS");
+    const generatedRocketUrl = generateUrls(rocketChatUrlIdentifier, "ROCKET_CHAT");
+    const noUrlsEntered = generatedTeamsUrl.length === 0 && generatedRocketUrl.length === 0;
 
-    if ((generatedTeamsUrl === "empty" && generatedRocketUrl === "empty") || (typeof generatedTeamsUrl === "boolean" && typeof generatedRocketUrl === "boolean")) {
-        $(".error").show();
-        return false;
-    }
-
-    if (generatedTeamsUrl && !generatedRocketUrl) {
-        $(".url-error-rocket").show();
-        return false;
-    }
-
-    if (generatedRocketUrl && !generatedTeamsUrl) {
+    if (noUrlsEntered) {
         $(".url-error-teams").show();
         return false;
     }
+
+    generatedTeamsUrl.forEach(teamsUrl => {
+        if (teamsUrl.errorExists) {
+            $(".url-error-teams").show();
+            return false;
+        }
+    });
+
+    generatedRocketUrl.forEach(rocketUrl => {
+        if (rocketUrl.errorExists) {
+            $(".url-error-rocket").show();
+            return false;
+        }
+    });
 
     webHookUrls.splunkWebHookUrls = splunkWebHookUrls;
     return JSON.stringify(webHookUrls);
@@ -97,7 +103,9 @@ function validateUrl(url) {
     return /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(url);
 }
 
-function checkForDuplicates(array, obj) {
+function checkForDuplicatesAndEmpty(array, obj) {
+    if (obj.url === "") return true;
+
     let duplicatesExist = false;
 
     array.forEach(element => {
