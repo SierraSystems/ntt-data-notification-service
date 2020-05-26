@@ -30,3 +30,5 @@ server.port=${PORT:<>}
 ### Frontend
 
 Once the application is running, the frontend page should be accessible at `http://localhost:<PORT>/splunk`. If not altered, this should be port 6060 on your local machine.
+
+In order to see the mocha frontend unit test results locally, navigate to `http://localhost:<PORT>/splunk/testrunner.html`.
