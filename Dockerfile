@@ -26,6 +26,14 @@ RUN mvn -B clean package \
         -DproxyHost=${PROXY_HOST} \
         -DproxyPort=${PROXY_PORT}
 
+
+FROM node:13.12.0-alpine
+
+# install dependencies
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm install
+
 # RUN mvn -B clean package \
 #         -DproxySet=${PROXY_SET} \
 #         -DproxyHost=${PROXY_HOST} \
