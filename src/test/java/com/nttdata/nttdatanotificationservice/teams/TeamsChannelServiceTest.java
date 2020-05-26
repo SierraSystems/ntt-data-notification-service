@@ -16,7 +16,8 @@ public class TeamsChannelServiceTest {
             "\t\t\"message\" : \"message\",\n" +
             "\t\t\"other\" : \"other\",\n" +
             "\t\t\"_raw\" : \"_raw\",\n" +
-            "\t\t\"source\": \"source\"\n" +
+            "\t\t\"source\": \"source\",\n" +
+            "\t\t\"dashboard\": \"dashboard_link\"\n" +
             "\t},\n" +
             "\t\"sid\" : \"sid\",\n" +
             "\t\"results_link\" : \"result_links\",\n" +
@@ -25,7 +26,7 @@ public class TeamsChannelServiceTest {
             "\t\"app\" : \"app\"\n" +
             "}";
 
-    private static final String teamsResult = "{\"type\":\"MessageCard\",\"context\":\"http://schema.org/extensions\",\"themeColor\":\"0076D7\",\"summary\":\"search_name\",\"sections\":[{\"activityTitle\":\"search_name\",\"activitySubtitle\":\"From source\",\"activityImage\":\"https://user-images.githubusercontent.com/51387119/82707419-ddb1c600-9c30-11ea-8bfa-b3c624b23cdd.png\",\"facts\":[{\"name\":\"App\",\"value\":\"source\"},{\"name\":\"Search\",\"value\":\"search_name\"},{\"name\":\"Owner\",\"value\":\"owner\"},{\"name\":\"other\",\"value\":\"other\"},{\"name\":\"Message\",\"value\":\"message\"},{\"name\":\"Status\",\"value\":\"Open\"}],\"markdown\":true}],\"potentialAction\":[{\"type\":\"ViewAction\",\"name\":\"View in Splunk\",\"target\":[\"result_links\"],\"inputs\":[],\"actions\":[]},{\"type\":\"ActionCard\",\"name\":\"Update Status\",\"target\":[],\"inputs\":[{\"type\":\"MultichoiceInput\",\"id\":\"statuslist\",\"title\":\"Update Status\",\"choices\":[{\"display\":\"In Progress\",\"value\":\"1\"},{\"display\":\"In Review\",\"value\":\"2\"},{\"display\":\"Closed\",\"value\":\"3\"}]}],\"actions\":[{\"type\":\"HttpPOST\",\"name\":\"OK\",\"target\":\"https://webhook.site/b1990094-ff1a-4668-b19e-e3bbddf8a717\"}]}]}";
+    private static final String teamsResult = "{\"type\":\"MessageCard\",\"context\":\"http://schema.org/extensions\",\"themeColor\":\"0076D7\",\"summary\":\"search_name\",\"sections\":[{\"activityTitle\":\"search_name\",\"activitySubtitle\":\"From source\",\"activityImage\":\"https://user-images.githubusercontent.com/51387119/82707419-ddb1c600-9c30-11ea-8bfa-b3c624b23cdd.png\",\"facts\":[{\"name\":\"App\",\"value\":\"source\"},{\"name\":\"Search\",\"value\":\"search_name\"},{\"name\":\"Owner\",\"value\":\"owner\"},{\"name\":\"other\",\"value\":\"other\"},{\"name\":\"Message\",\"value\":\"message\"},{\"name\":\"Status\",\"value\":\"Open\"}],\"markdown\":true}],\"potentialAction\":[{\"type\":\"ViewAction\",\"name\":\"View in Splunk\",\"target\":[\"result_links\"],\"inputs\":[],\"actions\":[]},{\"type\":\"ViewAction\",\"name\":\"Splunk Dashboard\",\"target\":[\"dashboard_link\"],\"inputs\":[],\"actions\":[]},{\"type\":\"ActionCard\",\"name\":\"Update Status\",\"target\":[],\"inputs\":[{\"type\":\"MultichoiceInput\",\"id\":\"statuslist\",\"title\":\"Update Status\",\"choices\":[{\"display\":\"In Progress\",\"value\":\"1\"},{\"display\":\"In Review\",\"value\":\"2\"},{\"display\":\"Closed\",\"value\":\"3\"}]}],\"actions\":[{\"type\":\"HttpPOST\",\"name\":\"OK\",\"target\":\"https://webhook.site/b1990094-ff1a-4668-b19e-e3bbddf8a717\"}]}]}";
 
     @BeforeAll
     public void setUp() {
@@ -48,7 +49,7 @@ public class TeamsChannelServiceTest {
         Assertions.assertEquals("search_name", actual.getSummary());
         Assertions.assertEquals("0076D7", actual.getThemeColor());
         Assertions.assertEquals("MessageCard", actual.getType());
-        Assertions.assertEquals(2, actual.getPotentialAction().size());
+        Assertions.assertEquals(3, actual.getPotentialAction().size());
 
 
         Assertions.assertEquals("View in Splunk", actual.getPotentialAction().get(0).getName());
@@ -57,33 +58,40 @@ public class TeamsChannelServiceTest {
 
         Assertions.assertEquals(0, actual.getPotentialAction().get(0).getInputs().size());
 
-        Assertions.assertEquals("Update Status", actual.getPotentialAction().get(1).getName());
-        Assertions.assertEquals("ActionCard", actual.getPotentialAction().get(1).getType());
-        Assertions.assertEquals(1, actual.getPotentialAction().get(1).getActions().size());
 
-        Assertions.assertEquals("HttpPOST", actual.getPotentialAction().get(1).getActions().get(0).getType());
-        Assertions.assertEquals("https://webhook.site/b1990094-ff1a-4668-b19e-e3bbddf8a717", actual.getPotentialAction().get(1).getActions().get(0).getTarget());
-        Assertions.assertEquals("OK", actual.getPotentialAction().get(1).getActions().get(0).getName());
-        Assertions.assertEquals(teamsResult, actual.getPotentialAction().get(1).getActions().get(0).getBody());
+        Assertions.assertEquals("Splunk Dashboard", actual.getPotentialAction().get(1).getName());
+        Assertions.assertEquals("ViewAction", actual.getPotentialAction().get(1).getType());
+        Assertions.assertEquals(0, actual.getPotentialAction().get(1).getActions().size());
+
+        Assertions.assertEquals(0, actual.getPotentialAction().get(1).getInputs().size());
+
+        Assertions.assertEquals("Update Status", actual.getPotentialAction().get(2).getName());
+        Assertions.assertEquals("ActionCard", actual.getPotentialAction().get(2).getType());
+        Assertions.assertEquals(1, actual.getPotentialAction().get(2).getActions().size());
+
+        Assertions.assertEquals("HttpPOST", actual.getPotentialAction().get(2).getActions().get(0).getType());
+        Assertions.assertEquals("https://webhook.site/b1990094-ff1a-4668-b19e-e3bbddf8a717", actual.getPotentialAction().get(2).getActions().get(0).getTarget());
+        Assertions.assertEquals("OK", actual.getPotentialAction().get(2).getActions().get(0).getName());
+        Assertions.assertEquals(teamsResult, actual.getPotentialAction().get(2).getActions().get(0).getBody());
 
 
 
-        Assertions.assertEquals(1, actual.getPotentialAction().get(1).getInputs().size());
+        Assertions.assertEquals(1, actual.getPotentialAction().get(2).getInputs().size());
 
-        Assertions.assertEquals("statuslist", actual.getPotentialAction().get(1).getInputs().get(0).getId());
-        Assertions.assertEquals("Update Status", actual.getPotentialAction().get(1).getInputs().get(0).getTitle());
-        Assertions.assertEquals("MultichoiceInput", actual.getPotentialAction().get(1).getInputs().get(0).getType());
-        Assertions.assertEquals(null, actual.getPotentialAction().get(1).getInputs().get(0).getMultiline());
-        Assertions.assertEquals(null, actual.getPotentialAction().get(1).getInputs().get(0).getMultiSelect());
+        Assertions.assertEquals("statuslist", actual.getPotentialAction().get(2).getInputs().get(0).getId());
+        Assertions.assertEquals("Update Status", actual.getPotentialAction().get(2).getInputs().get(0).getTitle());
+        Assertions.assertEquals("MultichoiceInput", actual.getPotentialAction().get(2).getInputs().get(0).getType());
+        Assertions.assertEquals(null, actual.getPotentialAction().get(2).getInputs().get(0).getMultiline());
+        Assertions.assertEquals(null, actual.getPotentialAction().get(2).getInputs().get(0).getMultiSelect());
 
-        Assertions.assertEquals(3, actual.getPotentialAction().get(1).getInputs().get(0).getChoices().size());
+        Assertions.assertEquals(3, actual.getPotentialAction().get(2).getInputs().get(0).getChoices().size());
 
-        Assertions.assertEquals("In Progress", actual.getPotentialAction().get(1).getInputs().get(0).getChoices().get(0).getDisplay());
-        Assertions.assertEquals("1", actual.getPotentialAction().get(1).getInputs().get(0).getChoices().get(0).getValue());
-        Assertions.assertEquals("In Review", actual.getPotentialAction().get(1).getInputs().get(0).getChoices().get(1).getDisplay());
-        Assertions.assertEquals("2", actual.getPotentialAction().get(1).getInputs().get(0).getChoices().get(1).getValue());
-        Assertions.assertEquals("Closed", actual.getPotentialAction().get(1).getInputs().get(0).getChoices().get(2).getDisplay());
-        Assertions.assertEquals("3", actual.getPotentialAction().get(1).getInputs().get(0).getChoices().get(2).getValue());
+        Assertions.assertEquals("In Progress", actual.getPotentialAction().get(2).getInputs().get(0).getChoices().get(0).getDisplay());
+        Assertions.assertEquals("1", actual.getPotentialAction().get(2).getInputs().get(0).getChoices().get(0).getValue());
+        Assertions.assertEquals("In Review", actual.getPotentialAction().get(2).getInputs().get(0).getChoices().get(1).getDisplay());
+        Assertions.assertEquals("2", actual.getPotentialAction().get(2).getInputs().get(0).getChoices().get(1).getValue());
+        Assertions.assertEquals("Closed", actual.getPotentialAction().get(2).getInputs().get(0).getChoices().get(2).getDisplay());
+        Assertions.assertEquals("3", actual.getPotentialAction().get(2).getInputs().get(0).getChoices().get(2).getValue());
 
         Assertions.assertEquals(1, actual.getSections().size());
 
