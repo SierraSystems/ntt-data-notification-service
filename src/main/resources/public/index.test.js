@@ -38,26 +38,26 @@ describe('errorsExist', () => {
 });
 
 describe('checkForDuplicatesAndEmpty', () => {
+    const arr = [];
+
     it('should return true when the object passed in has an empty url', () => {
         const obj = { chatApp: "TEAMS", url: "", errorExists: true };
-        const arr = [];
 
         assert.equal(true, checkForDuplicatesAndEmpty(arr, obj));
     });
 
     it('should return false when the object being compared is not in the array', () => {
         const obj = { chatApp: "TEAMS", url: "http://www.example.com", errorExists: false };
-        const arr = [];
 
         assert.equal(false, checkForDuplicatesAndEmpty(arr, obj));
     });
 
     it('should return true when the object being compared is in the array', () => {
         const obj = { chatApp: "TEAMS", url: "http://www.example.com", errorExists: false };
-        const arr = [
+        arr.push(
             { chatApp: "TEAMS", url: "http://www.example2.com", errorExists: false },
             { chatApp: "TEAMS", url: "http://www.example.com", errorExists: false }
-        ];
+        );
 
         assert.equal(true, checkForDuplicatesAndEmpty(arr, obj));
     });
