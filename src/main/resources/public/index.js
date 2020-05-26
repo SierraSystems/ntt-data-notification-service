@@ -119,14 +119,16 @@ function checkForDuplicatesAndEmpty(array, obj) {
 }
 
 function errorsExist(array, type) {
+    let error = false;
+
     array.forEach(url => {
         if (url.errorExists) {
             $(type).show();
-            return true;
+            error = true;
         }
     });
 
-    return false;
+    return error;
 }
 
 function isEmpty(array) {
@@ -138,4 +140,6 @@ function validateToken(token) {
         $(".token-error").show();
         return false;
     }
+
+    return true;
 }
