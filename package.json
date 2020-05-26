@@ -1,7 +1,7 @@
 {
-    "name": "mocha-unit-testing",
+    "name": "splunk-notification-service-tests",
     "version": "1.0.0",
-    "description": "Mocha Tests",
+    "description": "Splunk Notification Service Frontend Unit Tests",
     "main": "index.js",
     "scripts": {
         "test": "mocha"
