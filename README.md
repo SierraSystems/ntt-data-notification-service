@@ -24,7 +24,7 @@ docker run -d -p <LOCAL_SPLUNK_PORT>:8000 -p 8088:8088  -e "SPLUNK_START_ARGS=--
 
 Optional: You can set a property in `application.properties` if you would like to customize the port your app runs on:
 ```bash
-server.port=${PORT:<>}
+server.port=${PORT:<PORT>}
 ```
 
 ### Frontend
