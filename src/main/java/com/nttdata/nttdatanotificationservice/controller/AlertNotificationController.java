@@ -1,6 +1,6 @@
 package com.nttdata.nttdatanotificationservice.controller;
 
-import com.nttdata.nttdatanotificationservice.configuration.SplunkProperites;
+import com.nttdata.nttdatanotificationservice.configuration.NotificationServiceProperties;
 import com.nttdata.nttdatanotificationservice.splunk.models.SplunkAlert;
 import com.nttdata.nttdatanotificationservice.service.WebHookService;
 import org.slf4j.Logger;
@@ -13,14 +13,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@EnableConfigurationProperties(SplunkProperites.class)
+@EnableConfigurationProperties(NotificationServiceProperties.class)
 public class AlertNotificationController {
 
     @Autowired
     WebHookService webHookService;
 
     @Autowired
-    SplunkProperites splunkProperites;
+    NotificationServiceProperties notificationServiceProperties;
 
     Logger logger = LoggerFactory.getLogger(AlertNotificationController.class);
 
@@ -28,7 +28,7 @@ public class AlertNotificationController {
     public ResponseEntity<String> alert(@PathVariable("token") String token,
                                         @PathVariable("routes") String routes,
                                         @RequestBody SplunkAlert splunkAlert) {
-        if (!splunkProperites.getTokens().contains(token)) {
+        if (!notificationServiceProperties.getTokens().contains(token)) {
             logger.error("Token failed to validate");
             return new ResponseEntity<>("Token validation failed", HttpStatus.UNAUTHORIZED);
         }
