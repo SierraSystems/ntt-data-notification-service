@@ -127,4 +127,75 @@ public class WebHookServiceImplTest {
 
         Assertions.assertEquals(HttpStatus.CREATED, result.getStatusCode());
     }
+    @DisplayName("Error - WebHookServiceImpl TEAMS")
+    @Test
+    void testTEAMSChatError() {
+        Mockito.when(channelServiceFactory.getChanelService(any())).thenReturn(java.util.Optional.of(new TeamsChannelService()));
+
+        MockResponse mockResponse = new MockResponse();
+        mockResponse.setBody("{\"test\":\"test\"}");
+        mockResponse.addHeader("content-type: application/json;");
+        mockResponse.setResponseCode(500);
+        mockBackEnd.enqueue(mockResponse);
+
+        SplunkWebHookUrls splunkWebHookUrl = new SplunkWebHookUrls();
+        splunkWebHookUrl.setChatApp(ChatApp.TEAMS);
+        splunkWebHookUrl.setUrl(baseUrl);
+        List<SplunkWebHookUrls> splunkWebHookUrls = Arrays.asList(splunkWebHookUrl);
+
+        SplunkWebHookParams splunkWebHookParams = new SplunkWebHookParams();
+        splunkWebHookParams.setSplunkWebHookUrls(splunkWebHookUrls);
+        Gson gson = new Gson();
+        String encodedString = Base64.getUrlEncoder().encodeToString(gson.toJson(splunkWebHookParams).getBytes());
+
+        SplunkAlert splunkAlert = new SplunkAlert();
+        splunkAlert.setApp("TEST");
+        splunkAlert.setOwner("TEST");
+        SplunkResult splunkResult = new SplunkResult();
+        splunkResult.setMessage("AMESSAGE");
+        splunkResult.setSource("ASOURCE");
+        splunkAlert.setResult(splunkResult);
+        splunkAlert.setResults_link("TEST");
+        splunkAlert.setSid("TEST");
+        splunkAlert.setSearch_name("");
+
+        ResponseEntity<String> result = webHookService.postMessage(splunkAlert,encodedString);
+
+        Assertions.assertEquals(HttpStatus.CREATED, result.getStatusCode());
+    }
+    @DisplayName("Error - WebHookServiceImpl ROCKET")
+    @Test
+    void testRocketChatError() {
+        Mockito.when(channelServiceFactory.getChanelService(any())).thenReturn(java.util.Optional.of(new RocketChannelService()));
+
+        MockResponse mockResponse = new MockResponse();
+        mockResponse.setBody("{\"test\":\"test\"}");
+        mockResponse.addHeader("content-type: application/json;");
+        mockResponse.setResponseCode(500);
+        mockBackEnd.enqueue(mockResponse);
+
+        SplunkWebHookUrls splunkWebHookUrl = new SplunkWebHookUrls();
+        splunkWebHookUrl.setChatApp(ChatApp.ROCKET_CHAT);
+        splunkWebHookUrl.setUrl(baseUrl);
+        List<SplunkWebHookUrls> splunkWebHookUrls = Arrays.asList(splunkWebHookUrl);
+
+        SplunkWebHookParams splunkWebHookParams = new SplunkWebHookParams();
+        splunkWebHookParams.setSplunkWebHookUrls(splunkWebHookUrls);
+        Gson gson = new Gson();
+        String encodedString = Base64.getUrlEncoder().encodeToString(gson.toJson(splunkWebHookParams).getBytes());
+
+        SplunkAlert splunkAlert = new SplunkAlert();
+        splunkAlert.setApp("TEST");
+        splunkAlert.setOwner("TEST");
+        SplunkResult splunkResult = new SplunkResult();
+        splunkResult.setMessage("AMESSAGE");
+        splunkResult.setSource("ASOURCE");
+        splunkAlert.setResult(splunkResult);
+        splunkAlert.setResults_link("TEST");
+        splunkAlert.setSid("TEST");
+
+        ResponseEntity<String> result = webHookService.postMessage(splunkAlert,encodedString);
+
+        Assertions.assertEquals(HttpStatus.CREATED, result.getStatusCode());
+    }
 }
