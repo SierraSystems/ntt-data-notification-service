@@ -34,7 +34,11 @@ public class RocketChannelService implements ChannelService {
         });
 
         text[0] = text[0].concat(String.format(ROCKETCHATTEMPLATE, "Message", splunkAlert.getResult().getMessage()));
-        text[0] = text[0].concat(String.format(ROCKETCHATTEMPLATE, "Link", splunkAlert.getResults_link()));
+        text[0] = text[0].concat(String.format(ROCKETCHATTEMPLATE, "Search Link", splunkAlert.getResults_link()));
+
+        if (splunkAlert.getResult().getDashboard() != null) {
+            text[0] = text[0].concat(String.format(ROCKETCHATTEMPLATE, "Dashboard Link", splunkAlert.getResult().getDashboard()));
+        }
 
         return text[0];
     }
