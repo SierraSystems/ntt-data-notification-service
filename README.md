@@ -66,4 +66,4 @@ Add to Triggered Alerts
 
 8. Click `Enable`.
 
-NOTE: Make sure to disable this alert once done testing if it is only for testing purposes.
+<b>NOTE:</b> Make sure to disable this alert once done testing if it is only for testing purposes.
