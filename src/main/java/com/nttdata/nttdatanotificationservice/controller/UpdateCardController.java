@@ -1,6 +1,6 @@
 package com.nttdata.nttdatanotificationservice.controller;
 
-import com.nttdata.nttdatanotificationservice.configuration.SplunkProperites;
+import com.nttdata.nttdatanotificationservice.configuration.NotificationServiceProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,17 +15,13 @@ public class UpdateCardController {
   Logger logger = LoggerFactory.getLogger(UpdateCardController.class);
 
   @Autowired
-  SplunkProperites splunkProperites;
+  NotificationServiceProperties notificationServiceProperties;
 
   @PostMapping(value = "update/{token}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<String> update(@PathVariable("token") String token, @RequestBody Object teamsUpdate) {
-    if (!token.equals(splunkProperites.getToken())) {
-      logger.error("Token failed to validate");
-      return new ResponseEntity<>("Token validation failed", HttpStatus.UNAUTHORIZED);
-    }
 
-    logger.info(teamsUpdate.toString());
+      logger.info(teamsUpdate.toString());
 
-    return new ResponseEntity<>("Did a thing", HttpStatus.OK);
+      return new ResponseEntity<>("Did a thing", HttpStatus.OK);
   }
 }
