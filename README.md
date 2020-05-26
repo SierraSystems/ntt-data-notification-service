@@ -50,7 +50,7 @@ index="_audit"
 | table message source
 ```
 
-3. Click `Save As` and select `Alert`.
+3. Click <b>Save As</b> and select <b>Alert</b>.
 
 4. Provide a title, set it to run on a cron schedule and provide a valid cron expression as per your frequency needs.
 
@@ -62,8 +62,8 @@ Add to Triggered Alerts
 
 6. In order to generate the Webhook URL, navigate to the application frontend, type in at least one valid teams/rocketchat URL and a valid token (present in the `application.yml` file) and copy the generated base64encoded URL. Paste in this value into splunk.
 
-7. Press `Save`.
+7. Press <b>Save</b>.
 
-8. Click `Enable`.
+8. Click <b>Enable</b>.
 
 <b>NOTE:</b> Make sure to disable this alert once done testing if it is only for testing purposes.
