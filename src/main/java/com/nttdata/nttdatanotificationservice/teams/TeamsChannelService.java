@@ -11,9 +11,6 @@ import com.nttdata.nttdatanotificationservice.teams.models.TeamsInput;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsPotentialActions;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsSection;
 import org.springframework.stereotype.Service;
-import com.google.gson.Gson;
-import java.text.MessageFormat;
-import java.util.ArrayList;
 
 @Service
 public class TeamsChannelService implements ChannelService {

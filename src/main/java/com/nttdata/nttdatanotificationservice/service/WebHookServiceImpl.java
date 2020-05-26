@@ -33,7 +33,7 @@ public class WebHookServiceImpl implements WebHookService {
             ChatApp chatApp = splunkWebHookUrls.getChatApp();
 
             Optional<ChannelService> channelService = channelServiceFactory.getChanelService(chatApp);
-            logger.info("Posting to {}", chatApp.toString());
+            logger.info("Posting to {}", chatApp);
 
             channelService.ifPresent(service -> post(splunkWebHookUrls.getUrl(), service.generatePayload(splunkAlert)));
         });
