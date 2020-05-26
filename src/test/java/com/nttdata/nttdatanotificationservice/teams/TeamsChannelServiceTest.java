@@ -1,5 +1,6 @@
 package com.nttdata.nttdatanotificationservice.teams;
 
+import com.google.gson.Gson;
 import com.nttdata.nttdatanotificationservice.splunk.models.SplunkAlert;
 import com.nttdata.nttdatanotificationservice.splunk.models.SplunkResult;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsCard;
@@ -9,6 +10,22 @@ import org.junit.jupiter.api.*;
 public class TeamsChannelServiceTest {
 
     private TeamsChannelService sut;
+
+    private static final String splunkAlertJson = "{\n" +
+            "\t\"result\": {\n" +
+            "\t\t\"message\" : \"message\",\n" +
+            "\t\t\"other\" : \"other\",\n" +
+            "\t\t\"_raw\" : \"_raw\",\n" +
+            "\t\t\"source\": \"source\"\n" +
+            "\t},\n" +
+            "\t\"sid\" : \"sid\",\n" +
+            "\t\"results_link\" : \"result_links\",\n" +
+            "\t\"search_name\" : \"search_name\",\n" +
+            "\t\"owner\" : \"owner\",\n" +
+            "\t\"app\" : \"app\"\n" +
+            "}";
+
+    private static final String teamsResult = "{\"type\":\"MessageCard\",\"context\":\"http://schema.org/extensions\",\"themeColor\":\"0076D7\",\"summary\":\"search_name\",\"sections\":[{\"activityTitle\":\"search_name\",\"activitySubtitle\":\"From source\",\"activityImage\":\"https://user-images.githubusercontent.com/51387119/82707419-ddb1c600-9c30-11ea-8bfa-b3c624b23cdd.png\",\"facts\":[{\"name\":\"App\",\"value\":\"source\"},{\"name\":\"Search\",\"value\":\"search_name\"},{\"name\":\"Owner\",\"value\":\"owner\"},{\"name\":\"other\",\"value\":\"other\"},{\"name\":\"Message\",\"value\":\"message\"},{\"name\":\"Status\",\"value\":\"Open\"}],\"markdown\":true}],\"potentialAction\":[{\"type\":\"ViewAction\",\"name\":\"View in Splunk\",\"target\":[\"result_links\"],\"inputs\":[],\"actions\":[]},{\"type\":\"ActionCard\",\"name\":\"Update Status\",\"target\":[],\"inputs\":[{\"type\":\"MultichoiceInput\",\"id\":\"statuslist\",\"title\":\"Update Status\",\"choices\":[{\"display\":\"In Progress\",\"value\":\"1\"},{\"display\":\"In Review\",\"value\":\"2\"},{\"display\":\"Closed\",\"value\":\"3\"}]}],\"actions\":[{\"type\":\"HttpPOST\",\"name\":\"OK\",\"target\":\"https://webhook.site/b1990094-ff1a-4668-b19e-e3bbddf8a717\"}]}]}";
 
     @BeforeAll
     public void setUp() {
@@ -20,19 +37,9 @@ public class TeamsChannelServiceTest {
     @DisplayName("CASE 1: with valid splunk notification")
     public void withValidSplunkNotificationShouldProduceTeamObject() {
 
-
-        SplunkAlert splunkAlert = new SplunkAlert();
-
-        splunkAlert.setApp("app");
-        splunkAlert.setOwner("owner");
-        SplunkResult splunkResult = new SplunkResult();
-        splunkResult.set_raw("_raw");
-        splunkResult.setMessage("message");
-        splunkResult.setSource("source");
-        splunkAlert.setResult(splunkResult);
-        splunkAlert.setSearch_name("search_name");
-        splunkAlert.setResults_link("result_links");
-        splunkAlert.setSid("sid");
+        Gson gson = new Gson();
+        SplunkAlert splunkAlert = gson.fromJson(splunkAlertJson, SplunkAlert.class);
+        splunkAlert.getResult().getDetails().put("other","other");
 
         TeamsCard actual = (TeamsCard) sut.generatePayload(splunkAlert);
 
@@ -57,20 +64,7 @@ public class TeamsChannelServiceTest {
         Assertions.assertEquals("HttpPOST", actual.getPotentialAction().get(1).getActions().get(0).getType());
         Assertions.assertEquals("https://webhook.site/b1990094-ff1a-4668-b19e-e3bbddf8a717", actual.getPotentialAction().get(1).getActions().get(0).getTarget());
         Assertions.assertEquals("OK", actual.getPotentialAction().get(1).getActions().get(0).getName());
-        Assertions.assertEquals("{\"type\":\"MessageCard\",\"context\":\"http://schema.org/extensions\"," +
-                "\"themeColor\":\"0076D7\",\"summary\":\"search_name\"," +
-                "\"sections\":[{\"activityTitle\":\"search_name\",\"activitySubtitle\":\"From source\"," +
-                "\"activityImage\":\"https://user-images.githubusercontent" +
-                ".com/51387119/82707419-ddb1c600-9c30-11ea-8bfa-b3c624b23cdd.png\",\"facts\":[{\"name\":\"App\"," +
-                "\"value\":\"source\"},{\"name\":\"Search\",\"value\":\"search_name\"},{\"name\":\"Owner\"," +
-                "\"value\":\"owner\"},{\"name\":\"Message\",\"value\":\"message\"},{\"name\":\"Status\"," +
-                "\"value\":\"Open\"}],\"markdown\":true}],\"potentialAction\":[{\"type\":\"ViewAction\"," +
-                "\"name\":\"View in Splunk\",\"target\":[\"result_links\"],\"inputs\":[],\"actions\":[]},{\"type\":\"ActionCard\"," +
-                "\"name\":\"Update Status\",\"target\":[],\"inputs\":[{\"type\":\"MultichoiceInput\",\"id\":\"statuslist\"," +
-                "\"title\":\"Update Status\",\"choices\":[{\"display\":\"In Progress\",\"value\":\"1\"}," +
-                "{\"display\":\"In Review\",\"value\":\"2\"},{\"display\":\"Closed\",\"value\":\"3\"}]}]," +
-                "\"actions\":[{\"type\":\"HttpPOST\",\"name\":\"OK\",\"target\":\"https://webhook" +
-                ".site/b1990094-ff1a-4668-b19e-e3bbddf8a717\"}]}]}", actual.getPotentialAction().get(1).getActions().get(0).getBody());
+        Assertions.assertEquals(teamsResult, actual.getPotentialAction().get(1).getActions().get(0).getBody());
 
 
 
@@ -96,7 +90,7 @@ public class TeamsChannelServiceTest {
         Assertions.assertEquals("https://user-images.githubusercontent.com/51387119/82707419-ddb1c600-9c30-11ea-8bfa-b3c624b23cdd.png", actual.getSections().get(0).getActivityImage());
         Assertions.assertEquals("From source", actual.getSections().get(0).getActivitySubtitle());
         Assertions.assertEquals("search_name", actual.getSections().get(0).getActivityTitle());
-        Assertions.assertEquals(5, actual.getSections().get(0).getFacts().size());
+        Assertions.assertEquals(6, actual.getSections().get(0).getFacts().size());
 
         Assertions.assertEquals("App", actual.getSections().get(0).getFacts().get(0).getName());
         Assertions.assertEquals("source", actual.getSections().get(0).getFacts().get(0).getValue());
@@ -104,10 +98,12 @@ public class TeamsChannelServiceTest {
         Assertions.assertEquals("search_name", actual.getSections().get(0).getFacts().get(1).getValue());
         Assertions.assertEquals("Owner", actual.getSections().get(0).getFacts().get(2).getName());
         Assertions.assertEquals("owner", actual.getSections().get(0).getFacts().get(2).getValue());
-        Assertions.assertEquals("Message", actual.getSections().get(0).getFacts().get(3).getName());
-        Assertions.assertEquals("message", actual.getSections().get(0).getFacts().get(3).getValue());
-        Assertions.assertEquals("Status", actual.getSections().get(0).getFacts().get(4).getName());
-        Assertions.assertEquals("Open", actual.getSections().get(0).getFacts().get(4).getValue());
+        Assertions.assertEquals("other", actual.getSections().get(0).getFacts().get(3).getName());
+        Assertions.assertEquals("other", actual.getSections().get(0).getFacts().get(3).getValue());
+        Assertions.assertEquals("Message", actual.getSections().get(0).getFacts().get(4).getName());
+        Assertions.assertEquals("message", actual.getSections().get(0).getFacts().get(4).getValue());
+        Assertions.assertEquals("Status", actual.getSections().get(0).getFacts().get(5).getName());
+        Assertions.assertEquals("Open", actual.getSections().get(0).getFacts().get(5).getValue());
 
         Assertions.assertEquals(true, actual.getSections().get(0).getMarkdown());
 
