@@ -38,7 +38,9 @@ public class TeamsChannelService implements ChannelService {
 
         potentialActionsStatus.addAction(statusAction);
 
-        teamsCard.addPotentialAction(getTeamsPotentialActionLink(splunkAlert));
+        teamsCard.addPotentialAction(getTeamsPotentialActionLink(splunkAlert, "View in Splunk", splunkAlert.getResults_link()));
+        teamsCard.addPotentialAction(getTeamsPotentialActionLink(splunkAlert, "Splunk Dashboard", splunkAlert.getResult().getDashboard()));
+
         teamsCard.addPotentialAction(potentialActionsStatus);
 
         statusAction.setBody(teamsCard.toJson());
@@ -63,9 +65,9 @@ public class TeamsChannelService implements ChannelService {
         return teamsSection;
     }
 
-    private TeamsPotentialActions getTeamsPotentialActionLink(SplunkAlert splunkAlert) {
-        TeamsPotentialActions potentialActionsLink = TeamsPotentialActions.defaultTeamsPotentialActions("ViewAction", "View in Splunk");
-        potentialActionsLink.addTarget(splunkAlert.getResults_link());
+    private TeamsPotentialActions getTeamsPotentialActionLink(SplunkAlert splunkAlert, String message, String url) {
+        TeamsPotentialActions potentialActionsLink = TeamsPotentialActions.defaultTeamsPotentialActions("ViewAction", message);
+        potentialActionsLink.addTarget(url);
         return potentialActionsLink;
     }
 
