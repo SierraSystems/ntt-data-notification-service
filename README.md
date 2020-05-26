@@ -54,11 +54,15 @@ index="_audit"
 
 4. Provide a title, set it to run on a cron schedule and provide a valid cron expression as per your frequency needs.
 
+<img width="540" alt="alertsettings1" src="https://user-images.githubusercontent.com/28017034/82948601-e965fb00-9f56-11ea-93cd-7c81dd0bfc9a.PNG">
+
 5. Add actions:
 ```
 Webhook
 Add to Triggered Alerts
 ```
+
+<img width="498" alt="settings2" src="https://user-images.githubusercontent.com/28017034/82948608-ec60eb80-9f56-11ea-90e8-b1bbf4a17190.PNG">
 
 6. In order to generate the Webhook URL, navigate to the application frontend, type in at least one valid teams/rocketchat URL and a valid token (present in the `application.yml` file) and copy the generated base64encoded URL. Paste in this value into splunk.
 
