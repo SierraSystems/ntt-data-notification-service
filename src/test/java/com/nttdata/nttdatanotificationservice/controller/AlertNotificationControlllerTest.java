@@ -1,6 +1,6 @@
 package com.nttdata.nttdatanotificationservice.controller;
 
-import com.nttdata.nttdatanotificationservice.configuration.SplunkProperites;
+import com.nttdata.nttdatanotificationservice.configuration.NotificationServiceProperties;
 import com.nttdata.nttdatanotificationservice.service.WebHookService;
 import com.nttdata.nttdatanotificationservice.splunk.models.SplunkAlert;
 import org.junit.jupiter.api.Assertions;
@@ -24,7 +24,7 @@ public class AlertNotificationControlllerTest {
     private static final String FAILURE = "FAILURE";
     private static final String TEST = "test";
     @Mock
-    SplunkProperites splunkProperites;
+    NotificationServiceProperties notificationServiceProperties;
 
     @Mock
     WebHookService webHookService;
@@ -34,7 +34,7 @@ public class AlertNotificationControlllerTest {
     @BeforeEach
     void initialize() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         MockitoAnnotations.initMocks(this);
-        when(splunkProperites.getTokens()).thenReturn(Arrays.asList("test","test2"));
+        when(notificationServiceProperties.getTokens()).thenReturn(Arrays.asList("test","test2"));
     }
 
     @DisplayName("Success - AlertNotificationController")
