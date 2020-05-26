@@ -76,3 +76,23 @@ describe('validateUrl', () => {
         assert.equal(true, validateUrl("http://www.example.com"))
     });
 });
+
+describe('populateSplunkWebHooks', () => {
+    const webhooksArray = [{ chatApp: "TEAMS", url: "http://www.example.com" }];
+
+    it('should return the original webhooks array if the urlArray passed in is empty', () => {
+        assert.equal(webhooksArray, populateSplunkWebHooks([], webhooksArray));
+    });
+
+    it('should push the values of the urlArray into the webhooksArray when the urlArray is not empty', () => {
+        const urlArray = [{ chatApp: "ROCKET_CHAT", url: "http://www.rocket.url" }];
+
+        assert.deepEqual(
+            [
+                { chatApp: "TEAMS", url: "http://www.example.com" },
+                { chatApp: "ROCKET_CHAT", url: "http://www.rocket.url" }
+            ],
+            populateSplunkWebHooks(urlArray, webhooksArray)
+        );
+    });
+});
