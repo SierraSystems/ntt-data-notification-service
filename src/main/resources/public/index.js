@@ -1,6 +1,5 @@
 // populate these two fields based on your local dev environment
-const localIP = "192.168.56.1";
-const port = "8888";
+const url = window.location.origin;
 const teamsUrlIdentifier = ".teams-url";
 const rocketChatUrlIdentifier = ".rocket-chat-url";
 
@@ -69,7 +68,7 @@ function generateWebHookUrlString() {
 
 function generateFinalUrl() {
     // temporarily for local dev
-    const baseUrl = `http://${localIP}:${port}/splunk/alert/`;
+    const baseUrl = `${url}/splunk/alert/`;
     const token = $(".token").val();
     const webHookUrlString = generateWebHookUrlString();
 
