@@ -2,11 +2,9 @@ package com.nttdata.nttdatanotificationservice.teams;
 
 import com.google.gson.Gson;
 import com.nttdata.nttdatanotificationservice.splunk.models.SplunkAlert;
-import com.nttdata.nttdatanotificationservice.splunk.models.SplunkResult;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsCard;
 import org.junit.jupiter.api.*;
 
-import java.util.Map;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TeamsChannelServiceTest {
