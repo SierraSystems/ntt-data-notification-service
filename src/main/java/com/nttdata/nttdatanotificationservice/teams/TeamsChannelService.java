@@ -45,7 +45,7 @@ public class TeamsChannelService implements ChannelService {
         return  teamsCard;
     }
 
-
+    @SuppressWarnings("java:S1602")
     private TeamsSection getTeamsSection(SplunkAlert splunkAlert) {
         TeamsSection teamsSection = TeamsSection.defaultNttSection(splunkAlert.getSearch_name(), splunkAlert.getResult().getSource());
 
