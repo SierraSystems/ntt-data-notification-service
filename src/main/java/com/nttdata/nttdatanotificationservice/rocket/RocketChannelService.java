@@ -24,6 +24,7 @@ public class RocketChannelService implements ChannelService {
         return rocketMessage;
     }
 
+    @SuppressWarnings("java:S1602")
     private String getRocketText(SplunkAlert splunkAlert) {
         final String[] text = {String.format(ROCKETCHATTEMPLATE, "App", splunkAlert.getResult().getSource())};
         text[0] = text[0].concat(String.format(ROCKETCHATTEMPLATE, "Search", splunkAlert.getSearch_name()));

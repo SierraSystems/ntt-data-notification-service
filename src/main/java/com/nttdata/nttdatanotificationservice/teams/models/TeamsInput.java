@@ -1,6 +1,7 @@
 package com.nttdata.nttdatanotificationservice.teams.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,14 @@ public class TeamsInput {
     this.type = type;
     this.id = id;
     this.title = title;
+  }
+
+  public TeamsInput(String id, String type, String title, Boolean isMultiline, Boolean isMultiSelect) {
+    this.type = type;
+    this.id = id;
+    this.title = title;
+    this.isMultiline = isMultiline;
+    this.isMultiSelect = isMultiSelect;
   }
 
   @JsonProperty("@type")
@@ -51,26 +60,5 @@ public class TeamsInput {
 
   public static TeamsInput defaultTeamsInput(String id, String type, String title) {
     return new TeamsInput(id, type, title);
-  }
-
-
-  public void setType(String type) {
-    this.type = type;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public void setMultiline(Boolean multiline) {
-    isMultiline = multiline;
-  }
-
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  public void setMultiSelect(Boolean multiSelect) {
-    isMultiSelect = multiSelect;
   }
 }

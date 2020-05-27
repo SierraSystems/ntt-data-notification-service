@@ -2,9 +2,9 @@ package com.nttdata.nttdatanotificationservice.teams;
 
 import com.google.gson.Gson;
 import com.nttdata.nttdatanotificationservice.splunk.models.SplunkAlert;
-import com.nttdata.nttdatanotificationservice.splunk.models.SplunkResult;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsCard;
 import org.junit.jupiter.api.*;
+
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TeamsChannelServiceTest {
@@ -40,7 +40,8 @@ public class TeamsChannelServiceTest {
 
         Gson gson = new Gson();
         SplunkAlert splunkAlert = gson.fromJson(splunkAlertJson, SplunkAlert.class);
-        splunkAlert.getResult().getDetails().put("other","other");
+        //Work around to get other fields mapped. Gson wouldn't map.
+        splunkAlert.getResult().setDetails("other","other");
 
         TeamsCard actual = (TeamsCard) sut.generatePayload(splunkAlert);
 

@@ -6,7 +6,6 @@ public class RocketMessage {
 
     private String alias;
     private String avatar;
-    private String emoji;
     private String text;
 
     private RocketMessage(String alias, String avatar) {
@@ -17,10 +16,6 @@ public class RocketMessage {
     public String getAlias() { return alias; }
 
     public String getAvatar() {  return avatar;  }
-
-    public String getEmoji() { return emoji; }
-
-    public void setEmoji(String emoji) { this.emoji = emoji; }
 
     public String getText() { return text;  }
 
