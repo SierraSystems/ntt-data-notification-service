@@ -78,11 +78,11 @@ public class WebHookServiceImplTest {
         String encodedString = Base64.getUrlEncoder().encodeToString(gson.toJson(splunkWebHookParams).getBytes());
 
         SplunkAlert splunkAlert = new SplunkAlert();
-        splunkAlert.setApp("TEST");
         splunkAlert.setOwner("TEST");
         SplunkResult splunkResult = new SplunkResult();
         splunkResult.setMessage("AMESSAGE");
         splunkResult.setSource("ASOURCE");
+        splunkResult.setDashboard("TEST");
         splunkAlert.setResult(splunkResult);
         splunkAlert.setResults_link("TEST");
         splunkAlert.setSid("TEST");
@@ -114,11 +114,11 @@ public class WebHookServiceImplTest {
         String encodedString = Base64.getUrlEncoder().encodeToString(gson.toJson(splunkWebHookParams).getBytes());
 
         SplunkAlert splunkAlert = new SplunkAlert();
-        splunkAlert.setApp("TEST");
         splunkAlert.setOwner("TEST");
         SplunkResult splunkResult = new SplunkResult();
         splunkResult.setMessage("AMESSAGE");
         splunkResult.setSource("ASOURCE");
+        splunkResult.setDashboard("TEST");
         splunkAlert.setResult(splunkResult);
         splunkAlert.setResults_link("TEST");
         splunkAlert.setSid("TEST");
@@ -149,11 +149,11 @@ public class WebHookServiceImplTest {
         String encodedString = Base64.getUrlEncoder().encodeToString(gson.toJson(splunkWebHookParams).getBytes());
 
         SplunkAlert splunkAlert = new SplunkAlert();
-        splunkAlert.setApp("TEST");
         splunkAlert.setOwner("TEST");
         SplunkResult splunkResult = new SplunkResult();
         splunkResult.setMessage("AMESSAGE");
         splunkResult.setSource("ASOURCE");
+        splunkResult.setDashboard("TEST");
         splunkAlert.setResult(splunkResult);
         splunkAlert.setResults_link("TEST");
         splunkAlert.setSid("TEST");
@@ -185,11 +185,11 @@ public class WebHookServiceImplTest {
         String encodedString = Base64.getUrlEncoder().encodeToString(gson.toJson(splunkWebHookParams).getBytes());
 
         SplunkAlert splunkAlert = new SplunkAlert();
-        splunkAlert.setApp("TEST");
         splunkAlert.setOwner("TEST");
         SplunkResult splunkResult = new SplunkResult();
         splunkResult.setMessage("AMESSAGE");
         splunkResult.setSource("ASOURCE");
+        splunkResult.setDashboard("TEST");
         splunkAlert.setResult(splunkResult);
         splunkAlert.setResults_link("TEST");
         splunkAlert.setSid("TEST");

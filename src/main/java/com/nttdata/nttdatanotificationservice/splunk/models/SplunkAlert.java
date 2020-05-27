@@ -5,7 +5,6 @@ public class SplunkAlert {
     private String results_link;
     private String search_name;
     private String owner;
-    private String app;
     private SplunkResult result;
 
     public String getSid() {return sid;}
@@ -23,10 +22,6 @@ public class SplunkAlert {
     public String getOwner() {return owner;}
 
     public void setOwner(String owner) { this.owner = owner; }
-
-    public String getApp() {return app; }
-
-    public void setApp(String app) {this.app = app;}
 
     public SplunkResult getResult() {return result;}
 

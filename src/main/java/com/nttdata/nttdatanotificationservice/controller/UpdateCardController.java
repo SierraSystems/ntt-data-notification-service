@@ -20,7 +20,7 @@ public class UpdateCardController {
   @PostMapping(value = "update/{token}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<String> update(@PathVariable("token") String token, @RequestBody Object teamsUpdate) {
 
-      logger.info(teamsUpdate.toString());
+      logger.info("{}",teamsUpdate);
 
       return new ResponseEntity<>("Did a thing", HttpStatus.OK);
   }

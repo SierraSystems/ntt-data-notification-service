@@ -5,7 +5,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class SplunkResult {
-    private String _raw;
     private String source;
     private String message;
     private String dashboard;
@@ -13,17 +12,13 @@ public class SplunkResult {
     private Map<String, Object> details = new LinkedHashMap<>();
 
     @JsonAnySetter
-    void setDetails(String key, Object value) {
+    public void setDetails(String key, Object value) {
         details.put(key, value);
     }
 
     public Map<String, Object> getDetails() {
         return details;
     }
-
-    public String get_raw() { return _raw; }
-
-    public void set_raw(String _raw) { this._raw = _raw; }
 
     public String getSource() { return source; }
 
