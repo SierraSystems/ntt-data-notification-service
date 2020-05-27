@@ -1,7 +1,6 @@
 package com.nttdata.nttdatanotificationservice.teams.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.util.ArrayList;
 import java.util.List;
