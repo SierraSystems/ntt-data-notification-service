@@ -22,11 +22,11 @@ services:
   #############################################################################################
   ###                            NTT Data notification service                              ###
   #############################################################################################
-  splunk-notification-service:
+  ntt-data-notification-service:
     build:
       context: .
       args:
-        - SERVICE_NAME=splunk-notification-service
+        - SERVICE_NAME=ntt-data-notification-service
     ports:
       - "6060:8080"
     networks:

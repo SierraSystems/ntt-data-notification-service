@@ -1,7 +1,7 @@
 {
-    "name": "splunk-notification-service-tests",
+    "name": "ntt-data-notification-service-tests",
     "version": "1.0.0",
-    "description": "Splunk Notification Service Frontend Unit Tests",
+    "description": "NTT Data Notification Service Frontend Unit Tests",
     "main": "index.js",
     "scripts": {
         "test": "mocha"
