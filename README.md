@@ -1,6 +1,6 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/a1719884328523a5b49d/test_coverage)](https://codeclimate.com/github/SierraSystems/ntt-data-notification-service/test_coverage) [![Maintainability](https://api.codeclimate.com/v1/badges/a1719884328523a5b49d/maintainability)](https://codeclimate.com/github/SierraSystems/ntt-data-notification-service/maintainability)
 
-# splunk-notification-service
+# ntt-data-notification-service
 
 A Service that pushes notification to different channels.
 
