@@ -54,13 +54,3 @@ COPY --from=build ${SERVICE_NAME}/target/${SERVICE_NAME}-*.jar /app/service.jar
 
 CMD ["java", "-jar", "/app/service.jar"]
 ############################################################################################
-
-#############################################################################################
-### Stage where Docker is running a java process to run a service built in previous stage ###
-#############################################################################################
-FROM splunk/splunk:latest
-
-ARG SPLUNK_PASSWORD=admin
-ARG SPLUNK_START_ARGS=--accept-license
-
-RUN -d -p 6000:8000 -p 8088:8088  -e "SPLUNK_START_ARGS=--accept-license" -e "SPLUNK_PASSWORD=somepassword" --name splunkest splunk/splunk:latest
