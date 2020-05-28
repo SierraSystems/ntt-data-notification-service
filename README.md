@@ -1,6 +1,6 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/a1719884328523a5b49d/test_coverage)](https://codeclimate.com/github/SierraSystems/ntt-data-notification-service/test_coverage) [![Maintainability](https://api.codeclimate.com/v1/badges/a1719884328523a5b49d/maintainability)](https://codeclimate.com/github/SierraSystems/ntt-data-notification-service/maintainability)
 
-# splunk-notification-service
+# ntt-data-notification-service
 
 A Service that pushes notification to different channels.
 
@@ -11,10 +11,10 @@ Teams notification screenshot:
 ## Running Locally
 
 ```bash
-docker-compose up --build splunk-notification-service
+docker-compose up --build ntt-data-notification-service
 ```
 
-This should spin up the splunk-notification-service locally.
+This should spin up the ntt-data-notification-service locally.
 
 To run the latest version of splunk, run the following command to spin up a container locally:
 
