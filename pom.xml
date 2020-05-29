@@ -8,11 +8,11 @@
 		<version>2.2.7.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>ca.bc.gov</groupId>
-	<artifactId>splunk-notification-service</artifactId>
+	<groupId>com.nttdata</groupId>
+	<artifactId>ntt-data-notification-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>splunk-notification-service</name>
-	<description>Splunk webHook notification</description>
+	<name>ntt-data-notification-service</name>
+	<description>NTT Data webHook notification service</description>
 
 	<properties>
 		<java.version>1.8</java.version>

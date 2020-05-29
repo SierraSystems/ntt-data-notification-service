@@ -30,7 +30,7 @@ public class AlertNotificationControlllerTest {
     WebHookService webHookService;
 
     @InjectMocks
-    AlertNotificationController alertNotificationController = new AlertNotificationController();
+    SplunkNotificationController alertNotificationController = new SplunkNotificationController();
     @BeforeEach
     void initialize() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         MockitoAnnotations.initMocks(this);

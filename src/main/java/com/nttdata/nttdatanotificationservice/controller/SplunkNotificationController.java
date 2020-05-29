@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @EnableConfigurationProperties(NotificationServiceProperties.class)
-public class AlertNotificationController {
+public class SplunkNotificationController {
 
     @Autowired
     WebHookService webHookService;
@@ -22,9 +22,9 @@ public class AlertNotificationController {
     @Autowired
     NotificationServiceProperties notificationServiceProperties;
 
-    Logger logger = LoggerFactory.getLogger(AlertNotificationController.class);
+    Logger logger = LoggerFactory.getLogger(SplunkNotificationController.class);
 
-    @PostMapping(value = "alert/{token}/{routes}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "splunk/{token}/{routes}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> alert(@PathVariable("token") String token,
                                         @PathVariable("routes") String routes,
                                         @RequestBody SplunkAlert splunkAlert) {
