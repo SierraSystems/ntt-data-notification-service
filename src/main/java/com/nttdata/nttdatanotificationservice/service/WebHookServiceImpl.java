@@ -27,11 +27,7 @@ public class WebHookServiceImpl implements WebHookService {
         byte[] decodedRoutesBytes = Base64.getUrlDecoder().decode(routes);
         String decodedRoutesUrl = new String(decodedRoutesBytes);
 
-        logger.info(decodedRoutesUrl);
-
         WebHookParams webHookParams = gson.fromJson(decodedRoutesUrl, WebHookParams.class);
-
-        logger.info(webHookParams.getWebHookUrls().toString());
 
         webHookParams.getWebHookUrls().stream().forEach(webHookUrl -> {
             ChatApp chatApp = webHookUrl.getChatApp();

@@ -54,7 +54,6 @@ public class TeamsChannelService implements ChannelService {
         teamsSection.addFact(new TeamsFact("Owner", genericAlert.getOwner()));
 
         genericAlert.getDetails().forEach((key, value) -> {
-            System.out.println(key);
             teamsSection.addFact(new TeamsFact(key, value.toString()));
         });
 
