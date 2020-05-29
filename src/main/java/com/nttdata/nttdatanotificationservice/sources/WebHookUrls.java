@@ -1,8 +1,8 @@
-package com.nttdata.nttdatanotificationservice.splunk.models;
+package com.nttdata.nttdatanotificationservice.sources;
 
 import com.nttdata.nttdatanotificationservice.service.ChatApp;
 
-public class SplunkWebHookUrls {
+public class WebHookUrls {
 
     private ChatApp chatApp;
     private String url;

@@ -2,7 +2,7 @@ package com.nttdata.nttdatanotificationservice.rocket;
 
 import com.google.gson.Gson;
 import com.nttdata.nttdatanotificationservice.rocket.models.RocketMessage;
-import com.nttdata.nttdatanotificationservice.splunk.models.SplunkAlert;
+import com.nttdata.nttdatanotificationservice.sources.splunk.models.SplunkAlert;
 import org.junit.jupiter.api.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

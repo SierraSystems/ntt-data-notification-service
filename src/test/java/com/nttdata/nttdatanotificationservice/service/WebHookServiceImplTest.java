@@ -2,10 +2,10 @@ package com.nttdata.nttdatanotificationservice.service;
 
 import com.google.gson.Gson;
 import com.nttdata.nttdatanotificationservice.rocket.RocketChannelService;
-import com.nttdata.nttdatanotificationservice.splunk.models.SplunkAlert;
-import com.nttdata.nttdatanotificationservice.splunk.models.SplunkResult;
-import com.nttdata.nttdatanotificationservice.splunk.models.SplunkWebHookParams;
-import com.nttdata.nttdatanotificationservice.splunk.models.SplunkWebHookUrls;
+import com.nttdata.nttdatanotificationservice.sources.splunk.models.SplunkAlert;
+import com.nttdata.nttdatanotificationservice.sources.splunk.models.SplunkResult;
+import com.nttdata.nttdatanotificationservice.sources.WebHookParams;
+import com.nttdata.nttdatanotificationservice.sources.WebHookUrls;
 import com.nttdata.nttdatanotificationservice.teams.TeamsChannelService;
 import org.junit.jupiter.api.*;
 import okhttp3.mockwebserver.MockResponse;
@@ -67,15 +67,15 @@ public class WebHookServiceImplTest {
         mockResponse.setResponseCode(200);
         mockBackEnd.enqueue(mockResponse);
 
-        SplunkWebHookUrls splunkWebHookUrl = new SplunkWebHookUrls();
+        WebHookUrls splunkWebHookUrl = new WebHookUrls();
         splunkWebHookUrl.setChatApp(ChatApp.TEAMS);
         splunkWebHookUrl.setUrl(baseUrl);
-        List<SplunkWebHookUrls> splunkWebHookUrls = Arrays.asList(splunkWebHookUrl);
+        List<WebHookUrls> webHookUrls = Arrays.asList(splunkWebHookUrl);
 
-        SplunkWebHookParams splunkWebHookParams = new SplunkWebHookParams();
-        splunkWebHookParams.setSplunkWebHookUrls(splunkWebHookUrls);
+        WebHookParams webHookParams = new WebHookParams();
+        webHookParams.setWebHookUrls(webHookUrls);
         Gson gson = new Gson();
-        String encodedString = Base64.getUrlEncoder().encodeToString(gson.toJson(splunkWebHookParams).getBytes());
+        String encodedString = Base64.getUrlEncoder().encodeToString(gson.toJson(webHookParams).getBytes());
 
         SplunkAlert splunkAlert = new SplunkAlert();
         splunkAlert.setOwner("TEST");
@@ -103,15 +103,15 @@ public class WebHookServiceImplTest {
         mockResponse.setResponseCode(200);
         mockBackEnd.enqueue(mockResponse);
 
-        SplunkWebHookUrls splunkWebHookUrl = new SplunkWebHookUrls();
+        WebHookUrls splunkWebHookUrl = new WebHookUrls();
         splunkWebHookUrl.setChatApp(ChatApp.ROCKET_CHAT);
         splunkWebHookUrl.setUrl(baseUrl);
-        List<SplunkWebHookUrls> splunkWebHookUrls = Arrays.asList(splunkWebHookUrl);
+        List<WebHookUrls> webHookUrls = Arrays.asList(splunkWebHookUrl);
 
-        SplunkWebHookParams splunkWebHookParams = new SplunkWebHookParams();
-        splunkWebHookParams.setSplunkWebHookUrls(splunkWebHookUrls);
+        WebHookParams webHookParams = new WebHookParams();
+        webHookParams.setWebHookUrls(webHookUrls);
         Gson gson = new Gson();
-        String encodedString = Base64.getUrlEncoder().encodeToString(gson.toJson(splunkWebHookParams).getBytes());
+        String encodedString = Base64.getUrlEncoder().encodeToString(gson.toJson(webHookParams).getBytes());
 
         SplunkAlert splunkAlert = new SplunkAlert();
         splunkAlert.setOwner("TEST");
@@ -138,15 +138,15 @@ public class WebHookServiceImplTest {
         mockResponse.setResponseCode(500);
         mockBackEnd.enqueue(mockResponse);
 
-        SplunkWebHookUrls splunkWebHookUrl = new SplunkWebHookUrls();
+        WebHookUrls splunkWebHookUrl = new WebHookUrls();
         splunkWebHookUrl.setChatApp(ChatApp.TEAMS);
         splunkWebHookUrl.setUrl(baseUrl);
-        List<SplunkWebHookUrls> splunkWebHookUrls = Arrays.asList(splunkWebHookUrl);
+        List<WebHookUrls> webHookUrls = Arrays.asList(splunkWebHookUrl);
 
-        SplunkWebHookParams splunkWebHookParams = new SplunkWebHookParams();
-        splunkWebHookParams.setSplunkWebHookUrls(splunkWebHookUrls);
+        WebHookParams webHookParams = new WebHookParams();
+        webHookParams.setWebHookUrls(webHookUrls);
         Gson gson = new Gson();
-        String encodedString = Base64.getUrlEncoder().encodeToString(gson.toJson(splunkWebHookParams).getBytes());
+        String encodedString = Base64.getUrlEncoder().encodeToString(gson.toJson(webHookParams).getBytes());
 
         SplunkAlert splunkAlert = new SplunkAlert();
         splunkAlert.setOwner("TEST");
@@ -174,15 +174,15 @@ public class WebHookServiceImplTest {
         mockResponse.setResponseCode(500);
         mockBackEnd.enqueue(mockResponse);
 
-        SplunkWebHookUrls splunkWebHookUrl = new SplunkWebHookUrls();
+        WebHookUrls splunkWebHookUrl = new WebHookUrls();
         splunkWebHookUrl.setChatApp(ChatApp.ROCKET_CHAT);
         splunkWebHookUrl.setUrl(baseUrl);
-        List<SplunkWebHookUrls> splunkWebHookUrls = Arrays.asList(splunkWebHookUrl);
+        List<WebHookUrls> webHookUrls = Arrays.asList(splunkWebHookUrl);
 
-        SplunkWebHookParams splunkWebHookParams = new SplunkWebHookParams();
-        splunkWebHookParams.setSplunkWebHookUrls(splunkWebHookUrls);
+        WebHookParams webHookParams = new WebHookParams();
+        webHookParams.setWebHookUrls(webHookUrls);
         Gson gson = new Gson();
-        String encodedString = Base64.getUrlEncoder().encodeToString(gson.toJson(splunkWebHookParams).getBytes());
+        String encodedString = Base64.getUrlEncoder().encodeToString(gson.toJson(webHookParams).getBytes());
 
         SplunkAlert splunkAlert = new SplunkAlert();
         splunkAlert.setOwner("TEST");

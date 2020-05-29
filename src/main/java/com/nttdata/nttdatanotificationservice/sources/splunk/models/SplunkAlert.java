@@ -1,4 +1,4 @@
-package com.nttdata.nttdatanotificationservice.splunk.models;
+package com.nttdata.nttdatanotificationservice.sources.splunk.models;
 
 public class SplunkAlert {
     private String 	sid;

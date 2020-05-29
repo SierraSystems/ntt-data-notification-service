@@ -3,7 +3,7 @@ package com.nttdata.nttdatanotificationservice.rocket;
 import com.nttdata.nttdatanotificationservice.rocket.models.RocketMessage;
 import com.nttdata.nttdatanotificationservice.service.ChannelService;
 import com.nttdata.nttdatanotificationservice.service.ChatApp;
-import com.nttdata.nttdatanotificationservice.splunk.models.SplunkAlert;
+import com.nttdata.nttdatanotificationservice.sources.splunk.models.SplunkAlert;
 import org.springframework.stereotype.Service;
 
 @Service

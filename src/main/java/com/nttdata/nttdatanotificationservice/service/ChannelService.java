@@ -1,6 +1,6 @@
 package com.nttdata.nttdatanotificationservice.service;
 
-import com.nttdata.nttdatanotificationservice.splunk.models.SplunkAlert;
+import com.nttdata.nttdatanotificationservice.sources.splunk.models.SplunkAlert;
 
 public interface ChannelService {
 

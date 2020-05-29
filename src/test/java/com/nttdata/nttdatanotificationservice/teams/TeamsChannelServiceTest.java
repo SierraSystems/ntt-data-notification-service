@@ -1,7 +1,7 @@
 package com.nttdata.nttdatanotificationservice.teams;
 
 import com.google.gson.Gson;
-import com.nttdata.nttdatanotificationservice.splunk.models.SplunkAlert;
+import com.nttdata.nttdatanotificationservice.sources.splunk.models.SplunkAlert;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsCard;
 import org.junit.jupiter.api.*;
 
