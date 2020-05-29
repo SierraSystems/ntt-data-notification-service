@@ -5,17 +5,14 @@ services:
   #############################################################################################
   ###                                 SPLUNK DEV BOX                                        ###
   #############################################################################################
-  dps-splunk:
-    image: splunk/splunk:7.3.2
+  ntt-data-notification-splunk:
+    image: splunk/splunk:latest
     environment:
-      - SPLUNK_PASSWORD=admin
+      - SPLUNK_PASSWORD=TestTest
       - SPLUNK_START_ARGS=--accept-license
     ports:
-      - "8000:8000"
-      - "8001:8001"
+      - "7000:8000"
       - "8088:8088"
-      - "8089:8089"
-      - "9997:9997"
     networks:
       - ops-net
 
