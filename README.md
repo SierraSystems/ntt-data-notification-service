@@ -11,10 +11,10 @@ Teams notification screenshot:
 ## Running Locally
 
 ```bash
-docker-compose up --build splunk-notification-service
+docker-compose up
 ```
 
-This should spin up the splunk-notification-service locally.
+This should spin up the ntt-data-notification-service and the latest docker image of splunk locally.
 
 To run the latest version of splunk, run the following command to spin up a container locally:
 

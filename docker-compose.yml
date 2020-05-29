@@ -14,7 +14,8 @@ services:
       - "7000:8000"
       - "8088:8088"
     networks:
-      - ops-net
+      notification-net:
+        ipv4_address: 172.20.0.5
 
   #############################################################################################
   ###                            NTT Data notification service                              ###
@@ -27,8 +28,12 @@ services:
     ports:
       - "6060:8080"
     networks:
-      - ops-net
+      notification-net:
+        ipv4_address: 172.20.0.6
 
 networks: 
-  ops-net:
+  notification-net:
     driver: "bridge"
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
