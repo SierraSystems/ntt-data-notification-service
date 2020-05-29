@@ -1,11 +1,11 @@
 package com.nttdata.nttdatanotificationservice.service;
 
-import com.nttdata.nttdatanotificationservice.sources.splunk.models.SplunkAlert;
+import com.nttdata.nttdatanotificationservice.sources.generic.models.GenericAlert;
 
 public interface ChannelService {
 
     ChatApp getChatApp();
 
-    Object generatePayload(SplunkAlert splunkAlert);
+    Object generatePayload(GenericAlert genericAlert);
 
 }

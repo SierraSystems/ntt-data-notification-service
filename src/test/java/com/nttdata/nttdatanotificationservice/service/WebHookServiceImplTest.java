@@ -2,6 +2,8 @@ package com.nttdata.nttdatanotificationservice.service;
 
 import com.google.gson.Gson;
 import com.nttdata.nttdatanotificationservice.rocket.RocketChannelService;
+import com.nttdata.nttdatanotificationservice.sources.generic.ConvertToGeneric;
+import com.nttdata.nttdatanotificationservice.sources.generic.models.GenericAlert;
 import com.nttdata.nttdatanotificationservice.sources.splunk.models.SplunkAlert;
 import com.nttdata.nttdatanotificationservice.sources.splunk.models.SplunkResult;
 import com.nttdata.nttdatanotificationservice.sources.WebHookParams;
@@ -88,7 +90,9 @@ public class WebHookServiceImplTest {
         splunkAlert.setSid("TEST");
         splunkAlert.setSearch_name("");
 
-        ResponseEntity<String> result = webHookService.postMessage(splunkAlert,encodedString);
+        GenericAlert genericAlert = ConvertToGeneric.splunkToGeneric(splunkAlert);
+
+        ResponseEntity<String> result = webHookService.postMessage(genericAlert,encodedString);
 
         Assertions.assertEquals(HttpStatus.CREATED, result.getStatusCode());
     }
@@ -123,7 +127,9 @@ public class WebHookServiceImplTest {
         splunkAlert.setResults_link("TEST");
         splunkAlert.setSid("TEST");
 
-        ResponseEntity<String> result = webHookService.postMessage(splunkAlert,encodedString);
+        GenericAlert genericAlert = ConvertToGeneric.splunkToGeneric(splunkAlert);
+
+        ResponseEntity<String> result = webHookService.postMessage(genericAlert,encodedString);
 
         Assertions.assertEquals(HttpStatus.CREATED, result.getStatusCode());
     }
@@ -159,7 +165,9 @@ public class WebHookServiceImplTest {
         splunkAlert.setSid("TEST");
         splunkAlert.setSearch_name("");
 
-        ResponseEntity<String> result = webHookService.postMessage(splunkAlert,encodedString);
+        GenericAlert genericAlert = ConvertToGeneric.splunkToGeneric(splunkAlert);
+
+        ResponseEntity<String> result = webHookService.postMessage(genericAlert,encodedString);
 
         Assertions.assertEquals(HttpStatus.CREATED, result.getStatusCode());
     }
@@ -194,7 +202,9 @@ public class WebHookServiceImplTest {
         splunkAlert.setResults_link("TEST");
         splunkAlert.setSid("TEST");
 
-        ResponseEntity<String> result = webHookService.postMessage(splunkAlert,encodedString);
+        GenericAlert genericAlert = ConvertToGeneric.splunkToGeneric(splunkAlert);
+
+        ResponseEntity<String> result = webHookService.postMessage(genericAlert,encodedString);
 
         Assertions.assertEquals(HttpStatus.CREATED, result.getStatusCode());
     }

@@ -2,6 +2,7 @@ package com.nttdata.nttdatanotificationservice.teams;
 
 import com.nttdata.nttdatanotificationservice.service.ChannelService;
 import com.nttdata.nttdatanotificationservice.service.ChatApp;
+import com.nttdata.nttdatanotificationservice.sources.generic.models.GenericAlert;
 import com.nttdata.nttdatanotificationservice.sources.splunk.models.SplunkAlert;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsAction;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsCard;
@@ -21,11 +22,11 @@ public class TeamsChannelService implements ChannelService {
     }
 
     @Override
-    public Object generatePayload(SplunkAlert splunkAlert) {
+    public Object generatePayload(GenericAlert genericAlert) {
 
-        TeamsCard teamsCard = TeamsCard.defaultNttCard(splunkAlert.getSearch_name());
+        TeamsCard teamsCard = TeamsCard.defaultNttCard(genericAlert.getAppName());
 
-        teamsCard.addSection(getTeamsSection(splunkAlert));
+        teamsCard.addSection(getTeamsSection(genericAlert));
 
         TeamsPotentialActions potentialActionsStatus = TeamsPotentialActions.defaultTeamsPotentialActions("ActionCard","Update Status");
 
@@ -35,8 +36,7 @@ public class TeamsChannelService implements ChannelService {
 
         potentialActionsStatus.addAction(statusAction);
 
-        teamsCard.addPotentialAction(getTeamsPotentialActionLink("View in Splunk", splunkAlert.getResults_link()));
-        teamsCard.addPotentialAction(getTeamsPotentialActionLink("Splunk Dashboard", splunkAlert.getResult().getDashboard()));
+        teamsCard.addPotentialAction(getTeamsPotentialActionLink("View in Splunk", genericAlert.getReturnUrl()));
 
         teamsCard.addPotentialAction(potentialActionsStatus);
 
@@ -46,18 +46,19 @@ public class TeamsChannelService implements ChannelService {
     }
 
     @SuppressWarnings("java:S1602")
-    private TeamsSection getTeamsSection(SplunkAlert splunkAlert) {
-        TeamsSection teamsSection = TeamsSection.defaultNttSection(splunkAlert.getSearch_name(), splunkAlert.getResult().getSource());
+    private TeamsSection getTeamsSection(GenericAlert genericAlert) {
+        TeamsSection teamsSection = TeamsSection.defaultNttSection(genericAlert.getAppName(), genericAlert.getOrigin());
 
-        teamsSection.addFact(new TeamsFact("App", splunkAlert.getResult().getSource()));
-        teamsSection.addFact(new TeamsFact("Search", splunkAlert.getSearch_name()));
-        teamsSection.addFact(new TeamsFact("Owner", splunkAlert.getOwner()));
+        teamsSection.addFact(new TeamsFact("App", genericAlert.getAppName()));
+        teamsSection.addFact(new TeamsFact("Search", genericAlert.getOrigin()));
+        teamsSection.addFact(new TeamsFact("Owner", genericAlert.getOwner()));
 
-        splunkAlert.getResult().getDetails().forEach((key, value) -> {
+        genericAlert.getDetails().forEach((key, value) -> {
+            System.out.println(key);
             teamsSection.addFact(new TeamsFact(key, value.toString()));
         });
 
-        teamsSection.addFact(new TeamsFact("Message", splunkAlert.getResult().getMessage()));
+        teamsSection.addFact(new TeamsFact("Message", genericAlert.getMessage()));
         teamsSection.addFact(new TeamsFact("Status", "Open"));
         return teamsSection;
     }

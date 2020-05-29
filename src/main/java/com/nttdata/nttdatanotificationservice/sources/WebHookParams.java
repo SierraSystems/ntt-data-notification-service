@@ -10,8 +10,7 @@ public class WebHookParams {
     return webHookUrls;
   }
 
-  public void setWebHookUrls(
-      List<WebHookUrls> webHookUrls) {
+  public void setWebHookUrls(List<WebHookUrls> webHookUrls) {
     this.webHookUrls = webHookUrls;
   }
 }
