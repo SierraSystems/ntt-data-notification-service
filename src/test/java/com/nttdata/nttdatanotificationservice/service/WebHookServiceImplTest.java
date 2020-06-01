@@ -126,7 +126,7 @@ public class WebHookServiceImplTest {
         splunkAlert.setResults_link("TEST");
         splunkAlert.setSid("TEST");
 
-        GenericAlert genericAlert = ;
+        GenericAlert genericAlert = splunkAlert.convertToGeneric();
 
         ResponseEntity<String> result = webHookService.postMessage(genericAlert,encodedString);
 
