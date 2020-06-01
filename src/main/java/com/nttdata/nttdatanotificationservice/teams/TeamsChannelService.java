@@ -2,7 +2,7 @@ package com.nttdata.nttdatanotificationservice.teams;
 
 import com.nttdata.nttdatanotificationservice.service.ChannelService;
 import com.nttdata.nttdatanotificationservice.service.ChatApp;
-import com.nttdata.nttdatanotificationservice.sources.alert.models.Alert;
+import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsAction;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsCard;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsChoice;
@@ -21,11 +21,11 @@ public class TeamsChannelService implements ChannelService {
     }
 
     @Override
-    public Object generatePayload(Alert alert) {
+    public Object generatePayload(Notification notification) {
 
-        TeamsCard teamsCard = TeamsCard.defaultNttCard(alert.getAppName());
+        TeamsCard teamsCard = TeamsCard.defaultNttCard(notification.getAppName());
 
-        teamsCard.addSection(getTeamsSection(alert));
+        teamsCard.addSection(getTeamsSection(notification));
 
         TeamsPotentialActions potentialActionsStatus = TeamsPotentialActions.defaultTeamsPotentialActions("ActionCard","Update Status");
 
@@ -35,7 +35,7 @@ public class TeamsChannelService implements ChannelService {
 
         potentialActionsStatus.addAction(statusAction);
 
-        teamsCard.addPotentialAction(getTeamsPotentialActionLink("View in Splunk", alert.getReturnUrl()));
+        teamsCard.addPotentialAction(getTeamsPotentialActionLink("View in Splunk", notification.getReturnUrl()));
 
         teamsCard.addPotentialAction(potentialActionsStatus);
 
@@ -45,18 +45,19 @@ public class TeamsChannelService implements ChannelService {
     }
 
     @SuppressWarnings("java:S1602")
-    private TeamsSection getTeamsSection(Alert alert) {
-        TeamsSection teamsSection = TeamsSection.defaultNttSection(alert.getAppName(), alert.getOrigin());
+    private TeamsSection getTeamsSection(Notification notification) {
+        TeamsSection teamsSection = TeamsSection.defaultNttSection(notification.getAppName(), notification
+            .getOrigin());
 
-        teamsSection.addFact(new TeamsFact("App", alert.getAppName()));
-        teamsSection.addFact(new TeamsFact("Search", alert.getOrigin()));
-        teamsSection.addFact(new TeamsFact("Owner", alert.getOwner()));
+        teamsSection.addFact(new TeamsFact("App", notification.getAppName()));
+        teamsSection.addFact(new TeamsFact("Search", notification.getOrigin()));
+        teamsSection.addFact(new TeamsFact("Owner", notification.getOwner()));
 
-        alert.getDetails().forEach((key, value) -> {
+        notification.getDetails().forEach((key, value) -> {
             teamsSection.addFact(new TeamsFact(key, value.toString()));
         });
 
-        teamsSection.addFact(new TeamsFact("Message", alert.getMessage()));
+        teamsSection.addFact(new TeamsFact("Message", notification.getMessage()));
         teamsSection.addFact(new TeamsFact("Status", "Open"));
         return teamsSection;
     }

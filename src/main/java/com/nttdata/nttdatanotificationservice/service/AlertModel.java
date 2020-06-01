@@ -1,9 +1,9 @@
 package com.nttdata.nttdatanotificationservice.service;
 
-import com.nttdata.nttdatanotificationservice.sources.alert.models.Alert;
+import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
 
 public interface AlertModel {
 
-  Alert convertToAlert();
+  Notification convertToAlert();
 
 }

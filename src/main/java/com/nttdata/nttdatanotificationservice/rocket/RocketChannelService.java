@@ -3,7 +3,7 @@ package com.nttdata.nttdatanotificationservice.rocket;
 import com.nttdata.nttdatanotificationservice.rocket.models.RocketMessage;
 import com.nttdata.nttdatanotificationservice.service.ChannelService;
 import com.nttdata.nttdatanotificationservice.service.ChatApp;
-import com.nttdata.nttdatanotificationservice.sources.alert.models.Alert;
+import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,25 +17,25 @@ public class RocketChannelService implements ChannelService {
     }
 
     @Override
-    public Object generatePayload(Alert alert) {
-        RocketMessage rocketMessage = RocketMessage.defaultNttMessage(alert.getAppName());
-        rocketMessage.setText(getRocketText(alert));
+    public Object generatePayload(Notification notification) {
+        RocketMessage rocketMessage = RocketMessage.defaultNttMessage(notification.getAppName());
+        rocketMessage.setText(getRocketText(notification));
 
         return rocketMessage;
     }
 
     @SuppressWarnings("java:S1602")
-    private String getRocketText(Alert alert) {
-        final String[] text = {String.format(ROCKETCHATTEMPLATE, "App", alert.getAppName())};
-        text[0] = text[0].concat(String.format(ROCKETCHATTEMPLATE, "Search", alert.getOrigin()));
-        text[0] = text[0].concat(String.format(ROCKETCHATTEMPLATE, "Owner", alert.getOwner()));
+    private String getRocketText(Notification notification) {
+        final String[] text = {String.format(ROCKETCHATTEMPLATE, "App", notification.getAppName())};
+        text[0] = text[0].concat(String.format(ROCKETCHATTEMPLATE, "Search", notification.getOrigin()));
+        text[0] = text[0].concat(String.format(ROCKETCHATTEMPLATE, "Owner", notification.getOwner()));
 
-        alert.getDetails().forEach((key, value) -> {
+        notification.getDetails().forEach((key, value) -> {
             text[0] = text[0].concat(String.format(ROCKETCHATTEMPLATE, key, value.toString()));
         });
 
-        text[0] = text[0].concat(String.format(ROCKETCHATTEMPLATE, "Message", alert.getMessage()));
-        text[0] = text[0].concat(String.format(ROCKETCHATTEMPLATE, "Search Link", alert.getReturnUrl()));
+        text[0] = text[0].concat(String.format(ROCKETCHATTEMPLATE, "Message", notification.getMessage()));
+        text[0] = text[0].concat(String.format(ROCKETCHATTEMPLATE, "Search Link", notification.getReturnUrl()));
 
         return text[0];
     }

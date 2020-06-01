@@ -1,10 +1,10 @@
-package com.nttdata.nttdatanotificationservice.sources.alert.models;
+package com.nttdata.nttdatanotificationservice.sources.notification.models;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Alert {
+public class Notification {
   private String appName;
   private String origin;
   private String owner;

@@ -1,7 +1,7 @@
 package com.nttdata.nttdatanotificationservice.controller;
 
 import com.nttdata.nttdatanotificationservice.configuration.NotificationServiceProperties;
-import com.nttdata.nttdatanotificationservice.sources.alert.models.Alert;
+import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
 import com.nttdata.nttdatanotificationservice.sources.splunk.models.SplunkAlert;
 import com.nttdata.nttdatanotificationservice.service.WebHookService;
 import org.slf4j.Logger;
@@ -34,8 +34,8 @@ public class SplunkNotificationController {
             return new ResponseEntity<>("Token validation failed", HttpStatus.UNAUTHORIZED);
         }
 
-        Alert alert = splunkAlert.convertToAlert();
+        Notification notification = splunkAlert.convertToAlert();
 
-        return webHookService.postMessage(alert, routes);
+        return webHookService.postMessage(notification, routes);
     }
 }

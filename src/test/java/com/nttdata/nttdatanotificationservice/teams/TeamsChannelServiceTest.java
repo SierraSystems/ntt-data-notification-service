@@ -1,7 +1,7 @@
 package com.nttdata.nttdatanotificationservice.teams;
 
 import com.google.gson.Gson;
-import com.nttdata.nttdatanotificationservice.sources.alert.models.Alert;
+import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
 import com.nttdata.nttdatanotificationservice.sources.splunk.models.SplunkAlert;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsCard;
 import org.junit.jupiter.api.*;
@@ -44,9 +44,9 @@ public class TeamsChannelServiceTest {
         //Work around to get other fields mapped. Gson wouldn't map.
         splunkAlert.getResult().setDetails("other","other");
 
-        Alert alert = splunkAlert.convertToAlert();
+        Notification notification = splunkAlert.convertToAlert();
 
-        TeamsCard actual = (TeamsCard) sut.generatePayload(alert);
+        TeamsCard actual = (TeamsCard) sut.generatePayload(notification);
 
 
         Assertions.assertEquals("http://schema.org/extensions", actual.getContext());

@@ -2,7 +2,7 @@ package com.nttdata.nttdatanotificationservice.service;
 
 import com.google.gson.Gson;
 import com.nttdata.nttdatanotificationservice.rocket.RocketChannelService;
-import com.nttdata.nttdatanotificationservice.sources.alert.models.Alert;
+import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
 import com.nttdata.nttdatanotificationservice.sources.splunk.models.SplunkAlert;
 import com.nttdata.nttdatanotificationservice.sources.splunk.models.SplunkResult;
 import com.nttdata.nttdatanotificationservice.configuration.WebHookParams;
@@ -89,9 +89,9 @@ public class WebHookServiceImplTest {
         splunkAlert.setSid("TEST");
         splunkAlert.setSearch_name("");
 
-        Alert alert = splunkAlert.convertToAlert();
+        Notification notification = splunkAlert.convertToAlert();
 
-        ResponseEntity<String> result = webHookService.postMessage(alert,encodedString);
+        ResponseEntity<String> result = webHookService.postMessage(notification,encodedString);
 
         Assertions.assertEquals(HttpStatus.CREATED, result.getStatusCode());
     }
@@ -126,9 +126,9 @@ public class WebHookServiceImplTest {
         splunkAlert.setResults_link("TEST");
         splunkAlert.setSid("TEST");
 
-        Alert alert = splunkAlert.convertToAlert();
+        Notification notification = splunkAlert.convertToAlert();
 
-        ResponseEntity<String> result = webHookService.postMessage(alert,encodedString);
+        ResponseEntity<String> result = webHookService.postMessage(notification,encodedString);
 
         Assertions.assertEquals(HttpStatus.CREATED, result.getStatusCode());
     }
@@ -164,9 +164,9 @@ public class WebHookServiceImplTest {
         splunkAlert.setSid("TEST");
         splunkAlert.setSearch_name("");
 
-        Alert alert = splunkAlert.convertToAlert();
+        Notification notification = splunkAlert.convertToAlert();
 
-        ResponseEntity<String> result = webHookService.postMessage(alert,encodedString);
+        ResponseEntity<String> result = webHookService.postMessage(notification,encodedString);
 
         Assertions.assertEquals(HttpStatus.CREATED, result.getStatusCode());
     }
@@ -201,9 +201,9 @@ public class WebHookServiceImplTest {
         splunkAlert.setResults_link("TEST");
         splunkAlert.setSid("TEST");
 
-        Alert alert = splunkAlert.convertToAlert();
+        Notification notification = splunkAlert.convertToAlert();
 
-        ResponseEntity<String> result = webHookService.postMessage(alert,encodedString);
+        ResponseEntity<String> result = webHookService.postMessage(notification,encodedString);
 
         Assertions.assertEquals(HttpStatus.CREATED, result.getStatusCode());
     }
