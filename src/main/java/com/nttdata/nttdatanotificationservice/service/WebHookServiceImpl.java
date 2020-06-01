@@ -1,7 +1,7 @@
 package com.nttdata.nttdatanotificationservice.service;
 
 import com.nttdata.nttdatanotificationservice.sources.generic.models.GenericAlert;
-import com.nttdata.nttdatanotificationservice.sources.WebHookParams;
+import com.nttdata.nttdatanotificationservice.configuration.WebHookParams;
 import com.google.gson.Gson;
 
 import java.util.Base64;

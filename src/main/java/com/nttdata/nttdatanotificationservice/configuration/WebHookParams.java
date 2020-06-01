@@ -1,4 +1,4 @@
-package com.nttdata.nttdatanotificationservice.sources;
+package com.nttdata.nttdatanotificationservice.configuration;
 
 import java.util.ArrayList;
 import java.util.List;
