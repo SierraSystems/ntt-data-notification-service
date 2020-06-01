@@ -1,7 +1,6 @@
 package com.nttdata.nttdatanotificationservice.teams;
 
 import com.google.gson.Gson;
-import com.nttdata.nttdatanotificationservice.sources.generic.ConvertToGeneric;
 import com.nttdata.nttdatanotificationservice.sources.generic.models.GenericAlert;
 import com.nttdata.nttdatanotificationservice.sources.splunk.models.SplunkAlert;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsCard;
@@ -45,7 +44,7 @@ public class TeamsChannelServiceTest {
         //Work around to get other fields mapped. Gson wouldn't map.
         splunkAlert.getResult().setDetails("other","other");
 
-        GenericAlert genericAlert = ConvertToGeneric.splunkToGeneric(splunkAlert);
+        GenericAlert genericAlert = splunkAlert.convertToGeneric();
 
         TeamsCard actual = (TeamsCard) sut.generatePayload(genericAlert);
 

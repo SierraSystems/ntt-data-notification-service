@@ -1,9 +1,9 @@
 package com.nttdata.nttdatanotificationservice.sources.splunk.models;
 
-import com.nttdata.nttdatanotificationservice.service.GenericService;
+import com.nttdata.nttdatanotificationservice.service.AlertModel;
 import com.nttdata.nttdatanotificationservice.sources.generic.models.GenericAlert;
 
-public class SplunkAlert implements GenericService {
+public class SplunkAlert implements AlertModel {
     private String 	sid;
     private String results_link;
     private String search_name;

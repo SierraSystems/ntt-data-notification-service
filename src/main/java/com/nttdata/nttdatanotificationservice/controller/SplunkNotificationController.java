@@ -2,7 +2,6 @@ package com.nttdata.nttdatanotificationservice.controller;
 
 import com.nttdata.nttdatanotificationservice.configuration.NotificationServiceProperties;
 import com.nttdata.nttdatanotificationservice.sources.generic.models.GenericAlert;
-import com.nttdata.nttdatanotificationservice.sources.generic.ConvertToGeneric;
 import com.nttdata.nttdatanotificationservice.sources.splunk.models.SplunkAlert;
 import com.nttdata.nttdatanotificationservice.service.WebHookService;
 import org.slf4j.Logger;

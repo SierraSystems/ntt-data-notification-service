@@ -2,7 +2,6 @@ package com.nttdata.nttdatanotificationservice.service;
 
 import com.google.gson.Gson;
 import com.nttdata.nttdatanotificationservice.rocket.RocketChannelService;
-import com.nttdata.nttdatanotificationservice.sources.generic.ConvertToGeneric;
 import com.nttdata.nttdatanotificationservice.sources.generic.models.GenericAlert;
 import com.nttdata.nttdatanotificationservice.sources.splunk.models.SplunkAlert;
 import com.nttdata.nttdatanotificationservice.sources.splunk.models.SplunkResult;
@@ -90,7 +89,7 @@ public class WebHookServiceImplTest {
         splunkAlert.setSid("TEST");
         splunkAlert.setSearch_name("");
 
-        GenericAlert genericAlert = ConvertToGeneric.splunkToGeneric(splunkAlert);
+        GenericAlert genericAlert = splunkAlert.convertToGeneric();
 
         ResponseEntity<String> result = webHookService.postMessage(genericAlert,encodedString);
 
@@ -127,7 +126,7 @@ public class WebHookServiceImplTest {
         splunkAlert.setResults_link("TEST");
         splunkAlert.setSid("TEST");
 
-        GenericAlert genericAlert = ConvertToGeneric.splunkToGeneric(splunkAlert);
+        GenericAlert genericAlert = ;
 
         ResponseEntity<String> result = webHookService.postMessage(genericAlert,encodedString);
 
@@ -165,7 +164,7 @@ public class WebHookServiceImplTest {
         splunkAlert.setSid("TEST");
         splunkAlert.setSearch_name("");
 
-        GenericAlert genericAlert = ConvertToGeneric.splunkToGeneric(splunkAlert);
+        GenericAlert genericAlert = splunkAlert.convertToGeneric();
 
         ResponseEntity<String> result = webHookService.postMessage(genericAlert,encodedString);
 
@@ -202,7 +201,7 @@ public class WebHookServiceImplTest {
         splunkAlert.setResults_link("TEST");
         splunkAlert.setSid("TEST");
 
-        GenericAlert genericAlert = ConvertToGeneric.splunkToGeneric(splunkAlert);
+        GenericAlert genericAlert = splunkAlert.convertToGeneric();
 
         ResponseEntity<String> result = webHookService.postMessage(genericAlert,encodedString);
 

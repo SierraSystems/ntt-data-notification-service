@@ -2,7 +2,6 @@ package com.nttdata.nttdatanotificationservice.rocket;
 
 import com.google.gson.Gson;
 import com.nttdata.nttdatanotificationservice.rocket.models.RocketMessage;
-import com.nttdata.nttdatanotificationservice.sources.generic.ConvertToGeneric;
 import com.nttdata.nttdatanotificationservice.sources.generic.models.GenericAlert;
 import com.nttdata.nttdatanotificationservice.sources.splunk.models.SplunkAlert;
 import org.junit.jupiter.api.*;
@@ -45,7 +44,7 @@ public class RocketChannelServiceTest {
     SplunkAlert splunkAlert = gson.fromJson(splunkAlertJson, SplunkAlert.class);
     splunkAlert.getResult().getDetails().put("other","other");
 
-    GenericAlert genericAlert = ConvertToGeneric.splunkToGeneric(splunkAlert);
+    GenericAlert genericAlert = splunkAlert.convertToGeneric();
 
     RocketMessage actual = (RocketMessage) sur.generatePayload(genericAlert);
 
