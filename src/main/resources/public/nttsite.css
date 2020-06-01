@@ -44,6 +44,36 @@ html, body {
     max-width: 90%;
 }
 
+.content {
+    padding-top: 15px;
+}
+
+.left-content {
+    width: 45%;
+    float: left;
+}
+
+.right-content {
+    width: 45%;
+    float: left;
+}
+
+.small-font {
+    font-size: 14px;
+}
+
+input {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid black;
+    width: 90%;
+}
+
+.sides {
+    clear: both;
+}
+
 /*
 Extra small (xs) devices (portrait phones, less than 576px)
 No media query since this is the default in Bootstrap
