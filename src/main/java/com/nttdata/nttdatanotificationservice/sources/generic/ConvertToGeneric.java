@@ -4,7 +4,7 @@ import com.nttdata.nttdatanotificationservice.sources.generic.models.GenericAler
 import com.nttdata.nttdatanotificationservice.sources.splunk.models.SplunkAlert;
 
 public class ConvertToGeneric {
-
+  private ConvertToGeneric() { throw new IllegalStateException("Utility class"); }
   public static GenericAlert splunkToGeneric(SplunkAlert splunkAlert) {
     GenericAlert genericAlert = new GenericAlert();
 
