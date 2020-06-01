@@ -74,6 +74,28 @@ input {
     clear: both;
 }
 
+.left-button {
+    width: 80%;
+    background: #000B28 0% 0% no-repeat padding-box;
+}
+
+.button-text {
+    font-size: 10px;
+    letter-spacing: 0.01px;
+    color: #FFFFFF;
+    text-transform: uppercase;
+}
+
+.right-button {
+    width: 13%;
+    background: #000B28 0% 0% no-repeat padding-box;
+}
+
+.textarea {
+    margin-top: 20px;
+    width: 94%;
+}
+
 /*
 Extra small (xs) devices (portrait phones, less than 576px)
 No media query since this is the default in Bootstrap
