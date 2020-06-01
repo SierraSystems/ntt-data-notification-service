@@ -35,7 +35,7 @@ public class SplunkNotificationController {
             return new ResponseEntity<>("Token validation failed", HttpStatus.UNAUTHORIZED);
         }
 
-        GenericAlert genericAlert = ConvertToGeneric.splunkToGeneric(splunkAlert);
+        GenericAlert genericAlert = splunkAlert.convertToGeneric();
 
         return webHookService.postMessage(genericAlert, routes);
     }

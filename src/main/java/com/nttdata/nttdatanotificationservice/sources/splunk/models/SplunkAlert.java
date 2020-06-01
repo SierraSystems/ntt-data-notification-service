@@ -1,6 +1,9 @@
 package com.nttdata.nttdatanotificationservice.sources.splunk.models;
 
-public class SplunkAlert {
+import com.nttdata.nttdatanotificationservice.service.GenericService;
+import com.nttdata.nttdatanotificationservice.sources.generic.models.GenericAlert;
+
+public class SplunkAlert implements GenericService {
     private String 	sid;
     private String results_link;
     private String search_name;
@@ -27,4 +30,19 @@ public class SplunkAlert {
 
     public void setResult(SplunkResult result) {this.result = result;}
 
+    @Override
+    public GenericAlert convertToGeneric() {
+        GenericAlert genericAlert = new GenericAlert();
+
+        genericAlert.setAppName(this.getResult().getSource());
+        genericAlert.setOrigin(this.getSearch_name());
+        genericAlert.setOwner(this.getOwner());
+        genericAlert.setMessage(this.getResult().getMessage());
+        genericAlert.setReturnUrl(this.getResults_link());
+
+        genericAlert.addDetails("dashboard", this.getResult().getDashboard());
+        genericAlert.addDetails(this.getResult().getDetails());
+
+        return genericAlert;
+    }
 }
