@@ -1,6 +1,6 @@
 package com.nttdata.nttdatanotificationservice.service;
 
-import com.nttdata.nttdatanotificationservice.sources.generic.models.GenericAlert;
+import com.nttdata.nttdatanotificationservice.sources.alert.models.Alert;
 import com.nttdata.nttdatanotificationservice.configuration.WebHookParams;
 import com.google.gson.Gson;
 
@@ -22,7 +22,7 @@ public class WebHookServiceImpl implements WebHookService {
     @Autowired
     ChannelServiceFactory channelServiceFactory;
 
-    public ResponseEntity<String> postMessage(GenericAlert genericAlert, String routes) {
+    public ResponseEntity<String> postMessage(Alert alert, String routes) {
         Gson gson = new Gson();
         byte[] decodedRoutesBytes = Base64.getUrlDecoder().decode(routes);
         String decodedRoutesUrl = new String(decodedRoutesBytes);
@@ -35,7 +35,8 @@ public class WebHookServiceImpl implements WebHookService {
             Optional<ChannelService> channelService = channelServiceFactory.getChanelService(chatApp);
             logger.info("Posting to {}", chatApp);
 
-            channelService.ifPresent(service -> post(webHookUrl.getUrl(), service.generatePayload(genericAlert)));
+            channelService.ifPresent(service -> post(webHookUrl.getUrl(), service.generatePayload(
+                alert)));
         });
 
         return new ResponseEntity<>("Success", HttpStatus.CREATED);

@@ -1,7 +1,7 @@
 package com.nttdata.nttdatanotificationservice.controller;
 
 import com.nttdata.nttdatanotificationservice.configuration.NotificationServiceProperties;
-import com.nttdata.nttdatanotificationservice.sources.generic.models.GenericAlert;
+import com.nttdata.nttdatanotificationservice.sources.alert.models.Alert;
 import com.nttdata.nttdatanotificationservice.service.WebHookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @EnableConfigurationProperties(NotificationServiceProperties.class)
-public class GenericNotificationController {
+public class NotificationController {
 
   @Autowired
   WebHookService webHookService;
@@ -22,17 +22,17 @@ public class GenericNotificationController {
   @Autowired
   NotificationServiceProperties notificationServiceProperties;
 
-  Logger logger = LoggerFactory.getLogger(GenericNotificationController.class);
+  Logger logger = LoggerFactory.getLogger(NotificationController.class);
 
   @PostMapping(value = "generic/{token}/{routes}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<String> alert(@PathVariable("token") String token,
                                       @PathVariable("routes") String routes,
-                                      @RequestBody GenericAlert genericAlert) {
+                                      @RequestBody Alert alert) {
     if (!notificationServiceProperties.getTokens().contains(token)) {
       logger.error("Token failed to validate");
       return new ResponseEntity<>("Token validation failed", HttpStatus.UNAUTHORIZED);
     }
 
-    return webHookService.postMessage(genericAlert, routes);
+    return webHookService.postMessage(alert, routes);
   }
 }

@@ -1,7 +1,7 @@
 package com.nttdata.nttdatanotificationservice.sources.splunk.models;
 
 import com.nttdata.nttdatanotificationservice.service.AlertModel;
-import com.nttdata.nttdatanotificationservice.sources.generic.models.GenericAlert;
+import com.nttdata.nttdatanotificationservice.sources.alert.models.Alert;
 
 public class SplunkAlert implements AlertModel {
     private String 	sid;
@@ -31,18 +31,18 @@ public class SplunkAlert implements AlertModel {
     public void setResult(SplunkResult result) {this.result = result;}
 
     @Override
-    public GenericAlert convertToGeneric() {
-        GenericAlert genericAlert = new GenericAlert();
+    public Alert convertToAlert() {
+        Alert alert = new Alert();
 
-        genericAlert.setAppName(this.getResult().getSource());
-        genericAlert.setOrigin(this.getSearch_name());
-        genericAlert.setOwner(this.getOwner());
-        genericAlert.setMessage(this.getResult().getMessage());
-        genericAlert.setReturnUrl(this.getResults_link());
+        alert.setAppName(this.getResult().getSource());
+        alert.setOrigin(this.getSearch_name());
+        alert.setOwner(this.getOwner());
+        alert.setMessage(this.getResult().getMessage());
+        alert.setReturnUrl(this.getResults_link());
 
-        genericAlert.addDetails("dashboard", this.getResult().getDashboard());
-        genericAlert.addDetails(this.getResult().getDetails());
+        alert.addDetails("dashboard", this.getResult().getDashboard());
+        alert.addDetails(this.getResult().getDetails());
 
-        return genericAlert;
+        return alert;
     }
 }

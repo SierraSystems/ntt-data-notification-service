@@ -1,11 +1,11 @@
 package com.nttdata.nttdatanotificationservice.service;
 
-import com.nttdata.nttdatanotificationservice.sources.generic.models.GenericAlert;
+import com.nttdata.nttdatanotificationservice.sources.alert.models.Alert;
 
 public interface ChannelService {
 
     ChatApp getChatApp();
 
-    Object generatePayload(GenericAlert genericAlert);
+    Object generatePayload(Alert alert);
 
 }
