@@ -37,7 +37,7 @@ In order to see the mocha frontend unit test results locally, navigate to `http:
 
 Once you have Splunk and the notification service running locally, you'll need to setup the actual webhook to send notifications to your favourite Teams/RocketChat channels. Follow the following steps to set this up:
 
-1. Navigate to your local splunk instance at `http://localhost:<LOCAL_SPLUNK_PORT>`. Via docker this port is defaulted to 7000.
+1. Navigate to your local Splunk instance at `http://localhost:<LOCAL_SPLUNK_PORT>`. Via docker this port is defaulted to 7000.
 
 2. To try out an example log, type the following as a search in Splunk:
 ```bash
