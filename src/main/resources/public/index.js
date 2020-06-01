@@ -142,3 +142,14 @@ function validateToken(token) {
 
     return true;
 }
+
+function copyToClipboard() {
+    const textToCopy = document.getElementById("generatedUrl");
+
+    textToCopy.select();
+    textToCopy.setSelectionRange(0, 99999);
+
+    document.execCommand("copy");
+
+    $(".success-copy").show();
+}

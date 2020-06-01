@@ -75,6 +75,7 @@ input {
 }
 
 .left-button {
+    cursor: pointer;
     width: 80%;
     background: #000B28 0% 0% no-repeat padding-box;
 }
@@ -87,6 +88,7 @@ input {
 }
 
 .right-button {
+    cursor: pointer;
     width: 13%;
     background: #000B28 0% 0% no-repeat padding-box;
 }
@@ -94,6 +96,12 @@ input {
 .textarea {
     margin-top: 20px;
     width: 94%;
+    font-size: 10px;
+}
+
+.success-copy {
+    padding-top: 15px;
+    font-size: 14px;
 }
 
 /*

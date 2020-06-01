@@ -11,6 +11,12 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
         <link href="nttsite.css" rel="stylesheet">
+        <script src="index.js"></script>
+        <script>
+            $(document).ready(function() {
+                $(".success-copy").hide();
+            });
+        </script>
     </head>
     <body>
         <!-- Navigation -->
@@ -54,10 +60,11 @@
                 <button class="left-button">
                     <b class="button-text">Generate Url</b>
                 </button>
-                <button class="right-button">
+                <button class="right-button" onclick="copyToClipboard()">
                     <img src="img/copy.svg" alt="copy-icon" width="23px" height="23px">
                 </button>
-                <textarea disabled class="form-control textarea" rows="3"></textarea>
+                <textarea id="generatedUrl" class="form-control textarea" rows="4"></textarea>
+                <p class="success-copy">Url has been successfully copied to the clipboard.</p>
             </div>
             <div class="sides">
         </div>
