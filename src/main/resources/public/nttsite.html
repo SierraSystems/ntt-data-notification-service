@@ -55,6 +55,32 @@
                 <b class="small-font">Enter Token</b>
                 <br/>
                 <input type="text" class="token">
+
+                <div class="rectangle">
+                    <div class="input-group">
+                        <img src="img/teams.png"/>
+                        <b class="small-font">Enter Microsoft Teams URL</b>
+                        <input type="text" class="input">
+                        <div class="input-group-addon">
+                            <button>+</button>
+                        </div>
+                    </div>
+                    <br/>
+                    <input disabled>
+                </div>
+                <br/>
+                <div class="rectangle">
+                    <div class="input-group">
+                        <img src="img/rocketchat.png"/>
+                        <b class="small-font">Enter Rocket Chat URL</b>
+                        <input type="text" class="input">
+                        <div class="input-group-addon">
+                            <button>+</button>
+                        </div>
+                    </div>
+                    <br/>
+                    <input disabled>
+                </div>
             </div>
             <div class="right-content">
                 <button class="left-button">
@@ -63,7 +89,7 @@
                 <button class="right-button" onclick="copyToClipboard()">
                     <img src="img/copy.svg" alt="copy-icon" width="23px" height="23px">
                 </button>
-                <textarea id="generatedUrl" class="form-control textarea" rows="4"></textarea>
+                <textarea placeholder="URL will be generated here..." id="generatedUrl" class="form-control textarea" rows="4"></textarea>
                 <p class="success-copy">Url has been successfully copied to the clipboard.</p>
             </div>
             <div class="sides">
