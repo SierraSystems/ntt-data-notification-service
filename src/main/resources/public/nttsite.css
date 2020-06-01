@@ -3,6 +3,11 @@ html, body {
     font-family: 'Catamaran';
 }
 
+.spacing {
+    padding-left: 12%;
+    padding-right: 12%;
+}
+
 .links {
     width: 100px;
     color: #FFFFFF !important;
@@ -36,6 +41,7 @@ html, body {
 
 .text {
     padding-top: 15px;
+    max-width: 90%;
 }
 
 /*
