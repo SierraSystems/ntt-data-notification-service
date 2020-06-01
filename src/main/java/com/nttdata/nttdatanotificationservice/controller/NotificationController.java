@@ -1,5 +1,6 @@
 package com.nttdata.nttdatanotificationservice.controller;
 
+import com.nttdata.nttdatanotificationservice.configuration.NotificationBody;
 import com.nttdata.nttdatanotificationservice.configuration.NotificationServiceProperties;
 import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
 import com.nttdata.nttdatanotificationservice.service.WebHookService;
@@ -27,12 +28,12 @@ public class NotificationController {
   @PostMapping(value = "generic/{token}/{routes}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<String> alert(@PathVariable("token") String token,
                                       @PathVariable("routes") String routes,
-                                      @RequestBody Notification notification) {
+                                      @RequestBody NotificationBody notificationBody) {
     if (!notificationServiceProperties.getTokens().contains(token)) {
       logger.error("Token failed to validate");
       return new ResponseEntity<>("Token validation failed", HttpStatus.UNAUTHORIZED);
     }
 
-    return webHookService.postMessage(notification, routes);
+    return webHookService.postMessage(notificationBody.getNotification(), notificationBody.getWebHookParams());
   }
 }

@@ -22,12 +22,7 @@ public class WebHookServiceImpl implements WebHookService {
     @Autowired
     ChannelServiceFactory channelServiceFactory;
 
-    public ResponseEntity<String> postMessage(Notification notification, String routes) {
-        Gson gson = new Gson();
-        byte[] decodedRoutesBytes = Base64.getUrlDecoder().decode(routes);
-        String decodedRoutesUrl = new String(decodedRoutesBytes);
-
-        WebHookParams webHookParams = gson.fromJson(decodedRoutesUrl, WebHookParams.class);
+    public ResponseEntity<String> postMessage(Notification notification, WebHookParams webHookParams) {
 
         webHookParams.getWebHookUrls().stream().forEach(webHookUrl -> {
             ChatApp chatApp = webHookUrl.getChatApp();

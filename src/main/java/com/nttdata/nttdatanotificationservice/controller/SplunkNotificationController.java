@@ -1,9 +1,12 @@
 package com.nttdata.nttdatanotificationservice.controller;
 
+import com.google.gson.Gson;
 import com.nttdata.nttdatanotificationservice.configuration.NotificationServiceProperties;
+import com.nttdata.nttdatanotificationservice.configuration.WebHookParams;
 import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
 import com.nttdata.nttdatanotificationservice.sources.splunk.models.SplunkAlert;
 import com.nttdata.nttdatanotificationservice.service.WebHookService;
+import java.util.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +39,12 @@ public class SplunkNotificationController {
 
         Notification notification = splunkAlert.convertToAlert();
 
-        return webHookService.postMessage(notification, routes);
+        Gson gson = new Gson();
+        byte[] decodedRoutesBytes = Base64.getUrlDecoder().decode(routes);
+        String decodedRoutesUrl = new String(decodedRoutesBytes);
+
+        WebHookParams webHookParams = gson.fromJson(decodedRoutesUrl, WebHookParams.class);
+
+        return webHookService.postMessage(notification, webHookParams);
     }
 }

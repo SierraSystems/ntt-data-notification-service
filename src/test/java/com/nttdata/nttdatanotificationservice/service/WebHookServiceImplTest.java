@@ -91,7 +91,7 @@ public class WebHookServiceImplTest {
 
         Notification notification = splunkAlert.convertToAlert();
 
-        ResponseEntity<String> result = webHookService.postMessage(notification,encodedString);
+        ResponseEntity<String> result = webHookService.postMessage(notification,webHookParams);
 
         Assertions.assertEquals(HttpStatus.CREATED, result.getStatusCode());
     }
@@ -128,7 +128,7 @@ public class WebHookServiceImplTest {
 
         Notification notification = splunkAlert.convertToAlert();
 
-        ResponseEntity<String> result = webHookService.postMessage(notification,encodedString);
+        ResponseEntity<String> result = webHookService.postMessage(notification,webHookParams);
 
         Assertions.assertEquals(HttpStatus.CREATED, result.getStatusCode());
     }
@@ -166,7 +166,7 @@ public class WebHookServiceImplTest {
 
         Notification notification = splunkAlert.convertToAlert();
 
-        ResponseEntity<String> result = webHookService.postMessage(notification,encodedString);
+        ResponseEntity<String> result = webHookService.postMessage(notification,webHookParams);
 
         Assertions.assertEquals(HttpStatus.CREATED, result.getStatusCode());
     }
@@ -203,7 +203,7 @@ public class WebHookServiceImplTest {
 
         Notification notification = splunkAlert.convertToAlert();
 
-        ResponseEntity<String> result = webHookService.postMessage(notification,encodedString);
+        ResponseEntity<String> result = webHookService.postMessage(notification,webHookParams);
 
         Assertions.assertEquals(HttpStatus.CREATED, result.getStatusCode());
     }
