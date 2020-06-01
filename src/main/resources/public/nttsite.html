@@ -54,40 +54,45 @@
             <div class="left-content head">
                 <b class="small-font">Enter Token</b>
                 <br/>
-                <input type="text" class="token">
+                <input type="text" class="token input">
 
                 <div class="rectangle">
                     <div class="input-group">
-                        <img src="img/teams.png"/>
+                        <img src="img/teams.png" width="23px" height="23px"/>
                         <b class="small-font">Enter Microsoft Teams URL</b>
                         <input type="text" class="input">
                         <div class="input-group-addon">
-                            <button>+</button>
+                            <button class="add-remove">+</button>
+                        </div>
+                        <input class="entered-urls mt-4" disabled>
+                        <div class="input-group-addon mt-4">
+                            <button class="add-remove">x</button>
                         </div>
                     </div>
-                    <br/>
-                    <input disabled>
                 </div>
                 <br/>
                 <div class="rectangle">
                     <div class="input-group">
-                        <img src="img/rocketchat.png"/>
+                        <img src="img/rocketchat.png" width="23px" height="23px"/>
                         <b class="small-font">Enter Rocket Chat URL</b>
                         <input type="text" class="input">
                         <div class="input-group-addon">
-                            <button>+</button>
+                            <button class="add-remove">+</button>
                         </div>
-                    </div>
-                    <br/>
-                    <input disabled>
+                        <input class="entered-urls mt-4" disabled>
+                        <div class="input-group-addon mt-4">
+                            <button class="add-remove">x</button>
+                        </div>
+                    </div>              
                 </div>
             </div>
+
             <div class="right-content">
                 <button class="left-button">
                     <b class="button-text">Generate Url</b>
                 </button>
                 <button class="right-button" onclick="copyToClipboard()">
-                    <img src="img/copy.svg" alt="copy-icon" width="23px" height="23px">
+                    <img src="img/copy.svg" alt="copy-icon" width="23px" height="23px"/>
                 </button>
                 <textarea placeholder="URL will be generated here..." id="generatedUrl" class="form-control textarea" rows="4"></textarea>
                 <p class="success-copy">Url has been successfully copied to the clipboard.</p>
