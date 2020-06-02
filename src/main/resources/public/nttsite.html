@@ -15,6 +15,11 @@
         <script>
             $(document).ready(function() {
                 $(".success-copy").hide();
+                $(".error").hide();
+
+                $("input").on("change paste keyup", function() {
+                    $(".error").hide();
+                });
             });
         </script>
     </head>
@@ -75,7 +80,6 @@
                         <div class="input-group-addon">
                             <button class="pointer" onclick="addNewUrl('rocket-chat-url')">+</button>
                         </div>
-                        <div id="add-rocket-chat-url-here"></div>
                     </div>              
                 </div>
             </div>
@@ -89,6 +93,7 @@
                 </button>
                 <textarea placeholder="URL will be generated here..." id="generatedUrl" class="form-control textarea" rows="4"></textarea>
                 <p class="success-copy">Url has been successfully copied to the clipboard.</p>
+                <p class="errors error" style="color: red">Please enter at least one valid url and a token.</p>
             </div>
             <div class="sides">
         </div>

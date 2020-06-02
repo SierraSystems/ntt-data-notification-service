@@ -24,14 +24,12 @@ function addNewUrl(urlType) {
 
 // ######################## URL Generation Functions ########################### //
 function generateUrls(urlType, chatType) {
-    console.log(urlType, chatType);
     let webHooks = [];
 
     // loops through urls
     for (let i = 0; i < $(urlType).length; i++) {
         let errorExists = false;
         const urlValue = $(urlType).eq(i).val();
-        console.log(urlValue);
 
         // if url incorrect or empty, skip this url
         if (!validateUrl(urlValue)) errorExists = true;
@@ -47,7 +45,6 @@ function generateUrls(urlType, chatType) {
         if (!checkForDuplicatesAndEmpty(webHooks, chatAppUrl)) webHooks.push(chatAppUrl);
     }
 
-    console.log(webHooks);
     return webHooks;
 }
 
@@ -86,7 +83,6 @@ function generateFinalUrl() {
     if ($(".url-error-teams").is(":visible") || $(".url-error-rocket").is(":visible") || !webHookUrlString) return false;
 
     const finalUrl = `${baseUrl}${token}/${base64EncodeString(webHookUrlString)}`;
-    console.log("FINAL URL", finalUrl);
     document.getElementById("generatedUrl").innerHTML = finalUrl;
 }
 
