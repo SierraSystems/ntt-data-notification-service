@@ -3,7 +3,7 @@ package com.nttdata.nttdatanotificationservice.rocket;
 import com.nttdata.nttdatanotificationservice.rocket.models.RocketMessage;
 import com.nttdata.nttdatanotificationservice.service.ChannelService;
 import com.nttdata.nttdatanotificationservice.service.ChatApp;
-import com.nttdata.nttdatanotificationservice.splunk.models.SplunkAlert;
+import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,29 +17,25 @@ public class RocketChannelService implements ChannelService {
     }
 
     @Override
-    public Object generatePayload(SplunkAlert splunkAlert) {
-        RocketMessage rocketMessage = RocketMessage.defaultNttMessage(splunkAlert.getSearch_name());
-        rocketMessage.setText(getRocketText(splunkAlert));
+    public Object generatePayload(Notification notification) {
+        RocketMessage rocketMessage = RocketMessage.defaultNttMessage(notification.getAppName());
+        rocketMessage.setText(getRocketText(notification));
 
         return rocketMessage;
     }
 
     @SuppressWarnings("java:S1602")
-    private String getRocketText(SplunkAlert splunkAlert) {
-        final String[] text = {String.format(ROCKETCHATTEMPLATE, "App", splunkAlert.getResult().getSource())};
-        text[0] = text[0].concat(String.format(ROCKETCHATTEMPLATE, "Search", splunkAlert.getSearch_name()));
-        text[0] = text[0].concat(String.format(ROCKETCHATTEMPLATE, "Owner", splunkAlert.getOwner()));
+    private String getRocketText(Notification notification) {
+        final String[] text = {String.format(ROCKETCHATTEMPLATE, "App", notification.getAppName())};
+        text[0] = text[0].concat(String.format(ROCKETCHATTEMPLATE, "Search", notification.getOrigin()));
+        text[0] = text[0].concat(String.format(ROCKETCHATTEMPLATE, "Owner", notification.getOwner()));
 
-        splunkAlert.getResult().getDetails().forEach((key, value) -> {
+        notification.getDetails().forEach((key, value) -> {
             text[0] = text[0].concat(String.format(ROCKETCHATTEMPLATE, key, value.toString()));
         });
 
-        text[0] = text[0].concat(String.format(ROCKETCHATTEMPLATE, "Message", splunkAlert.getResult().getMessage()));
-        text[0] = text[0].concat(String.format(ROCKETCHATTEMPLATE, "Search Link", splunkAlert.getResults_link()));
-
-        if (splunkAlert.getResult().getDashboard() != null) {
-            text[0] = text[0].concat(String.format(ROCKETCHATTEMPLATE, "Dashboard Link", splunkAlert.getResult().getDashboard()));
-        }
+        text[0] = text[0].concat(String.format(ROCKETCHATTEMPLATE, "Message", notification.getMessage()));
+        text[0] = text[0].concat(String.format(ROCKETCHATTEMPLATE, "Search Link", notification.getReturnUrl()));
 
         return text[0];
     }

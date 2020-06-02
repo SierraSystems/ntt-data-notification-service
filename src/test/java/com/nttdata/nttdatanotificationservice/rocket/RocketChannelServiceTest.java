@@ -2,7 +2,8 @@ package com.nttdata.nttdatanotificationservice.rocket;
 
 import com.google.gson.Gson;
 import com.nttdata.nttdatanotificationservice.rocket.models.RocketMessage;
-import com.nttdata.nttdatanotificationservice.splunk.models.SplunkAlert;
+import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
+import com.nttdata.nttdatanotificationservice.sources.splunk.models.SplunkAlert;
 import org.junit.jupiter.api.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -28,10 +29,10 @@ public class RocketChannelServiceTest {
   private static final String rocketText = "App: source \n"
       + "Search: search_name \n"
       + "Owner: owner \n"
+      + "dashboard: dashboard_link \n"
       + "other: other \n"
       + "Message: message \n"
-      + "Search Link: result_links \n"
-      + "Dashboard Link: dashboard_link \n";
+      + "Search Link: result_links \n";
 
   @BeforeAll
   public void setUp() { sur = new RocketChannelService(); }
@@ -43,9 +44,11 @@ public class RocketChannelServiceTest {
     SplunkAlert splunkAlert = gson.fromJson(splunkAlertJson, SplunkAlert.class);
     splunkAlert.getResult().getDetails().put("other","other");
 
-    RocketMessage actual = (RocketMessage) sur.generatePayload(splunkAlert);
+    Notification notification = splunkAlert.convertToAlert();
 
-    Assertions.assertEquals("search_name", actual.getAlias());
+    RocketMessage actual = (RocketMessage) sur.generatePayload(notification);
+
+    Assertions.assertEquals("source", actual.getAlias());
     Assertions.assertEquals("https://user-images.githubusercontent.com/51387119/82707419-ddb1c600-9c30-11ea-8bfa-b3c624b23cdd.png", actual.getAvatar());
     Assertions.assertEquals(rocketText, actual.getText());
   }

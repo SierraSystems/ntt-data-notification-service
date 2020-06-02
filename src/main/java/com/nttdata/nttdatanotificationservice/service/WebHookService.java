@@ -1,9 +1,10 @@
 package com.nttdata.nttdatanotificationservice.service;
 
-import com.nttdata.nttdatanotificationservice.splunk.models.SplunkAlert;
+import com.nttdata.nttdatanotificationservice.configuration.WebHookParams;
+import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
 import org.springframework.http.ResponseEntity;
 
 public interface WebHookService {
 
-    public ResponseEntity<String> postMessage(SplunkAlert splunkAlert, String routes);
+    public ResponseEntity<String> postMessage(Notification notification, WebHookParams webHookParams);
 }

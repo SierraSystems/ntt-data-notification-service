@@ -1,4 +1,4 @@
-package com.nttdata.nttdatanotificationservice.splunk.models;
+package com.nttdata.nttdatanotificationservice.sources.splunk.models;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import java.util.LinkedHashMap;

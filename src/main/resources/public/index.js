@@ -73,7 +73,7 @@ function generateWebHookUrlString() {
 
 function generateFinalUrl() {
     // temporarily for local dev
-    const baseUrl = `${url}/splunk/alert/`;
+    const baseUrl = `${url}/notification/splunk/`;
     const token = $(".token").val();
     const webHookUrlString = generateWebHookUrlString();
 

@@ -1,6 +1,6 @@
 package com.nttdata.nttdatanotificationservice.rocket.models;
 
-import com.nttdata.nttdatanotificationservice.Config;
+import com.nttdata.nttdatanotificationservice.configuration.Config;
 
 public class RocketMessage {
 
