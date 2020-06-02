@@ -60,7 +60,7 @@
                     <div id="add-teams-url-here" class="input-group">
                         <img src="img/teams.png" width="23px" height="23px"/>
                         <b class="small-font">Enter Microsoft Teams URL</b>
-                        <input type="text" class="input">
+                        <input type="text" class="input" id="teams-url-id">
                         <div class="input-group-addon">
                             <button class="pointer" onclick="addNewUrl('teams-url')">+</button>
                         </div>
@@ -71,7 +71,7 @@
                     <div id="add-rocket-chat-url-here" class="input-group">
                         <img src="img/rocketchat.png" width="23px" height="23px"/>
                         <b class="small-font">Enter Rocket Chat URL</b>
-                        <input type="text" class="input">
+                        <input type="text" class="input" id="rocket-chat-url-id">
                         <div class="input-group-addon">
                             <button class="pointer" onclick="addNewUrl('rocket-chat-url')">+</button>
                         </div>
@@ -81,7 +81,7 @@
             </div>
 
             <div class="right-content">
-                <button class="left-button">
+                <button class="left-button" onclick="generateFinalUrl()">
                     <b class="button-text">Generate Url</b>
                 </button>
                 <button class="right-button" onclick="copyToClipboard()">
