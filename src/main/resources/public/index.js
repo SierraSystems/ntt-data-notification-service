@@ -18,6 +18,15 @@ function deleteUrl(elementId) {
     element.parentNode.removeChild(element);
 }
 
+function addNewUrl(urlType) {
+    const id = Math.floor(Math.random() * 100000);
+    let txtNewInputBox = document.createElement('div');
+    txtNewInputBox.setAttribute("id", id);
+    txtNewInputBox.setAttribute("class", "input-group");
+    txtNewInputBox.innerHTML = "<input type='text' class='entered-urls mt-4' disabled><div class='input-group-addon mt-4'><button type='button' class='pointer' onclick='deleteUrl(" + id + ")'>x</button></div>";
+    document.getElementById("add-" + urlType + "-here").appendChild(txtNewInputBox);
+}
+
 
 // ######################## URL Generation Functions ########################### //
 function generateUrls(urlType, chatType) {

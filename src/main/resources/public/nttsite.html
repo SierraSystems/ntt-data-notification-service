@@ -54,35 +54,28 @@
             <div class="left-content head">
                 <b class="small-font">Enter Token</b>
                 <br/>
-                <input type="text" class="token input">
+                <input type="text" class="token input mb-4">
 
                 <div class="rectangle">
-                    <div class="input-group">
+                    <div id="add-teams-url-here" class="input-group">
                         <img src="img/teams.png" width="23px" height="23px"/>
                         <b class="small-font">Enter Microsoft Teams URL</b>
                         <input type="text" class="input">
                         <div class="input-group-addon">
-                            <button class="add-remove">+</button>
-                        </div>
-                        <input class="entered-urls mt-4" disabled>
-                        <div class="input-group-addon mt-4">
-                            <button class="add-remove">x</button>
+                            <button class="pointer" onclick="addNewUrl('teams-url')">+</button>
                         </div>
                     </div>
                 </div>
                 <br/>
                 <div class="rectangle">
-                    <div class="input-group">
+                    <div id="add-rocket-chat-url-here" class="input-group">
                         <img src="img/rocketchat.png" width="23px" height="23px"/>
                         <b class="small-font">Enter Rocket Chat URL</b>
                         <input type="text" class="input">
                         <div class="input-group-addon">
-                            <button class="add-remove">+</button>
+                            <button class="pointer" onclick="addNewUrl('rocket-chat-url')">+</button>
                         </div>
-                        <input class="entered-urls mt-4" disabled>
-                        <div class="input-group-addon mt-4">
-                            <button class="add-remove">x</button>
-                        </div>
+                        <div id="add-rocket-chat-url-here"></div>
                     </div>              
                 </div>
             </div>

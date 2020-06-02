@@ -69,6 +69,7 @@ html, body {
     background: transparent;
     border-bottom: 1px solid black;
     width: 90%;
+    font-size: 12px;
 }
 
 .sides {
@@ -114,6 +115,10 @@ html, body {
 
 .entered-urls {
     width: 90%;
+}
+
+.pointer {
+    cursor: pointer;
 }
 
 /*
