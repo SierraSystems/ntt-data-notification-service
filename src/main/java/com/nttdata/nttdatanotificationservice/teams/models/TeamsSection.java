@@ -1,6 +1,6 @@
 package com.nttdata.nttdatanotificationservice.teams.models;
 
-import com.nttdata.nttdatanotificationservice.Config;
+import com.nttdata.nttdatanotificationservice.configuration.Config;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
