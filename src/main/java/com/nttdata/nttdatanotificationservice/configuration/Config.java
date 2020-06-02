@@ -1,4 +1,4 @@
-package com.nttdata.nttdatanotificationservice;
+package com.nttdata.nttdatanotificationservice.configuration;
 
 public class Config {
   private Config() { throw new IllegalStateException("Utility class"); }

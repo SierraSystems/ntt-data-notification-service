@@ -2,10 +2,8 @@ package com.nttdata.nttdatanotificationservice.service;
 
 import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
 
-public interface ChannelService {
+public interface AlertModel {
 
-    ChatApp getChatApp();
-
-    Object generatePayload(Notification notification);
+  Notification convertToAlert();
 
 }

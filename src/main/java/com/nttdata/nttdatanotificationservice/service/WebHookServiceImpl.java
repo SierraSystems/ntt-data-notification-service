@@ -1,7 +1,7 @@
 package com.nttdata.nttdatanotificationservice.service;
 
-import com.nttdata.nttdatanotificationservice.splunk.models.SplunkAlert;
-import com.nttdata.nttdatanotificationservice.splunk.models.SplunkWebHookParams;
+import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
+import com.nttdata.nttdatanotificationservice.configuration.WebHookParams;
 import com.google.gson.Gson;
 
 import java.util.Base64;
@@ -22,20 +22,16 @@ public class WebHookServiceImpl implements WebHookService {
     @Autowired
     ChannelServiceFactory channelServiceFactory;
 
-    public ResponseEntity<String> postMessage(SplunkAlert splunkAlert, String routes) {
-        Gson gson = new Gson();
-        byte[] decodedRoutesBytes = Base64.getUrlDecoder().decode(routes);
-        String decodedRoutesUrl = new String(decodedRoutesBytes);
+    public ResponseEntity<String> postMessage(Notification notification, WebHookParams webHookParams) {
 
-        SplunkWebHookParams splunkWebHookParams = gson.fromJson(decodedRoutesUrl, SplunkWebHookParams.class);
-
-        splunkWebHookParams.getSplunkWebHookUrls().stream().forEach(splunkWebHookUrls -> {
-            ChatApp chatApp = splunkWebHookUrls.getChatApp();
+        webHookParams.getWebHookUrls().stream().forEach(webHookUrl -> {
+            ChatApp chatApp = webHookUrl.getChatApp();
 
             Optional<ChannelService> channelService = channelServiceFactory.getChanelService(chatApp);
             logger.info("Posting to {}", chatApp);
 
-            channelService.ifPresent(service -> post(splunkWebHookUrls.getUrl(), service.generatePayload(splunkAlert)));
+            channelService.ifPresent(service -> post(webHookUrl.getUrl(), service.generatePayload(
+                notification)));
         });
 
         return new ResponseEntity<>("Success", HttpStatus.CREATED);
