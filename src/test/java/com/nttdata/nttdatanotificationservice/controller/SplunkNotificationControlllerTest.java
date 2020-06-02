@@ -47,11 +47,8 @@ public class SplunkNotificationControlllerTest {
     WebHookService webHookService;
 
     @InjectMocks
-<<<<<<< HEAD:src/test/java/com/nttdata/nttdatanotificationservice/controller/AlertNotificationControlllerTest.java
-    SplunkNotificationController alertNotificationController = new SplunkNotificationController();
-=======
     SplunkNotificationController splunkNotificationController = new SplunkNotificationController();
->>>>>>> master:src/test/java/com/nttdata/nttdatanotificationservice/controller/SplunkNotificationControlllerTest.java
+
     @BeforeEach
     void initialize() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         MockitoAnnotations.initMocks(this);
