@@ -12,6 +12,8 @@ function deleteUrl(elementId) {
 
 function addNewUrl(urlType) {
     const urlVal = $(`#${urlType}-id`).val();
+    if (!urlVal) return;
+
     const id = Math.floor(Math.random() * 100000);
     let txtNewInputBox = document.createElement('div');
     txtNewInputBox.setAttribute("id", id);

@@ -1,68 +1,99 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
-        <title id="title">NTT Data Notification Service</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>NTT Data Notification Service</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Catamaran">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <link href="index.css" rel="stylesheet">
+        <script src="index.js"></script>
+        <script>
+            $(document).ready(function() {
+                $(".success-copy").hide();
+                $(".error").hide();
+
+                $("input").on("change paste keyup", function() {
+                    $(".error").hide();
+                });
+            });
+        </script>
     </head>
     <body>
-    <script src="./index.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function(){
-            $("#final-url-div").hide();
-            $(".url-error-teams").hide();
-            $(".url-error-rocket").hide();
-            $(".error").hide();
-            $(".token-error").hide();
-
-            $("input").on("change paste keyup", function() {
-               $(".url-error-teams").hide();
-                $(".url-error-rocket").hide();
-                $(".error").hide();
-                $(".token-error").hide();
-            });
-        });
-    </script>
-        <div>
-            <h1>Welcome to NTT Data Services Notification Service!</h1>
-        </div>
-        <div>
-            <label>Enter Microsoft Teams URL</label>
-            <br />
-            <input type="text" class="teams-url">
-            <button type="button" onclick="createNewUrlInput('teams-url')">
-                Add additional Teams URL
-            </button>
-            <br/>
-            <div id="add-teams-url-here"></div>
-            <p class="url-error-teams" style="color: red">Please make sure you enter valid Teams urls.</p>
-            <br />
-
-            <label>Enter Rocket.Chat URL</label>
-            <br />
-            <input type="text" class="rocket-chat-url">
-            <button type="button" onclick="createNewUrlInput('rocket-chat-url')">
-                Add additional Rocket.Chat URL
-            </button>
-            <div id="add-rocket-chat-url-here"></div>
-            <p class="url-error-rocket" style="color: red">Please make sure you enter valid Rocket.Chat urls.</p>
-            <br />
-
-            <label>Enter Token</label>
-            <br />
-            <input type="text" class="token">
-            <br />
-            <br />
+        <!-- Navigation -->
+        <div class="blue">
+            <div class="spacing">
+                <nav class="navbar navbar-expand-md sticky-top">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="https://ca.nttdata.com/en/">
+                            <img src="img/logo.png" alt="ntt-logo">
+                        </a>
+                    </div>
+                    <a class="links" href="https://ca.nttdata.com/en/">
+                        About Us
+                    </a>
+                    <a class="pl-4 links" href="https://github.com/SierraSystems/ntt-data-notification-service">
+                        GitHub
+                    </a>
+                </nav>
+                <p class="main-heading">NTT Data Notification Service</p>
+            </div>
         </div>
 
-        <button type="button" onclick="generateFinalUrl()">
-            Generate URL for Splunk Notification
-        </button>
+        <!-- Heading -->
+        <div class="spacing">
+            <h1 class="sub-heading head">Welcome to the NTT Data Notification Service</h1>
+            <p class="text head">
+                The NTT Data Notification Service allows you to receive alerts and notifications to all your favourite
+                channels such as Microsoft Teams and Rocket.Chat. To use our service, you must have a token and the URLs
+                to your channels. Use our interface to generate your webhook URL.
+            </p>
+        </div>
 
-        <p class="error" style="color: red">Please enter at least one valid url.</p>
-        <p class="token-error" style="color: red">Please enter a token.</p>
+        <!-- Content -->
+        <div class="spacing content">
+            <div class="left-content head">
+                <b class="small-font">Enter Token</b>
+                <br/>
+                <input type="text" class="token input mb-4">
 
-        <div id="final-url-div" style="word-wrap: break-word; width: 700px">
-            <h3>Your generated splunk WebHook URL is:</h3>
-            <p id="final-url"></p>
+                <div class="rectangle">
+                    <div id="add-teams-url-here" class="input-group">
+                        <img src="img/teams.png" width="23px" height="23px"/>
+                        <b class="small-font">Enter Microsoft Teams URL</b>
+                        <input type="text" class="input" id="teams-url-id">
+                        <div class="input-group-addon">
+                            <button class="pointer" onclick="addNewUrl('teams-url')">+</button>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="rectangle">
+                    <div id="add-rocket-chat-url-here" class="input-group">
+                        <img src="img/rocketchat.png" width="23px" height="23px"/>
+                        <b class="small-font">Enter Rocket Chat URL</b>
+                        <input type="text" class="input" id="rocket-chat-url-id">
+                        <div class="input-group-addon">
+                            <button class="pointer" onclick="addNewUrl('rocket-chat-url')">+</button>
+                        </div>
+                    </div>              
+                </div>
+            </div>
+
+            <div class="right-content">
+                <button class="left-button" onclick="generateFinalUrl()">
+                    <b class="button-text">Generate Url</b>
+                </button>
+                <button class="right-button" onclick="copyToClipboard()">
+                    <img src="img/copy.svg" alt="copy-icon" width="23px" height="23px"/>
+                </button>
+                <textarea placeholder="URL will be generated here..." id="generatedUrl" class="form-control textarea" rows="8"></textarea>
+                <p class="success-copy">Url has been successfully copied to the clipboard.</p>
+                <p class="errors error">Please enter at least one valid url and a token.</p>
+            </div>
+            <div class="sides">
         </div>
     </body>
 </html>
