@@ -1,0 +1,129 @@
+html, body {
+    height: 100%;
+    font-family: 'Catamaran';
+}
+
+.spacing {
+    padding-left: 12%;
+    padding-right: 12%;
+    overflow: auto;
+}
+
+.links {
+    width: 100px;
+    color: #FFFFFF !important;
+}
+
+.blue {
+    background-color: #5876AA !important;
+    min-height: 210px;
+}
+
+.main-heading {
+    color: #FFFFFF !important;
+    padding-left: 40px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 35px;
+}
+
+.head {
+    padding-left: 40px;
+    margin-right: 25px;
+}
+
+.sub-heading {
+    padding-top: 35px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.text {
+    padding-top: 15px;
+    max-width: 90%;
+}
+
+.content {
+    padding-top: 15px;
+}
+
+.left-content {
+    width: 55%;
+    float: left;
+}
+
+.right-content {
+    width: 35%;
+    float: left;
+}
+
+.small-font {
+    font-size: 14px;
+}
+
+.input {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid black;
+    width: 90%;
+    font-size: 12px;
+}
+
+.sides {
+    clear: both;
+}
+
+.left-button {
+    cursor: pointer;
+    width: 83%;
+    background: #000B28 0% 0% no-repeat padding-box;
+}
+
+.button-text {
+    font-size: 10px;
+    letter-spacing: 0.01px;
+    color: #FFFFFF;
+    text-transform: uppercase;
+}
+
+.right-button {
+    cursor: pointer;
+    width: 15%;
+    background: #000B28 0% 0% no-repeat padding-box;
+}
+
+.textarea {
+    margin-top: 20px;
+    width: 99%;
+    font-size: 12px;
+}
+
+.success-copy {
+    padding-top: 15px;
+    font-size: 14px;
+    color: green;
+}
+
+.rectangle{
+    background: #F3F3F3 0% 0% no-repeat padding-box;
+    border-radius: 3px;
+    margin-top: 15px;
+    padding: 10px 0px 30px 10px;
+}
+
+.entered-urls {
+    width: 90%;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.errors {
+    padding-top: 10px;
+    font-size: 12px;
+    color: #d0372a;
+}

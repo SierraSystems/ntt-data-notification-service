@@ -5,17 +5,22 @@ const rocketChatUrlIdentifier = ".rocket-chat-url";
 
 
 // ######################## HTML Element Functions ########################### //
-function createNewUrlInput(urlType) {
-    const id = Math.floor(Math.random() * 100000);
-    let txtNewInputBox = document.createElement('div');
-    txtNewInputBox.setAttribute("id", id);
-    txtNewInputBox.innerHTML = "<br/><input type='text' style='margin-right: 4px' class='" + urlType + "'><button type='button' onclick='deleteUrl(" + id + ")'>Remove URL</button>";
-    document.getElementById("add-" + urlType + "-here").appendChild(txtNewInputBox);
-}
-
 function deleteUrl(elementId) {
     const element = document.getElementById(elementId);
     element.parentNode.removeChild(element);
+}
+
+function addNewUrl(urlType) {
+    const urlVal = $(`#${urlType}-id`).val();
+    if (!urlVal) return;
+
+    const id = Math.floor(Math.random() * 100000);
+    let txtNewInputBox = document.createElement('div');
+    txtNewInputBox.setAttribute("id", id);
+    txtNewInputBox.setAttribute("class", "input-group");
+    txtNewInputBox.innerHTML = "<input type='text' class='entered-urls mt-4 "+ urlType +"' value='" + urlVal + "' readonly><div class='input-group-addon mt-4'><button type='button' class='pointer' onclick='deleteUrl(" + id + ")'>x</button></div>";
+    document.getElementById("add-" + urlType + "-here").appendChild(txtNewInputBox);
+    $(`#${urlType}-id`).val("");
 }
 
 
@@ -77,10 +82,7 @@ function generateFinalUrl() {
     if ($(".url-error-teams").is(":visible") || $(".url-error-rocket").is(":visible") || !webHookUrlString) return false;
 
     const finalUrl = `${baseUrl}${token}/${base64EncodeString(webHookUrlString)}`;
-    document.getElementById("final-url").innerHTML = finalUrl;
-
-    // display the url
-    $("#final-url-div").show();
+    document.getElementById("generatedUrl").innerHTML = finalUrl;
 }
 
 function populateSplunkWebHooks(urlArray, webHooksArray) {
@@ -141,4 +143,15 @@ function validateToken(token) {
     }
 
     return true;
+}
+
+function copyToClipboard() {
+    const textToCopy = document.getElementById("generatedUrl");
+
+    textToCopy.select();
+    textToCopy.setSelectionRange(0, 99999);
+
+    document.execCommand("copy");
+
+    $(".success-copy").show();
 }
