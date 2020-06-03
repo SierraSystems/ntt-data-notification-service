@@ -5,19 +5,17 @@ services:
   #############################################################################################
   ###                                 SPLUNK DEV BOX                                        ###
   #############################################################################################
-  dps-splunk:
-    image: splunk/splunk:7.3.2
+  ntt-data-notification-splunk:
+    image: splunk/splunk:latest
     environment:
-      - SPLUNK_PASSWORD=admin
+      - SPLUNK_PASSWORD=TestTest
       - SPLUNK_START_ARGS=--accept-license
     ports:
-      - "8000:8000"
-      - "8001:8001"
+      - "7000:8000"
       - "8088:8088"
-      - "8089:8089"
-      - "9997:9997"
     networks:
-      - ops-net
+      notification-net:
+        ipv4_address: 172.20.0.5
 
   #############################################################################################
   ###                            NTT Data notification service                              ###
@@ -30,8 +28,12 @@ services:
     ports:
       - "6060:8080"
     networks:
-      - ops-net
+      notification-net:
+        ipv4_address: 172.20.0.6
 
 networks: 
-  ops-net:
+  notification-net:
     driver: "bridge"
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24

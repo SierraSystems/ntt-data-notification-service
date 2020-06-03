@@ -48,6 +48,7 @@ public class SplunkNotificationControlllerTest {
 
     @InjectMocks
     SplunkNotificationController splunkNotificationController = new SplunkNotificationController();
+
     @BeforeEach
     void initialize() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         MockitoAnnotations.initMocks(this);
