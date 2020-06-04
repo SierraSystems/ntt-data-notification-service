@@ -2,9 +2,7 @@ package com.nttdata.nttdatanotificationservice.service;
 
 import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
 import com.nttdata.nttdatanotificationservice.configuration.WebHookParams;
-import com.google.gson.Gson;
 
-import java.util.Base64;
 import java.util.Optional;
 
 import org.slf4j.Logger;

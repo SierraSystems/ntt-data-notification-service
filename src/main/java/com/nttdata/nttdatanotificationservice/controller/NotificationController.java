@@ -2,7 +2,6 @@ package com.nttdata.nttdatanotificationservice.controller;
 
 import com.nttdata.nttdatanotificationservice.configuration.NotificationBody;
 import com.nttdata.nttdatanotificationservice.configuration.NotificationServiceProperties;
-import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
 import com.nttdata.nttdatanotificationservice.service.WebHookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

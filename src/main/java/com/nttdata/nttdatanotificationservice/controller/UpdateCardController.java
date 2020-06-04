@@ -18,9 +18,8 @@ public class UpdateCardController {
   @Autowired
   NotificationServiceProperties notificationServiceProperties;
 
-  @PostMapping(value = "update/{token}/{url}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(value = "update/{token}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<String> update(@PathVariable("token") String token,
-                                       @PathVariable("url") String url,
                                        @RequestHeader Map<String, String> headers,
                                        @RequestBody Object teamsUpdate) {
 
