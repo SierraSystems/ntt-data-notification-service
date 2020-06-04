@@ -8,24 +8,34 @@ import java.util.List;
 
 public class TeamsCard {
 
-  private static final String TYPE = "MessageCard";
-  private static final String CONTEXT = "http://schema.org/extensions";
+  private static final String DEFAULT_TYPE = "MessageCard";
+  private static final String DEFAULT_CONTEXT = "http://schema.org/extensions";
   private static final String THEME_COLOR = "0076D7";
 
   private String type;
   private String context;
   private String themeColor;
   private String summary;
+  private String webHookUrl;
 
   private List<TeamsSection> sections = new ArrayList<>();
   private List<TeamsPotentialActions> potentialAction = new ArrayList<>();
 
-
-  private TeamsCard(String type, String context, String themeColor, String summary) {
+  /***
+   *
+   * @param type Standard teams variable
+   * @param context Standard teams variable
+   * @param themeColor Standard teams variable
+   * @param summary Standard teams variable
+   * @param webHookUrl Non standard team variable. Used to update teams card.
+   */
+  private TeamsCard(String type, String context, String themeColor, String summary, String webHookUrl) {
     this.type = type;
     this.context = context;
     this.themeColor = themeColor;
     this.summary = summary;
+    this.webHookUrl = webHookUrl;
+
   }
 
   @JsonProperty("@type")
@@ -54,10 +64,13 @@ public class TeamsCard {
     return potentialAction;
   }
 
+  public String getWebHookUrl() {
+    return webHookUrl;
+  }
 
-  public static TeamsCard defaultNttCard(String summary) {
+  public static TeamsCard defaultNttCard(String summary, String webHookUrl) {
 
-      return new TeamsCard(TYPE, CONTEXT, THEME_COLOR, summary);
+      return new TeamsCard(DEFAULT_TYPE, DEFAULT_CONTEXT, THEME_COLOR, summary, webHookUrl);
 
   }
 

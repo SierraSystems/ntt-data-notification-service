@@ -7,20 +7,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
+@RestController
 public class UpdateCardController {
   Logger logger = LoggerFactory.getLogger(UpdateCardController.class);
 
   @Autowired
   NotificationServiceProperties notificationServiceProperties;
 
-  @PostMapping(value = "update/{token}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<String> update(@PathVariable("token") String token, @RequestBody Object teamsUpdate) {
+  @PostMapping(value = "update/{token}/{url}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<String> update(@PathVariable("token") String token,
+                                       @PathVariable("url") String url,
+                                       @RequestHeader Map<String, String> headers,
+                                       @RequestBody Object teamsUpdate) {
 
       logger.info("{}",teamsUpdate);
+
+      headers.forEach((key, value) -> {
+          logger.info(String.format("WAT: '%s' = %s", key, value));
+      });
 
       return new ResponseEntity<>("Did a thing", HttpStatus.OK);
   }
