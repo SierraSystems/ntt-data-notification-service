@@ -26,7 +26,8 @@ function addNewUrl(urlType) {
 
 // ######################## URL Generation Functions ########################### //
 function generateUrls(urlType, chatType) {
-    let webHooks = [];
+    // get url in non-submitted input field as well
+    let webHooks = getInputFieldValues(chatType);
 
     // loops through urls
     for (let i = 0; i < $(urlType).length; i++) {
@@ -45,6 +46,24 @@ function generateUrls(urlType, chatType) {
 
         // Push object to the array if doesn't already exist
         if (!checkForDuplicatesAndEmpty(webHooks, chatAppUrl)) webHooks.push(chatAppUrl);
+    }
+
+    return webHooks;
+}
+
+function getInputFieldValues(chatType) {
+    let webHooks = [];
+
+    const urlVal = chatType === "TEAMS" ? $("#teams-url-id").val() : $("#rocket-chat-url-id").val();
+    if (validateUrl(urlVal)) {
+        const chatUrl = {
+            "chatApp": chatType,
+            "url": urlVal,
+            "errorExists": false
+        };
+
+        // Push object to the array if doesn't already exist
+        if (!checkForDuplicatesAndEmpty(webHooks, chatUrl)) webHooks.push(chatUrl);
     }
 
     return webHooks;
