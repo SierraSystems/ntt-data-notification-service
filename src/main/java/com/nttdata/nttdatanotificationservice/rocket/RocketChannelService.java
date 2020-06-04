@@ -17,7 +17,7 @@ public class RocketChannelService implements ChannelService {
     }
 
     @Override
-    public Object generatePayload(Notification notification) {
+    public Object generatePayload(Notification notification, String webHookUrl) {
         RocketMessage rocketMessage = RocketMessage.defaultNttMessage(notification.getAppName());
         rocketMessage.setText(getRocketText(notification));
 

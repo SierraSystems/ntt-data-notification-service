@@ -35,3 +35,5 @@ build/
 
 ### node modules ###
 node_modules/
+
+pom.xml.versionsBackup

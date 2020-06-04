@@ -6,14 +6,14 @@ import java.util.List;
 
 @ConfigurationProperties(prefix = "notification")
 public class NotificationServiceProperties {
-    private String teamsCardBase;
+    private String updateCardBase;
 
-    public String getTeamsCardBase() {
-        return teamsCardBase;
+    public String getUpdateCardBase() {
+        return updateCardBase;
     }
 
-    public void setTeamsCardBase(String teamsCardBase) {
-        this.teamsCardBase = teamsCardBase;
+    public void setUpdateCardBase(String updateCardBase) {
+        this.updateCardBase = updateCardBase;
     }
 
     private List<String> tokens;

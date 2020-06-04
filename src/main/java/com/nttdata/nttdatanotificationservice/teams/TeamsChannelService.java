@@ -28,9 +28,9 @@ public class TeamsChannelService implements ChannelService {
     }
 
     @Override
-    public Object generatePayload(Notification notification) {
+    public Object generatePayload(Notification notification, String webHookUrl) {
 
-        TeamsCard teamsCard = TeamsCard.defaultNttCard(notification.getAppName(), notificationServiceProperties.getTeamsCardBase());
+        TeamsCard teamsCard = TeamsCard.defaultNttCard(notification.getAppName(), webHookUrl);
 
         teamsCard.addSection(getTeamsSection(notification));
 
@@ -38,7 +38,7 @@ public class TeamsChannelService implements ChannelService {
 
         potentialActionsStatus.addInput(getTeamsInput());
 
-        TeamsAction statusAction = TeamsAction.defaultTeamAction("HttpPOST", "OK","http://ntt-data-norification-service.canadacentral.azurecontainer.io:8080/notification/update/3ac241ab-4448-4f1a-b925-29ac7fe6e37e/aHR0cHM6Ly9vdXRsb29rLm9mZmljZS5jb20vd2ViaG9vay80NWFiNGU1OS1lNTFiLTRkODktOGE0MC02NDgzNzVmMTk3NjdANjVlNGUwNmYtZjI2My00YzFmLWJlY2ItOTBkZWI4YzJkOWZmL0luY29taW5nV2ViaG9vay9hMDEzNjNjZTg2MmU0ODkzOGM5MjNlNjAxMTA5NTNlYi83NTdkYzE0Yi1lOTY5LTQ4MGYtOTAyMy03NWFhNGMyZTdmMTU");
+        TeamsAction statusAction = TeamsAction.defaultTeamAction("HttpPOST", "OK", notificationServiceProperties.getUpdateCardBase());
 
         potentialActionsStatus.addAction(statusAction);
 
