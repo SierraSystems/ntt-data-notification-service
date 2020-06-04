@@ -31,7 +31,7 @@ public class WebHookServiceImpl implements WebHookService {
             logger.info("Posting to {}", chatApp);
 
             channelService.ifPresent(service -> post(webHookUrl.getUrl(), service.generatePayload(
-                notification)));
+                notification, webHookUrl.getUrl())));
         });
 
         return new ResponseEntity<>("Success", HttpStatus.CREATED);

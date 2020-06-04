@@ -56,7 +56,7 @@ public class WebHookServiceImplTest {
         MockitoAnnotations.initMocks(this);
         baseUrl = String.format("http://localhost:%s",
                 mockBackEnd.getPort());
-        when(teamsChannelService.generatePayload(any())).thenReturn(new Object());
+        when(teamsChannelService.generatePayload(any(), any())).thenReturn(new Object());
     }
 
 
