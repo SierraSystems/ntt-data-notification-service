@@ -1,5 +1,6 @@
 package com.nttdata.nttdatanotificationservice.teams;
 
+import com.nttdata.nttdatanotificationservice.configuration.NotificationServiceProperties;
 import com.nttdata.nttdatanotificationservice.service.ChannelService;
 import com.nttdata.nttdatanotificationservice.service.ChatApp;
 import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
@@ -10,10 +11,16 @@ import com.nttdata.nttdatanotificationservice.teams.models.TeamsFact;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsInput;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsPotentialActions;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsSection;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Service;
 
 @Service
+@EnableConfigurationProperties(NotificationServiceProperties.class)
 public class TeamsChannelService implements ChannelService {
+
+    @Autowired
+    NotificationServiceProperties notificationServiceProperties;
 
     @Override
     public ChatApp getChatApp() {
@@ -23,7 +30,7 @@ public class TeamsChannelService implements ChannelService {
     @Override
     public Object generatePayload(Notification notification) {
 
-        TeamsCard teamsCard = TeamsCard.defaultNttCard(notification.getAppName());
+        TeamsCard teamsCard = TeamsCard.defaultNttCard(notification.getAppName(), "http://ntt-data-norification-service.canadacentral.azurecontainer.io:8080/notification/update/3ac241ab-4448-4f1a-b925-29ac7fe6e37e/aHR0cHM6Ly9vdXRsb29rLm9mZmljZS5jb20vd2ViaG9vay80NWFiNGU1OS1lNTFiLTRkODktOGE0MC02NDgzNzVmMTk3NjdANjVlNGUwNmYtZjI2My00YzFmLWJlY2ItOTBkZWI4YzJkOWZmL0luY29taW5nV2ViaG9vay9hMDEzNjNjZTg2MmU0ODkzOGM5MjNlNjAxMTA5NTNlYi83NTdkYzE0Yi1lOTY5LTQ4MGYtOTAyMy03NWFhNGMyZTdmMTU");
 
         teamsCard.addSection(getTeamsSection(notification));
 
