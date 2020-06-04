@@ -35,7 +35,7 @@ public class UpdateCardControllerTest {
     @DisplayName("Success - UpdateCardController")
     @Test
     void testSuccess() {
-        ResponseEntity<String> result = updateCardController.update("TEST", "URL", new HashMap<String, String>(), TeamsCard.defaultNttCard("",""));
+        ResponseEntity<String> result = updateCardController.update("TEST", new HashMap<String, String>(), TeamsCard.defaultNttCard("",""));
         Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
     }
 }
