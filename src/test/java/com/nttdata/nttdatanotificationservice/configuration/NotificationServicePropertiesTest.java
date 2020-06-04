@@ -13,9 +13,10 @@ public class NotificationServicePropertiesTest {
         NotificationServiceProperties notificationServiceProperties = new NotificationServiceProperties();
 
         notificationServiceProperties.setTokens(Arrays.asList("TOKEN", "TOKEN2"));
-
+        notificationServiceProperties.setTeamsCardBase("TESTURL");
         Assert.assertEquals(2, notificationServiceProperties.getTokens().size());
         Assert.assertEquals("TOKEN", notificationServiceProperties.getTokens().get(0));
         Assert.assertEquals("TOKEN2", notificationServiceProperties.getTokens().get(1));
+        Assert.assertEquals("TESTURL", notificationServiceProperties.getTeamsCardBase());
     }
 }
