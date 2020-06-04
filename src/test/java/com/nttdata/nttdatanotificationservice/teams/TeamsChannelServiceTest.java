@@ -49,10 +49,10 @@ public class TeamsChannelServiceTest {
         TeamsCard actual = (TeamsCard) sut.generatePayload(notification);
 
 
-        Assertions.assertEquals("http://schema.org/extensions", actual.getTeamsContext());
+        Assertions.assertEquals("http://schema.org/extensions", actual.getContext());
         Assertions.assertEquals("source", actual.getSummary());
         Assertions.assertEquals("0076D7", actual.getThemeColor());
-        Assertions.assertEquals("MessageCard", actual.getTeamsType());
+        Assertions.assertEquals("MessageCard", actual.getType());
         Assertions.assertEquals(2, actual.getPotentialAction().size());
 
 
@@ -67,7 +67,7 @@ public class TeamsChannelServiceTest {
         Assertions.assertEquals("ActionCard", actual.getPotentialAction().get(1).getType());
         Assertions.assertEquals(1, actual.getPotentialAction().get(1).getActions().size());
 
-        Assertions.assertEquals("HttpPOST", actual.getPotentialAction().get(1).getActions().get(0).getDefaultType());
+        Assertions.assertEquals("HttpPOST", actual.getPotentialAction().get(1).getActions().get(0).getType());
         Assertions.assertEquals("http://ntt-data-norification-service.canadacentral.azurecontainer.io:8080/notification/update/3ac241ab-4448-4f1a-b925-29ac7fe6e37e/aHR0cHM6Ly9vdXRsb29rLm9mZmljZS5jb20vd2ViaG9vay80NWFiNGU1OS1lNTFiLTRkODktOGE0MC02NDgzNzVmMTk3NjdANjVlNGUwNmYtZjI2My00YzFmLWJlY2ItOTBkZWI4YzJkOWZmL0luY29taW5nV2ViaG9vay9hMDEzNjNjZTg2MmU0ODkzOGM5MjNlNjAxMTA5NTNlYi83NTdkYzE0Yi1lOTY5LTQ4MGYtOTAyMy03NWFhNGMyZTdmMTU", actual.getPotentialAction().get(1).getActions().get(0).getTarget());
         Assertions.assertEquals("OK", actual.getPotentialAction().get(1).getActions().get(0).getName());
         Assertions.assertEquals(teamsResult, actual.getPotentialAction().get(1).getActions().get(0).getBody());

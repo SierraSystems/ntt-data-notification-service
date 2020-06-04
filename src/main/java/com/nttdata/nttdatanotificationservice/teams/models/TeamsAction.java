@@ -3,21 +3,21 @@ package com.nttdata.nttdatanotificationservice.teams.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TeamsAction {
-  @JsonProperty("@type")
-  private String defaultType;
+
+  private String type;
   private String name;
   private String target;
   private String body;
 
   private TeamsAction(String defaultType, String name, String target) {
-    this.defaultType = defaultType;
+    this.type = defaultType;
     this.name = name;
     this.target = target;
   }
 
-
-  public String getDefaultType() {
-    return defaultType;
+  @JsonProperty("@type")
+  public String getType() {
+    return type;
   }
 
   public String getName() {

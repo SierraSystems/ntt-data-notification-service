@@ -8,13 +8,12 @@ import java.util.List;
 
 public class TeamsCard {
 
-  private static final String TYPE = "MessageCard";
-  private static final String CONTEXT = "http://schema.org/extensions";
+  private static final String DEFAULT_TYPE = "MessageCard";
+  private static final String DEFAULT_CONTEXT = "http://schema.org/extensions";
   private static final String THEME_COLOR = "0076D7";
-  @JsonProperty("@type")
-  private String teamsType;
-  @JsonProperty("@context")
-  private String teamsContext;
+
+  private String type;
+  private String context;
   private String themeColor;
   private String summary;
   private String webHookUrl;
@@ -25,28 +24,28 @@ public class TeamsCard {
   /***
    *
    * @param type Standard teams variable
-   * @param teamsContext Standard teams variable
+   * @param context Standard teams variable
    * @param themeColor Standard teams variable
    * @param summary Standard teams variable
    * @param webHookUrl Non standard team variable. Used to update teams card.
    */
-  private TeamsCard(String type, String teamsContext, String themeColor, String summary, String webHookUrl) {
-    this.teamsType = type;
-    this.teamsContext = teamsContext;
+  private TeamsCard(String type, String context, String themeColor, String summary, String webHookUrl) {
+    this.type = type;
+    this.context = context;
     this.themeColor = themeColor;
     this.summary = summary;
     this.webHookUrl = webHookUrl;
 
   }
 
-
-  public String getTeamsType() {
-    return teamsType;
+  @JsonProperty("@type")
+  public String getType() {
+    return type;
   }
 
-
-  public String getTeamsContext() {
-    return teamsContext;
+  @JsonProperty("@context")
+  public String getContext() {
+    return context;
   }
 
   public String getThemeColor() {
@@ -71,7 +70,7 @@ public class TeamsCard {
 
   public static TeamsCard defaultNttCard(String summary, String webHookUrl) {
 
-      return new TeamsCard(TYPE, CONTEXT, THEME_COLOR, summary, webHookUrl);
+      return new TeamsCard(DEFAULT_TYPE, DEFAULT_CONTEXT, THEME_COLOR, summary, webHookUrl);
 
   }
 
