@@ -1,6 +1,7 @@
 package com.nttdata.nttdatanotificationservice.service;
 
 import com.google.gson.Gson;
+import com.nttdata.nttdatanotificationservice.configuration.NotificationServiceProperties;
 import com.nttdata.nttdatanotificationservice.rocket.RocketChannelService;
 import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
 import com.nttdata.nttdatanotificationservice.sources.splunk.models.SplunkAlert;
@@ -24,6 +25,7 @@ import java.util.Base64;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 public class WebHookServiceImplTest {
     public static MockWebServer mockBackEnd;
@@ -34,6 +36,8 @@ public class WebHookServiceImplTest {
     @Mock
     ChannelServiceFactory channelServiceFactory;
 
+    @Mock
+    TeamsChannelService teamsChannelService;
 
 
     @BeforeAll
@@ -52,15 +56,14 @@ public class WebHookServiceImplTest {
         MockitoAnnotations.initMocks(this);
         baseUrl = String.format("http://localhost:%s",
                 mockBackEnd.getPort());
-
-
+        when(teamsChannelService.generatePayload(any())).thenReturn(new Object());
     }
 
 
     @DisplayName("Success - WebHookServiceImpl TEAMS")
     @Test
     void testTEAMSSuccess() {
-        Mockito.when(channelServiceFactory.getChanelService(any())).thenReturn(java.util.Optional.of(new TeamsChannelService()));
+        when(channelServiceFactory.getChanelService(any())).thenReturn(java.util.Optional.of(teamsChannelService));
 
         MockResponse mockResponse = new MockResponse();
         mockResponse.setBody("{\"test\":\"test\"}");
@@ -98,7 +101,7 @@ public class WebHookServiceImplTest {
     @DisplayName("Success - WebHookServiceImpl ROCKET")
     @Test
     void testRocketSuccess() {
-        Mockito.when(channelServiceFactory.getChanelService(any())).thenReturn(java.util.Optional.of(new RocketChannelService()));
+        when(channelServiceFactory.getChanelService(any())).thenReturn(java.util.Optional.of(new RocketChannelService()));
 
         MockResponse mockResponse = new MockResponse();
         mockResponse.setBody("{\"test\":\"test\"}");
@@ -135,7 +138,7 @@ public class WebHookServiceImplTest {
     @DisplayName("Error - WebHookServiceImpl TEAMS")
     @Test
     void testTEAMSChatError() {
-        Mockito.when(channelServiceFactory.getChanelService(any())).thenReturn(java.util.Optional.of(new TeamsChannelService()));
+        when(channelServiceFactory.getChanelService(any())).thenReturn(java.util.Optional.of(teamsChannelService));
 
         MockResponse mockResponse = new MockResponse();
         mockResponse.setBody("{\"test\":\"test\"}");
@@ -173,7 +176,7 @@ public class WebHookServiceImplTest {
     @DisplayName("Error - WebHookServiceImpl ROCKET")
     @Test
     void testRocketChatError() {
-        Mockito.when(channelServiceFactory.getChanelService(any())).thenReturn(java.util.Optional.of(new RocketChannelService()));
+        when(channelServiceFactory.getChanelService(any())).thenReturn(java.util.Optional.of(new RocketChannelService()));
 
         MockResponse mockResponse = new MockResponse();
         mockResponse.setBody("{\"test\":\"test\"}");
