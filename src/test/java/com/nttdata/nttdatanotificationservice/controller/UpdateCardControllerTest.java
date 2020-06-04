@@ -29,7 +29,7 @@ public class UpdateCardControllerTest {
     @DisplayName("Success - UpdateCardController")
     @Test
     void testSuccess() {
-        ResponseEntity<String> result = updateCardController.update("TEST", TeamsCard.defaultNttCard(""));
+        ResponseEntity<String> result = updateCardController.update("TEST", "URL",TeamsCard.defaultNttCard(""));
         Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
     }
 }
