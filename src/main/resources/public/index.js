@@ -28,9 +28,7 @@ function addNewUrl(urlType) {
 function generateUrls(urlType, chatType) {
     let webHooks = [];
 
-    console.log(urlType, chatType)
-
-    // get url in input field as well
+    // get url in non-submitted input field as well
     const urlVal = chatType === "TEAMS" ? $("#teams-url-id").val() : $("#rocket-chat-url-id").val();
     if (validateUrl(urlVal)) {
         const chatUrl = {
@@ -91,8 +89,6 @@ function generateFinalUrl() {
 
     const token = $(".token").val();
     const webHookUrlString = generateWebHookUrlString();
-
-    console.log(webHookUrlString)
 
     if (!validateToken(token)) return false;
 
