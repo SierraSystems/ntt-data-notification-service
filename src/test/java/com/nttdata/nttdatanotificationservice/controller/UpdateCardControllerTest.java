@@ -28,7 +28,7 @@ public class UpdateCardControllerTest {
     NotificationServiceProperties notificationServiceProperties;
 
     @BeforeEach
-    void initialize() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    void initialize() {
         MockitoAnnotations.initMocks(this);
     }
 
