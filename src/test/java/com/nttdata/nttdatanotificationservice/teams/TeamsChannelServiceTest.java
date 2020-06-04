@@ -41,7 +41,6 @@ public class TeamsChannelServiceTest {
     @BeforeAll
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        //sut = new TeamsChannelService();
         when(notificationServiceProperties.getTeamsCardBase()).thenReturn("http://aurl.com");
     }
 
