@@ -8,6 +8,7 @@ import com.nttdata.nttdatanotificationservice.teams.models.TeamsSection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +32,14 @@ public class UpdateCardController {
       TeamsPotentialActions potentialActionsLink = TeamsPotentialActions.defaultTeamsPotentialActions("ViewAction", "WAT");
       potentialActionsLink.addTarget("BLARG");
       teamsUpdate.addPotentialAction(potentialActionsLink);
-      ResponseEntity<TeamsCard> res =  new ResponseEntity<TeamsCard>(teamsUpdate, HttpStatus.OK);
-      res.getHeaders().add("CARD-UPDATE-IN-BODY","true");
-      return res;
+
+
+      HttpHeaders responseHeaders = new HttpHeaders();
+      responseHeaders.set("CARD-UPDATE-IN-BODY",
+              "true");
+
+      return ResponseEntity.ok()
+              .headers(responseHeaders)
+              .body(teamsUpdate);
   }
 }
