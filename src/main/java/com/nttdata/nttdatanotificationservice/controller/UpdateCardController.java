@@ -1,6 +1,10 @@
 package com.nttdata.nttdatanotificationservice.controller;
 
 import com.nttdata.nttdatanotificationservice.configuration.NotificationServiceProperties;
+import com.nttdata.nttdatanotificationservice.teams.models.TeamsCard;
+import com.nttdata.nttdatanotificationservice.teams.models.TeamsFact;
+import com.nttdata.nttdatanotificationservice.teams.models.TeamsPotentialActions;
+import com.nttdata.nttdatanotificationservice.teams.models.TeamsSection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +23,16 @@ public class UpdateCardController {
   NotificationServiceProperties notificationServiceProperties;
 
   @PostMapping(value = "update/{token}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<String> update(@PathVariable("token") String token,
+  public ResponseEntity<TeamsCard> update(@PathVariable("token") String token,
                                        @RequestHeader Map<String, String> headers,
-                                       @RequestBody Object teamsUpdate) {
+                                       @RequestBody TeamsCard teamsUpdate) {
 
-      logger.info("{}",teamsUpdate);
-
-      headers.forEach((key, value) -> {
-          logger.info(String.format("WAT: '%s' = %s", key, value));
-      });
-
-      return new ResponseEntity<>("Did a thing", HttpStatus.OK);
+      logger.info("Received message from teams");
+      TeamsPotentialActions potentialActionsLink = TeamsPotentialActions.defaultTeamsPotentialActions("ViewAction", "WAT");
+      potentialActionsLink.addTarget("BLARG");
+      teamsUpdate.addPotentialAction(potentialActionsLink);
+      ResponseEntity<TeamsCard> res =  new ResponseEntity<TeamsCard>(teamsUpdate, HttpStatus.OK);
+      res.getHeaders().add("CARD-UPDATE-IN-BODY","true");
+      return res;
   }
 }
