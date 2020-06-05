@@ -2,6 +2,7 @@ package com.nttdata.nttdatanotificationservice.teams.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +12,9 @@ public class TeamsCard {
   private static final String DEFAULT_TYPE = "MessageCard";
   private static final String DEFAULT_CONTEXT = "http://schema.org/extensions";
   private static final String THEME_COLOR = "0076D7";
-
+  @SerializedName("@type")
   private String type;
+  @SerializedName("@context")
   private String context;
   private String themeColor;
   private String summary;
@@ -38,12 +40,10 @@ public class TeamsCard {
 
   }
 
-  @JsonProperty("@type")
   public String getType() {
     return type;
   }
 
-  @JsonProperty("@context")
   public String getContext() {
     return context;
   }
