@@ -1,5 +1,7 @@
 package com.nttdata.nttdatanotificationservice.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.nttdata.nttdatanotificationservice.configuration.NotificationServiceProperties;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsCard;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsFact;
@@ -24,22 +26,21 @@ public class UpdateCardController {
   NotificationServiceProperties notificationServiceProperties;
 
   @PostMapping(value = "update/{token}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<TeamsCard> update(@PathVariable("token") String token,
+  public ResponseEntity<String> update(@PathVariable("token") String token,
                                        @RequestHeader Map<String, String> headers,
-                                       @RequestBody TeamsCard teamsUpdate) {
+                                       @RequestBody String teamsUpdate) {
 
       logger.info("Received message from teams");
-      TeamsPotentialActions potentialActionsLink = TeamsPotentialActions.defaultTeamsPotentialActions("ViewAction", "WAT");
-      potentialActionsLink.addTarget("BLARG");
-      teamsUpdate.addPotentialAction(potentialActionsLink);
-
-
+      Gson gson = new Gson();
+      JsonObject obj = gson.fromJson(teamsUpdate, JsonObject.class);
+      obj.remove("summary");
+      obj.addProperty("summary", "IMMANEWSUMMARY");
       HttpHeaders responseHeaders = new HttpHeaders();
       responseHeaders.set("CARD-UPDATE-IN-BODY",
               "true");
 
       return ResponseEntity.ok()
               .headers(responseHeaders)
-              .body(teamsUpdate);
+              .body(gson.toJson(obj));
   }
 }

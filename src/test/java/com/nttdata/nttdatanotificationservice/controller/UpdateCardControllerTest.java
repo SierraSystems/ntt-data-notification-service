@@ -1,5 +1,7 @@
 package com.nttdata.nttdatanotificationservice.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.nttdata.nttdatanotificationservice.configuration.NotificationServiceProperties;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsCard;
 import org.jetbrains.annotations.NotNull;
@@ -35,7 +37,9 @@ public class UpdateCardControllerTest {
     @DisplayName("Success - UpdateCardController")
     @Test
     void testSuccess() {
-        ResponseEntity<TeamsCard> result = updateCardController.update("TEST", new HashMap<String, String>(), TeamsCard.defaultNttCard("",""));
+        String json = "{\"summary\":\"test\"}";
+        Gson gson = new Gson();
+        ResponseEntity<String> result = updateCardController.update("TEST", new HashMap<String, String>(), json);
         Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
     }
 }
