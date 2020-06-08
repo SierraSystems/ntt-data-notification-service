@@ -35,11 +35,6 @@ public class UpdateCardController {
 
       logger.info("Received message from teams");
 
-      logger.info("{}", teamsUpdate.toJson());
-
-//      obj.remove("summary");
-//      obj.addProperty("summary", "IMMANEWSUMMARY");
-
       TeamsCard obj = (TeamsCard) teamsChannelService.generatePayload(teamsUpdate.getNotification(), teamsUpdate.getWebHookParams().getWebHookUrls().get(0).getUrl());
 
       obj.getSections().stream().findFirst().ifPresent(section -> {
