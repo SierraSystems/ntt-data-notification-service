@@ -4,6 +4,7 @@ import com.nttdata.nttdatanotificationservice.configuration.Config;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class TeamsSection {
 
@@ -39,6 +40,14 @@ public class TeamsSection {
 
   public void addFact(TeamsFact fact) {
     this.facts.add(fact);
+  }
+
+  public void updateFact(String name, String value) {
+    Optional<TeamsFact> fact = this.facts.stream().filter(f -> f.getName().equals(name)).findFirst();
+
+    if (fact.isPresent()) {
+      fact.get().setValue(value);
+    }
   }
 
   public Boolean getMarkdown() {

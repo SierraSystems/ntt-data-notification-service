@@ -95,11 +95,11 @@ public class TeamsChannelServiceTest {
         Assertions.assertEquals(3, actual.getPotentialAction().get(1).getInputs().get(0).getChoices().size());
 
         Assertions.assertEquals("In Progress", actual.getPotentialAction().get(1).getInputs().get(0).getChoices().get(0).getDisplay());
-        Assertions.assertEquals("1", actual.getPotentialAction().get(1).getInputs().get(0).getChoices().get(0).getValue());
+        Assertions.assertEquals("In Progress", actual.getPotentialAction().get(1).getInputs().get(0).getChoices().get(0).getValue());
         Assertions.assertEquals("In Review", actual.getPotentialAction().get(1).getInputs().get(0).getChoices().get(1).getDisplay());
-        Assertions.assertEquals("2", actual.getPotentialAction().get(1).getInputs().get(0).getChoices().get(1).getValue());
+        Assertions.assertEquals("In Review", actual.getPotentialAction().get(1).getInputs().get(0).getChoices().get(1).getValue());
         Assertions.assertEquals("Closed", actual.getPotentialAction().get(1).getInputs().get(0).getChoices().get(2).getDisplay());
-        Assertions.assertEquals("3", actual.getPotentialAction().get(1).getInputs().get(0).getChoices().get(2).getValue());
+        Assertions.assertEquals("Closed", actual.getPotentialAction().get(1).getInputs().get(0).getChoices().get(2).getValue());
 
         Assertions.assertEquals(1, actual.getSections().size());
 

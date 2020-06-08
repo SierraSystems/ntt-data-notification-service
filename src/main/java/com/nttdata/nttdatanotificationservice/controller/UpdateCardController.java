@@ -6,6 +6,8 @@ import com.nttdata.nttdatanotificationservice.configuration.NotificationBody;
 import com.nttdata.nttdatanotificationservice.configuration.NotificationServiceProperties;
 import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
 import com.nttdata.nttdatanotificationservice.teams.TeamsChannelService;
+import com.nttdata.nttdatanotificationservice.teams.models.TeamsCard;
+import com.nttdata.nttdatanotificationservice.teams.models.TeamsFact;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,26 +34,26 @@ public class UpdateCardController {
                                        @RequestBody NotificationBody teamsUpdate) {
 
       logger.info("Received message from teams");
-//      Gson gson = new Gson();
-//      JsonObject obj = gson.fromJson(teamsUpdate, JsonObject.class);
-//
+
       logger.info("{}", teamsUpdate.toJson());
-//
+
 //      obj.remove("summary");
 //      obj.addProperty("summary", "IMMANEWSUMMARY");
 
-      logger.info("{}", teamsUpdate.getWebHookParams().getWebHookUrls().get(0).getUrl());
+      TeamsCard obj = (TeamsCard) teamsChannelService.generatePayload(teamsUpdate.getNotification(), teamsUpdate.getWebHookParams().getWebHookUrls().get(0).getUrl());
 
-      Object obj = teamsChannelService.generatePayload(teamsUpdate.getNotification(), teamsUpdate.getWebHookParams().getWebHookUrls().get(0).getUrl());
-
-      logger.info("{}", obj);
+      obj.getSections().stream().findFirst().ifPresent(section -> {
+        section.updateFact("Status", teamsUpdate.getResponse());
+      });
 
       HttpHeaders responseHeaders = new HttpHeaders();
       responseHeaders.set("CARD-UPDATE-IN-BODY",
               "true");
 
+      Gson postJson = new Gson();
+
       return ResponseEntity.ok()
               .headers(responseHeaders)
-              .body(obj.toString());
+              .body(postJson.toJson(obj, Object.class));
   }
 }

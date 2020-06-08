@@ -45,8 +45,6 @@ public class TeamsChannelService implements ChannelService {
 
         potentialActionsStatus.addInput(getTeamsInput());
 
-//        logger.info("{}", notificationServiceProperties.getTokens());
-
         TeamsAction statusAction = TeamsAction.defaultTeamAction("HttpPOST", "OK", notificationServiceProperties.getUpdateCardBase());
 
         potentialActionsStatus.addAction(statusAction);
@@ -94,9 +92,9 @@ public class TeamsChannelService implements ChannelService {
     private TeamsInput getTeamsInput() {
         TeamsInput statusInput = TeamsInput.defaultTeamsInput("statuslist", "MultichoiceInput", "Update Status");
 
-        statusInput.addChoice(new TeamsChoice("In Progress","1"));
-        statusInput.addChoice(new TeamsChoice("In Review","2"));
-        statusInput.addChoice(new TeamsChoice("Closed","3"));
+        statusInput.addChoice(new TeamsChoice("In Progress","In Progress"));
+        statusInput.addChoice(new TeamsChoice("In Review","In Review"));
+        statusInput.addChoice(new TeamsChoice("Closed","Closed"));
         return statusInput;
     }
 }
