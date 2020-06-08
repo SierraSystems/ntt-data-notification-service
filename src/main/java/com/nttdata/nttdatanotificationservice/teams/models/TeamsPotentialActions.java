@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TeamsPotentialActions {
-  @SerializedName("@type")
+  //@SerializedName("@type")
   private String type;
   private String name;
   private List<String> target = new ArrayList<>();
