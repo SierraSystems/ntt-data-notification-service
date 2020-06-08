@@ -23,6 +23,9 @@ public class UpdateCardController {
   @Autowired
   NotificationServiceProperties notificationServiceProperties;
 
+  @Autowired
+  TeamsChannelService teamsChannelService;
+
   @PostMapping(value = "update/{token}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<String> update(@PathVariable("token") String token,
                                        @RequestHeader Map<String, String> headers,
@@ -38,8 +41,6 @@ public class UpdateCardController {
 //      obj.addProperty("summary", "IMMANEWSUMMARY");
 
       logger.info("{}", teamsUpdate.getWebHookParams().getWebHookUrls().get(0).getUrl());
-
-      TeamsChannelService teamsChannelService = new TeamsChannelService();
 
       Object obj = teamsChannelService.generatePayload(teamsUpdate.getNotification(), teamsUpdate.getWebHookParams().getWebHookUrls().get(0).getUrl());
 
