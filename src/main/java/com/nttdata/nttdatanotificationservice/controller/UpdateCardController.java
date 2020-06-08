@@ -2,7 +2,10 @@ package com.nttdata.nttdatanotificationservice.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.nttdata.nttdatanotificationservice.configuration.NotificationBody;
 import com.nttdata.nttdatanotificationservice.configuration.NotificationServiceProperties;
+import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
+import com.nttdata.nttdatanotificationservice.teams.TeamsChannelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,19 +26,31 @@ public class UpdateCardController {
   @PostMapping(value = "update/{token}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<String> update(@PathVariable("token") String token,
                                        @RequestHeader Map<String, String> headers,
-                                       @RequestBody String teamsUpdate) {
+                                       @RequestBody NotificationBody teamsUpdate) {
 
       logger.info("Received message from teams");
-      Gson gson = new Gson();
-      JsonObject obj = gson.fromJson(teamsUpdate, JsonObject.class);
-      obj.remove("summary");
-      obj.addProperty("summary", "IMMANEWSUMMARY");
+//      Gson gson = new Gson();
+//      JsonObject obj = gson.fromJson(teamsUpdate, JsonObject.class);
+//
+      logger.info("{}", teamsUpdate.toJson());
+//
+//      obj.remove("summary");
+//      obj.addProperty("summary", "IMMANEWSUMMARY");
+
+      logger.info("{}", teamsUpdate.getWebHookParams().getWebHookUrls().get(0).getUrl());
+
+      TeamsChannelService teamsChannelService = new TeamsChannelService();
+
+      Object obj = teamsChannelService.generatePayload(teamsUpdate.getNotification(), teamsUpdate.getWebHookParams().getWebHookUrls().get(0).getUrl());
+
+      logger.info("{}", obj);
+
       HttpHeaders responseHeaders = new HttpHeaders();
       responseHeaders.set("CARD-UPDATE-IN-BODY",
               "true");
 
       return ResponseEntity.ok()
               .headers(responseHeaders)
-              .body(gson.toJson(obj));
+              .body(obj.toString());
   }
 }

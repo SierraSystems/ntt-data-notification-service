@@ -1,5 +1,6 @@
 package com.nttdata.nttdatanotificationservice.service;
 
+import com.google.gson.Gson;
 import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
 import com.nttdata.nttdatanotificationservice.configuration.WebHookParams;
 
@@ -37,8 +38,11 @@ public class WebHookServiceImpl implements WebHookService {
 
     private void post(String url, Object postObj) {
         try {
+            Gson postJson = new Gson();
+
+            logger.info("{}", postJson.toJson(postObj, Object.class));
             RestTemplate restTemplate = new RestTemplate();
-            restTemplate.postForObject(url, postObj, String.class);
+            restTemplate.postForObject(url, postJson.toJson(postObj, Object.class), String.class);
             logger.info("Success");
         } catch (Exception e) {
             logger.error("Exception in post", e);

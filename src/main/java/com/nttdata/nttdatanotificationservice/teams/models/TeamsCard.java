@@ -19,6 +19,7 @@ public class TeamsCard {
   private String themeColor;
   private String summary;
   private String webHookUrl;
+  private String response;
 
   private List<TeamsSection> sections = new ArrayList<>();
   private List<TeamsPotentialActions> potentialAction = new ArrayList<>();
@@ -80,6 +81,14 @@ public class TeamsCard {
 
   public void addPotentialAction(TeamsPotentialActions teamsPotentialActions) {
     this.potentialAction.add(teamsPotentialActions);
+  }
+
+  public String getResponse() {
+    return response;
+  }
+
+  public void setResponse(String response) {
+    this.response = response;
   }
 
   public String toJson() {
