@@ -1,6 +1,5 @@
 package com.nttdata.nttdatanotificationservice.teams.models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 
 public class TeamsAction {
