@@ -1,8 +1,12 @@
 package com.nttdata.nttdatanotificationservice.teams;
 
+import com.nttdata.nttdatanotificationservice.configuration.NotificationBody;
 import com.nttdata.nttdatanotificationservice.configuration.NotificationServiceProperties;
+import com.nttdata.nttdatanotificationservice.configuration.WebHookParams;
+import com.nttdata.nttdatanotificationservice.configuration.WebHookUrls;
 import com.nttdata.nttdatanotificationservice.service.ChannelService;
 import com.nttdata.nttdatanotificationservice.service.ChatApp;
+import com.nttdata.nttdatanotificationservice.service.WebHookServiceImpl;
 import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsAction;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsCard;
@@ -11,6 +15,8 @@ import com.nttdata.nttdatanotificationservice.teams.models.TeamsFact;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsInput;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsPotentialActions;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsSection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Service;
@@ -18,6 +24,7 @@ import org.springframework.stereotype.Service;
 @Service
 @EnableConfigurationProperties(NotificationServiceProperties.class)
 public class TeamsChannelService implements ChannelService {
+    Logger logger = LoggerFactory.getLogger(WebHookServiceImpl.class);
 
     @Autowired
     NotificationServiceProperties notificationServiceProperties;
@@ -46,7 +53,14 @@ public class TeamsChannelService implements ChannelService {
 
         teamsCard.addPotentialAction(potentialActionsStatus);
 
-        statusAction.setBody(teamsCard.toJson());
+        NotificationBody notificationBody = new NotificationBody();
+        notificationBody.setNotification(notification);
+        WebHookParams webHookParams = new WebHookParams();
+        webHookParams.addWebHookUrls(new WebHookUrls(ChatApp.TEAMS, webHookUrl));
+        notificationBody.setWebHookParams(webHookParams);
+        notificationBody.setResponse("{{statusList.value}}");
+
+        statusAction.setBody(notificationBody.toJson());
 
         return  teamsCard;
     }
@@ -78,9 +92,9 @@ public class TeamsChannelService implements ChannelService {
     private TeamsInput getTeamsInput() {
         TeamsInput statusInput = TeamsInput.defaultTeamsInput("statuslist", "MultichoiceInput", "Update Status");
 
-        statusInput.addChoice(new TeamsChoice("In Progress","1"));
-        statusInput.addChoice(new TeamsChoice("In Review","2"));
-        statusInput.addChoice(new TeamsChoice("Closed","3"));
+        statusInput.addChoice(new TeamsChoice("In Progress","In Progress"));
+        statusInput.addChoice(new TeamsChoice("In Review","In Review"));
+        statusInput.addChoice(new TeamsChoice("Closed","Closed"));
         return statusInput;
     }
 }

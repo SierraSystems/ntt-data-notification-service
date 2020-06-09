@@ -7,6 +7,11 @@ public class WebHookUrls {
     private ChatApp chatApp;
     private String url;
 
+    public WebHookUrls(ChatApp chatApp, String url) {
+        this.chatApp = chatApp;
+        this.url = url;
+    }
+
     public ChatApp getChatApp() {
         return chatApp;
     }

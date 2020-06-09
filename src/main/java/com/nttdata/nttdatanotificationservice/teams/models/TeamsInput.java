@@ -22,15 +22,6 @@ public class TeamsInput {
     this.title = title;
   }
 
-  public TeamsInput(String id, String type, String title, Boolean isMultiline, Boolean isMultiSelect) {
-    this.type = type;
-    this.id = id;
-    this.title = title;
-    this.isMultiline = isMultiline;
-    this.isMultiSelect = isMultiSelect;
-  }
-
-
   public String getType() {
     return type;
   }

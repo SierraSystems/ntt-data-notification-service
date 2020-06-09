@@ -71,9 +71,8 @@ public class WebHookServiceImplTest {
         mockResponse.setResponseCode(200);
         mockBackEnd.enqueue(mockResponse);
 
-        WebHookUrls splunkWebHookUrl = new WebHookUrls();
-        splunkWebHookUrl.setChatApp(ChatApp.TEAMS);
-        splunkWebHookUrl.setUrl(baseUrl);
+        WebHookUrls splunkWebHookUrl = new WebHookUrls(ChatApp.TEAMS, baseUrl);
+
         List<WebHookUrls> webHookUrls = Arrays.asList(splunkWebHookUrl);
 
         WebHookParams webHookParams = new WebHookParams();
@@ -109,9 +108,8 @@ public class WebHookServiceImplTest {
         mockResponse.setResponseCode(200);
         mockBackEnd.enqueue(mockResponse);
 
-        WebHookUrls splunkWebHookUrl = new WebHookUrls();
-        splunkWebHookUrl.setChatApp(ChatApp.ROCKET_CHAT);
-        splunkWebHookUrl.setUrl(baseUrl);
+        WebHookUrls splunkWebHookUrl = new WebHookUrls(ChatApp.ROCKET_CHAT, baseUrl);
+
         List<WebHookUrls> webHookUrls = Arrays.asList(splunkWebHookUrl);
 
         WebHookParams webHookParams = new WebHookParams();
@@ -146,9 +144,8 @@ public class WebHookServiceImplTest {
         mockResponse.setResponseCode(500);
         mockBackEnd.enqueue(mockResponse);
 
-        WebHookUrls splunkWebHookUrl = new WebHookUrls();
-        splunkWebHookUrl.setChatApp(ChatApp.TEAMS);
-        splunkWebHookUrl.setUrl(baseUrl);
+        WebHookUrls splunkWebHookUrl = new WebHookUrls(ChatApp.TEAMS, baseUrl);
+
         List<WebHookUrls> webHookUrls = Arrays.asList(splunkWebHookUrl);
 
         WebHookParams webHookParams = new WebHookParams();
@@ -184,9 +181,8 @@ public class WebHookServiceImplTest {
         mockResponse.setResponseCode(500);
         mockBackEnd.enqueue(mockResponse);
 
-        WebHookUrls splunkWebHookUrl = new WebHookUrls();
-        splunkWebHookUrl.setChatApp(ChatApp.ROCKET_CHAT);
-        splunkWebHookUrl.setUrl(baseUrl);
+        WebHookUrls splunkWebHookUrl = new WebHookUrls(ChatApp.ROCKET_CHAT, baseUrl);
+
         List<WebHookUrls> webHookUrls = Arrays.asList(splunkWebHookUrl);
 
         WebHookParams webHookParams = new WebHookParams();

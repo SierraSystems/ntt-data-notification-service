@@ -13,4 +13,8 @@ public class WebHookParams {
   public void setWebHookUrls(List<WebHookUrls> webHookUrls) {
     this.webHookUrls = webHookUrls;
   }
+
+  public void addWebHookUrls(WebHookUrls webHookUrls) {
+    this.webHookUrls.add(webHookUrls);
+  }
 }

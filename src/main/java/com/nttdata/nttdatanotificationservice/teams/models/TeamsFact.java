@@ -12,10 +12,13 @@ public class TeamsFact {
     return value;
   }
 
+  public void setValue(String value) {
+    this.value = value;
+  }
+
   public TeamsFact(String name, String value) {
     this.name = name;
     this.value = value;
   }
-
 
 }

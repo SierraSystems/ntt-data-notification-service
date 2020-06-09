@@ -2,11 +2,19 @@ package com.nttdata.nttdatanotificationservice.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.nttdata.nttdatanotificationservice.configuration.NotificationBody;
 import com.nttdata.nttdatanotificationservice.configuration.NotificationServiceProperties;
+import com.nttdata.nttdatanotificationservice.configuration.WebHookUrls;
+import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
+import com.nttdata.nttdatanotificationservice.teams.TeamsChannelService;
+import com.nttdata.nttdatanotificationservice.teams.models.TeamsCard;
+import com.nttdata.nttdatanotificationservice.teams.models.TeamsFact;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,22 +28,40 @@ public class UpdateCardController {
   @Autowired
   NotificationServiceProperties notificationServiceProperties;
 
+  @Autowired
+  TeamsChannelService teamsChannelService;
+
   @PostMapping(value = "update/{token}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<String> update(@PathVariable("token") String token,
-                                       @RequestHeader Map<String, String> headers,
-                                       @RequestBody String teamsUpdate) {
+                                       @RequestBody NotificationBody teamsUpdate) {
 
       logger.info("Received message from teams");
-      Gson gson = new Gson();
-      JsonObject obj = gson.fromJson(teamsUpdate, JsonObject.class);
-      obj.remove("summary");
-      obj.addProperty("summary", "IMMANEWSUMMARY");
+
+      if (!notificationServiceProperties.getTokens().contains(token)) {
+        logger.error("Token failed to validate");
+        return new ResponseEntity<>("Token validation failed", HttpStatus.UNAUTHORIZED);
+      }
+
+      Optional<WebHookUrls> webHookUrl = teamsUpdate.getWebHookParams().getWebHookUrls().stream().findFirst();
+
+      if (!webHookUrl.isPresent()) {
+        return ResponseEntity.badRequest().body("Missing webHook Url.");
+      }
+
+      TeamsCard obj = (TeamsCard) teamsChannelService.generatePayload(teamsUpdate.getNotification(), webHookUrl.get().getUrl());
+
+      obj.getSections().stream().findFirst().ifPresent(section -> {
+        section.updateFact("Status", teamsUpdate.getResponse());
+      });
+
       HttpHeaders responseHeaders = new HttpHeaders();
       responseHeaders.set("CARD-UPDATE-IN-BODY",
               "true");
 
+      Gson postJson = new Gson();
+
       return ResponseEntity.ok()
               .headers(responseHeaders)
-              .body(gson.toJson(obj));
+              .body(postJson.toJson(obj, Object.class));
   }
 }
