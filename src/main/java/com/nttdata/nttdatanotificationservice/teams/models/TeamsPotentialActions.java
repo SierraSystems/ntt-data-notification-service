@@ -1,13 +1,12 @@
 package com.nttdata.nttdatanotificationservice.teams.models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TeamsPotentialActions {
-  //@SerializedName("@type")
+  @SerializedName("@type")
   private String type;
   private String name;
   private List<String> target = new ArrayList<>();
