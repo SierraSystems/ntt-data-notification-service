@@ -4,17 +4,14 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.nttdata.nttdatanotificationservice.configuration.NotificationBody;
 import com.nttdata.nttdatanotificationservice.configuration.NotificationServiceProperties;
 import com.nttdata.nttdatanotificationservice.configuration.WebHookParams;
 import com.nttdata.nttdatanotificationservice.configuration.WebHookUrls;
 import com.nttdata.nttdatanotificationservice.service.ChatApp;
 import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
-import com.nttdata.nttdatanotificationservice.sources.splunk.models.SplunkAlert;
+import com.nttdata.nttdatanotificationservice.teams.TeamsChannelService;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsCard;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,15 +22,15 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+
 
 public class UpdateCardControllerTest {
     @InjectMocks
-    UpdateCardController updateCardController = new UpdateCardController();
+    UpdateCardController updateCardController;
+
+    @Mock
+    TeamsChannelService teamsChannelService;
 
     @Mock
     NotificationServiceProperties notificationServiceProperties;
@@ -70,7 +67,7 @@ public class UpdateCardControllerTest {
       webHookParams.addWebHookUrls(new WebHookUrls(ChatApp.TEAMS, "webHookUrl"));
       notificationBody.setWebHookParams(webHookParams);
       notificationBody.setResponse("Success");
-
+      when(teamsChannelService.generatePayload(any(), any())).thenReturn( TeamsCard.defaultNttCard("",""));
       ResponseEntity<String> result = updateCardController.update("TEST", new HashMap<String, String>(), notificationBody);
       Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
     }
