@@ -50,6 +50,8 @@ public class UpdateCardControllerTest {
       "\t\"returnUrl\": \"return_url\"\n" +
       "}";
 
+  private static final String updatedCard = "{\"type\":\"MessageCard\",\"context\":\"http://schema.org/extensions\",\"themeColor\":\"0076D7\",\"summary\":\"\",\"webHookUrl\":\"\",\"sections\":[],\"potentialAction\":[]}";
+
     @BeforeEach
     void initialize() {
         MockitoAnnotations.initMocks(this);
@@ -69,6 +71,8 @@ public class UpdateCardControllerTest {
       notificationBody.setResponse("Success");
       when(teamsChannelService.generatePayload(any(), any())).thenReturn( TeamsCard.defaultNttCard("",""));
       ResponseEntity<String> result = updateCardController.update("TEST", new HashMap<String, String>(), notificationBody);
+
       Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
+      Assertions.assertEquals(updatedCard, result.getBody());
     }
 }
