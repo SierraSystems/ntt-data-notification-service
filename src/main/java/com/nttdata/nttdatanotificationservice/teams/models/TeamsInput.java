@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TeamsInput {
-  //@SerializedName("@type")
+  @SerializedName("@type")
   private String type;
   private String id;
   private Boolean isMultiline;
