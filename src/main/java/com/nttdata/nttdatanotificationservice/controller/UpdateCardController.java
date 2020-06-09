@@ -4,14 +4,17 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.nttdata.nttdatanotificationservice.configuration.NotificationBody;
 import com.nttdata.nttdatanotificationservice.configuration.NotificationServiceProperties;
+import com.nttdata.nttdatanotificationservice.configuration.WebHookUrls;
 import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
 import com.nttdata.nttdatanotificationservice.teams.TeamsChannelService;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsCard;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsFact;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,12 +33,22 @@ public class UpdateCardController {
 
   @PostMapping(value = "update/{token}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<String> update(@PathVariable("token") String token,
-                                       @RequestHeader Map<String, String> headers,
                                        @RequestBody NotificationBody teamsUpdate) {
 
       logger.info("Received message from teams");
 
-      TeamsCard obj = (TeamsCard) teamsChannelService.generatePayload(teamsUpdate.getNotification(), teamsUpdate.getWebHookParams().getWebHookUrls().get(0).getUrl());
+      if (!notificationServiceProperties.getTokens().contains(token)) {
+        logger.error("Token failed to validate");
+        return new ResponseEntity<>("Token validation failed", HttpStatus.UNAUTHORIZED);
+      }
+
+      Optional<WebHookUrls> webHookUrl = teamsUpdate.getWebHookParams().getWebHookUrls().stream().findFirst();
+
+      if (!webHookUrl.isPresent()) {
+        return ResponseEntity.badRequest().body("Missing webHook Url.");
+      }
+
+      TeamsCard obj = (TeamsCard) teamsChannelService.generatePayload(teamsUpdate.getNotification(), webHookUrl.get().getUrl());
 
       obj.getSections().stream().findFirst().ifPresent(section -> {
         section.updateFact("Status", teamsUpdate.getResponse());
