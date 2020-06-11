@@ -1,12 +1,15 @@
 package com.nttdata.nttdatanotificationservice.sources.splunk.models;
 
+import com.google.gson.annotations.SerializedName;
 import com.nttdata.nttdatanotificationservice.service.AlertModel;
 import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
 
 public class SplunkAlert implements AlertModel {
     private String 	sid;
-    private String results_link;
-    private String search_name;
+    @SerializedName("results_link")
+    private String resultsLink;
+    @SerializedName("search_name")
+    private String searchName;
     private String owner;
     private SplunkResult result;
 
@@ -14,13 +17,13 @@ public class SplunkAlert implements AlertModel {
 
     public void setSid(String sid) {this.sid = sid;}
 
-    public String getResults_link() {return results_link;}
+    public String getResultsLink() {return resultsLink;}
 
-    public void setResults_link(String results_link) {this.results_link = results_link;}
+    public void setResultsLink(String resultsLink) {this.resultsLink = resultsLink;}
 
-    public String getSearch_name() {return search_name;}
+    public String getSearchName() {return searchName;}
 
-    public void setSearch_name(String search_name) {this.search_name = search_name;}
+    public void setSearchName(String searchName) {this.searchName = searchName;}
 
     public String getOwner() {return owner;}
 
@@ -35,10 +38,10 @@ public class SplunkAlert implements AlertModel {
         Notification notification = new Notification();
 
         notification.setAppName(this.getResult().getSource());
-        notification.setOrigin(this.getSearch_name());
+        notification.setOrigin(this.getSearchName());
         notification.setOwner(this.getOwner());
         notification.setMessage(this.getResult().getMessage());
-        notification.setReturnUrl(this.getResults_link());
+        notification.setReturnUrl(this.getResultsLink());
 
         notification.addDetails("dashboard", this.getResult().getDashboard());
         notification.addDetails(this.getResult().getDetails());

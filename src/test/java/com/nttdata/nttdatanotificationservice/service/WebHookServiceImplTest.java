@@ -1,7 +1,6 @@
 package com.nttdata.nttdatanotificationservice.service;
 
 import com.google.gson.Gson;
-import com.nttdata.nttdatanotificationservice.configuration.NotificationServiceProperties;
 import com.nttdata.nttdatanotificationservice.rocket.RocketChannelService;
 import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
 import com.nttdata.nttdatanotificationservice.sources.splunk.models.SplunkAlert;
@@ -14,7 +13,6 @@ import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -87,9 +85,9 @@ public class WebHookServiceImplTest {
         splunkResult.setSource("ASOURCE");
         splunkResult.setDashboard("TEST");
         splunkAlert.setResult(splunkResult);
-        splunkAlert.setResults_link("TEST");
+        splunkAlert.setResultsLink("TEST");
         splunkAlert.setSid("TEST");
-        splunkAlert.setSearch_name("");
+        splunkAlert.setSearchName("");
 
         Notification notification = splunkAlert.convertToAlert();
 
@@ -124,7 +122,7 @@ public class WebHookServiceImplTest {
         splunkResult.setSource("ASOURCE");
         splunkResult.setDashboard("TEST");
         splunkAlert.setResult(splunkResult);
-        splunkAlert.setResults_link("TEST");
+        splunkAlert.setResultsLink("TEST");
         splunkAlert.setSid("TEST");
 
         Notification notification = splunkAlert.convertToAlert();
@@ -160,9 +158,9 @@ public class WebHookServiceImplTest {
         splunkResult.setSource("ASOURCE");
         splunkResult.setDashboard("TEST");
         splunkAlert.setResult(splunkResult);
-        splunkAlert.setResults_link("TEST");
+        splunkAlert.setResultsLink("TEST");
         splunkAlert.setSid("TEST");
-        splunkAlert.setSearch_name("");
+        splunkAlert.setSearchName("");
 
         Notification notification = splunkAlert.convertToAlert();
 
@@ -197,7 +195,7 @@ public class WebHookServiceImplTest {
         splunkResult.setSource("ASOURCE");
         splunkResult.setDashboard("TEST");
         splunkAlert.setResult(splunkResult);
-        splunkAlert.setResults_link("TEST");
+        splunkAlert.setResultsLink("TEST");
         splunkAlert.setSid("TEST");
 
         Notification notification = splunkAlert.convertToAlert();
