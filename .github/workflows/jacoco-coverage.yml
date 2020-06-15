@@ -19,6 +19,13 @@ jobs:
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-
+    - name: Run javascript tests
+    - uses: actions/checkout@master
+    - uses: actions/setup-node@master
+      with:
+        node-version: "12"
+    - run: npm install
+    - run: npm test
     - name: Test & publish code coverage
       uses: paambaati/codeclimate-action@v2.6.0
       env:
@@ -28,5 +35,7 @@ jobs:
       with:
         # The report file must be there, otherwise Code Climate won't find it
         coverageCommand: mvn -B test --file pom.xml
-        coverageLocations: ${{github.workspace}}/target/site/jacoco/jacoco.xml:jacoco
+        coverageLocations: |
+          ${{github.workspace}}/target/site/jacoco/jacoco.xml:jacoco
+          ${{github.workspace}}/coverage/lcov.info:lcov
         
