@@ -1,4 +1,11 @@
-const assert = chai.assert;
+const { isEmpty, validateToken, errorsExist, checkForDuplicatesAndEmpty, validateUrl, populateSplunkWebHooks } = require("./index.js");
+
+const { assert } = require("chai");
+
+before(() => {
+  $ = require("jquery");
+  global.$ = $;
+});
 
 describe('isEmpty', () => {
   it('should return true when array is empty', () => {

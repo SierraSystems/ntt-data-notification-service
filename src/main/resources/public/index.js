@@ -174,3 +174,5 @@ function copyToClipboard() {
 
     $(".success-copy").show();
 }
+
+module.exports = { isEmpty, validateToken, errorsExist, checkForDuplicatesAndEmpty, validateUrl, populateSplunkWebHooks };
