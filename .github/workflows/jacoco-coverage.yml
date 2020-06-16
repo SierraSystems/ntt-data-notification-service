@@ -4,21 +4,27 @@ on: [push]
       
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v1
     - name: Set up JDK 1.8
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
-    - uses: actions/cache@v1
+    - name: Set up m2 cache
+      uses: actions/cache@v1
       with:
         path: ~/.m2/repository
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-
+    - name: Run javascript tests
+      uses: actions/checkout@master
+    - uses: actions/setup-node@master
+      with:
+        node-version: "12"
+    - run: npm install
+    - run: npm test
     - name: Test & publish code coverage
       uses: paambaati/codeclimate-action@v2.6.0
       env:
@@ -28,5 +34,7 @@ jobs:
       with:
         # The report file must be there, otherwise Code Climate won't find it
         coverageCommand: mvn -B test --file pom.xml
-        coverageLocations: ${{github.workspace}}/target/site/jacoco/jacoco.xml:jacoco
+        coverageLocations: |
+          ${{github.workspace}}/target/site/jacoco/jacoco.xml:jacoco
+          ${{github.workspace}}/coverage/lcov.info:lcov
         
