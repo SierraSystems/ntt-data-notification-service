@@ -19,6 +19,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-maven-
     - name: Run javascript tests
+      uses: actions/checkout@master
     - uses: actions/setup-node@master
       with:
         node-version: "12"
