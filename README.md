@@ -1,4 +1,4 @@
-[![Test Coverage](https://api.codeclimate.com/v1/badges/a1719884328523a5b49d/test_coverage)](https://codeclimate.com/github/SierraSystems/ntt-data-notification-service/test_coverage) [![Maintainability](https://api.codeclimate.com/v1/badges/a1719884328523a5b49d/maintainability)](https://codeclimate.com/github/SierraSystems/ntt-data-notification-service/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/b6bb35624e04cdfb7364/test_coverage)](https://codeclimate.com/github/SierraSystems/ntt-data-notification-service/test_coverage) [![Maintainability](https://api.codeclimate.com/v1/badges/b6bb35624e04cdfb7364/maintainability)](https://codeclimate.com/github/SierraSystems/ntt-data-notification-service/maintainability)
 
 # ntt-data-notification-service
 
