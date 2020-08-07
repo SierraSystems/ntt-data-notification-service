@@ -2,7 +2,7 @@ version: 2
 updates:
   # Mvn dependencies
   - package-ecosystem: "maven"
-    directory: "/src"
+    directory: "/"
     schedule:
       interval: "daily"
       time: "18:00"
