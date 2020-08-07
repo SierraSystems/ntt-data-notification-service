@@ -82,7 +82,7 @@ function generateWebHookUrlString() {
         splunkWebHookUrls = populateSplunkWebHooks(generatedTeamsUrl, splunkWebHookUrls);
         splunkWebHookUrls = populateSplunkWebHooks(generatedRocketUrl, splunkWebHookUrls);
 
-        webHookUrls.splunkWebHookUrls = splunkWebHookUrls;
+        webHookUrls.webHookUrls = splunkWebHookUrls;
         return JSON.stringify(webHookUrls);
     }
 
