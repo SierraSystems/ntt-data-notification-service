@@ -43,7 +43,6 @@ public class SplunkNotificationController {
 
         Notification notification = splunkAlert.convertToAlert();
 
-
         byte[] decodedRoutesBytes = Base64.getUrlDecoder().decode(routes);
         String decodedRoutesUrl = new String(decodedRoutesBytes);
 

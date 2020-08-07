@@ -61,7 +61,7 @@ public class SplunkNotificationControlllerTest {
         String splunkAlert = splunkAlertJson;
 
         when(webHookService.postMessage(any(), any())).thenReturn(new ResponseEntity<>(
-                "We good", HttpStatus.OK));
+                "Success", HttpStatus.OK));
         ResponseEntity<String> result = splunkNotificationController.alert(TEST, "", splunkAlert);
 
         Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
