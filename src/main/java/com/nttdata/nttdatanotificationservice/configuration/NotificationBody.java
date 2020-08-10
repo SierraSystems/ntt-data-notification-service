@@ -2,7 +2,6 @@ package com.nttdata.nttdatanotificationservice.configuration;
 
 import com.google.gson.Gson;
 import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
-import com.nttdata.nttdatanotificationservice.teams.models.TeamsCard;
 
 public class NotificationBody {
   private WebHookParams webHookParams = new WebHookParams();
