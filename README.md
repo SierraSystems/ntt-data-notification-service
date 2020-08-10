@@ -60,7 +60,9 @@ Add to Triggered Alerts
 <b>NOTE:</b> Make sure to remove this alert once done testing as it is only intended for ensuring connectivity between Splunk, the notification service, and the chat platform(s).
 
 
-## Running Locally
+## Running Locally via Docker
+
+To run the application locally with Docker, a `.env` file will need to be created. See the `.env.example` file for variables used by this application.
 
 ```bash
 docker-compose up --build ntt-data-notification-service
@@ -69,8 +71,3 @@ docker-compose up --build ntt-data-notification-service
 This should spin up the ntt-data-notification-service and the latest docker image of Splunk locally.
 
 To modify the ports the app is running on, simply change the port mappings in the docker-compose file.
-
-Optional: If not running the application through docker, you can set a property in `application.properties` if you would like to customize the port your app runs on:
-```bash
-server.port=${PORT:<PORT>}
-```
