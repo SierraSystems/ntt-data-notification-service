@@ -58,11 +58,10 @@ public class SplunkNotificationControlllerTest {
     @DisplayName("Success - SplunkNotificationController")
     @Test
     void testSuccess() {
-        Gson gson = new Gson();
-        SplunkAlert splunkAlert = gson.fromJson(splunkAlertJson, SplunkAlert.class);
+        String splunkAlert = splunkAlertJson;
 
         when(webHookService.postMessage(any(), any())).thenReturn(new ResponseEntity<>(
-                "We good", HttpStatus.OK));
+                "Success", HttpStatus.OK));
         ResponseEntity<String> result = splunkNotificationController.alert(TEST, "", splunkAlert);
 
         Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
@@ -71,7 +70,7 @@ public class SplunkNotificationControlllerTest {
     @DisplayName("Unauthorized - SplunkNotificationController")
     @Test
     void testUnauthorized() {
-        SplunkAlert splunkAlert = new SplunkAlert();
+        String splunkAlert = "";
         when(webHookService.postMessage(any(), any())).thenReturn(new ResponseEntity<>(
                 "We good", HttpStatus.OK));
         ResponseEntity<String> result = splunkNotificationController.alert(FAILURE, "", splunkAlert);
