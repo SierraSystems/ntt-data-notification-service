@@ -26,7 +26,7 @@ services:
       args:
         - SERVICE_NAME=ntt-data-notification-service
     ports:
-      - "6060:8080"
+      - "6000:8080"
     networks:
       notification-net:
         ipv4_address: 172.20.0.6

@@ -12,15 +12,15 @@ Teams notification screenshot:
 
 ## Usage
 
-In order to use this application, a client requires a token (set in the applications env), and webHook URL(s) for Teams and/or RocketChat.
+In order to use this application, a client requires a token (set in the applications env), and webHook URL(s) for supported chat apps.
 
 ### URL Generation
 
-Once a token has been added/provided, navigate to the notification service (`<notification-service-url>/alert`)
+Once a token has been added/provided, navigate to the notification service (if running locally via docker `http://localhost:6000/alert`)
 
 ![ntt](https://user-images.githubusercontent.com/28017034/83478036-a8378480-a449-11ea-96fb-83a4e58c5004.PNG)
 
-Here, enter the provided token and the webHook url(s) you want notifications sent to. Click `Generate URL` to create a url containing the information required by the service to post to the provided webHook url(s). This URL will need to be regenerated and updated in Splunk when a chat destination needs to be added or removed.
+Enter the provided token and the webHook url(s) notifications should be sent to. Click `Generate URL` to create a url containing the information required by the service to post to the provided webHook url(s). This URL will need to be regenerated and updated in Splunk when a chat destination needs to be added or removed. (If running locally via docker, the `localhost:port` part of the url will need to be changed to `172.20.0.6:8080`)
 
 ### Splunk WebHook Setup
 
@@ -28,7 +28,7 @@ The URL generated in the frontend is required to setup alerts in Splunk.
 
 Use the following steps to set up a test alert:
 
-1. Navigate to your Splunk instance.
+1. Navigate to your Splunk instance and log in (if running locally via docker `http://localhost:7000`, with username/password of admin/TestTest).
 
 2. To try out an example log, type the following as a search in Splunk:
 ```bash
