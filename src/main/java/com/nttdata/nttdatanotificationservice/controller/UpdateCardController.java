@@ -1,14 +1,11 @@
 package com.nttdata.nttdatanotificationservice.controller;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.nttdata.nttdatanotificationservice.configuration.NotificationBody;
 import com.nttdata.nttdatanotificationservice.configuration.NotificationServiceProperties;
 import com.nttdata.nttdatanotificationservice.configuration.WebHookUrls;
-import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
 import com.nttdata.nttdatanotificationservice.teams.TeamsChannelService;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsCard;
-import com.nttdata.nttdatanotificationservice.teams.models.TeamsFact;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 public class UpdateCardController {

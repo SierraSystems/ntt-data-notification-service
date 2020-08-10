@@ -5,6 +5,5 @@ import com.nttdata.nttdatanotificationservice.sources.notification.models.Notifi
 import org.springframework.http.ResponseEntity;
 
 public interface WebHookService {
-
-    public ResponseEntity<String> postMessage(Notification notification, WebHookParams webHookParams);
+    ResponseEntity<String> postMessage(Notification notification, WebHookParams webHookParams);
 }

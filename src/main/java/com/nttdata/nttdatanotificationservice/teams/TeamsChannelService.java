@@ -6,7 +6,6 @@ import com.nttdata.nttdatanotificationservice.configuration.WebHookParams;
 import com.nttdata.nttdatanotificationservice.configuration.WebHookUrls;
 import com.nttdata.nttdatanotificationservice.service.ChannelService;
 import com.nttdata.nttdatanotificationservice.service.ChatApp;
-import com.nttdata.nttdatanotificationservice.service.WebHookServiceImpl;
 import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsAction;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsCard;
@@ -24,7 +23,7 @@ import org.springframework.stereotype.Service;
 @Service
 @EnableConfigurationProperties(NotificationServiceProperties.class)
 public class TeamsChannelService implements ChannelService {
-    Logger logger = LoggerFactory.getLogger(WebHookServiceImpl.class);
+    Logger logger = LoggerFactory.getLogger(TeamsChannelService.class);
 
     @Autowired
     NotificationServiceProperties notificationServiceProperties;
