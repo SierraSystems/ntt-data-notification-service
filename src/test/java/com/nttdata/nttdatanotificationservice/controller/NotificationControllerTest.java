@@ -1,13 +1,10 @@
 package com.nttdata.nttdatanotificationservice.controller;
 
-import com.google.gson.Gson;
 import com.nttdata.nttdatanotificationservice.configuration.NotificationBody;
 import com.nttdata.nttdatanotificationservice.configuration.NotificationServiceProperties;
 import com.nttdata.nttdatanotificationservice.configuration.WebHookParams;
 import com.nttdata.nttdatanotificationservice.service.WebHookService;
 import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
-import com.nttdata.nttdatanotificationservice.sources.splunk.models.SplunkAlert;
-import com.nttdata.nttdatanotificationservice.teams.models.TeamsCard;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
-import java.util.HashMap;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -48,14 +44,14 @@ public class NotificationControllerTest {
         notificationBody.setWebHookParams(new WebHookParams());
         when(webHookService.postMessage(any(), any())).thenReturn(new ResponseEntity<>(
                 "We good", HttpStatus.OK));
-        ResponseEntity<String> result = notificationController.alert("test", "", notificationBody);
+        ResponseEntity<String> result = notificationController.alert("test", notificationBody);
 
         Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
     }
     @DisplayName("Unauthorized - NotificationController")
     @Test
     void testUnauth() {
-        ResponseEntity<String> result = notificationController.alert("TEST", "URL", new NotificationBody());
+        ResponseEntity<String> result = notificationController.alert("TEST", new NotificationBody());
         Assertions.assertEquals(HttpStatus.UNAUTHORIZED, result.getStatusCode());
     }
 }

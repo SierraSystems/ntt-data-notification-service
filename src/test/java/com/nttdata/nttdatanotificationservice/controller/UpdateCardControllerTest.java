@@ -9,10 +9,8 @@ import com.nttdata.nttdatanotificationservice.configuration.NotificationServiceP
 import com.nttdata.nttdatanotificationservice.configuration.WebHookParams;
 import com.nttdata.nttdatanotificationservice.configuration.WebHookUrls;
 import com.nttdata.nttdatanotificationservice.service.ChatApp;
-import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
 import com.nttdata.nttdatanotificationservice.teams.TeamsChannelService;
 import com.nttdata.nttdatanotificationservice.teams.models.TeamsCard;
-import java.util.ArrayList;
 import java.util.Arrays;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,9 +21,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import java.util.HashMap;
-
 
 public class UpdateCardControllerTest {
     @InjectMocks
