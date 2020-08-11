@@ -39,7 +39,7 @@ index=_audit  action=search
 
 3. Click <b>Save As</b> and select <b>Alert</b>.
 
-4. Provide a title, set it to run on a cron schedule and provide a valid cron expression as per your frequency needs.
+4. Provide a title, set it to run on a cron schedule and provide a valid cron expression as per your frequency needs. See below for more information on alert setup.
 
 <img width="540" alt="alertsettings1" src="https://user-images.githubusercontent.com/28017034/82948601-e965fb00-9f56-11ea-93cd-7c81dd0bfc9a.PNG">
 
@@ -71,3 +71,42 @@ docker-compose up --build ntt-data-notification-service
 This should spin up the ntt-data-notification-service and the latest docker image of Splunk locally.
 
 To modify the ports the app is running on, simply change the port mappings in the docker-compose file.
+
+## Splunk Alert
+
+Basic information about setting up alerts for use with the Notification Service.
+
+### Alert Search Fields
+
+There are several standard and custom fields used to create notifications.
+
+```bash
+index=<application_logs_to_search>  <search_criteria>
+| eval message = "<action_to_be_taken>"
+| eval dashboard = "<link_to_dashboard>"
+| table source message dashboard <other>
+```
+
+Fields provided automatically by Splunk:
+- sid: A search ID, not currently used
+- searchName: The name given to the alert when created
+- owner: The user who initially created the alert
+- results_link: A link back to the alert query in Splunk
+
+Custom fields added to improve notification usability:
+- source: Source of the logs which produced the alert, used as App in notifications
+- message: A custom message for each alert indicating what should be done in response to the alert
+- dashboard: A link back to a Splunk dashboard associated with the application
+- <other>: The Notification Service will add any other fields in the table to the created notification
+
+### Alert Settings
+
+When creating an alert there are a number of important fields.
+
+Time Range: When running a scheduled alert, this refers to the time range to use for the search associated with the alert. It should closely match the scheduled alert time, eg. if an alert runs every hour, the Time Range should be 1 hour but if the alert runs once a day, the Time Range should be 24 hours.
+
+Cron Expression: Cron expressions are used for more fine-tuned alert scheduling. See [freeformatter.com](https://www.freeformatter.com/cron-expression-generator-quartz.html)
+
+Expires: This refers to how long an alert is displayed if it triggered, and not how long the alert itself is valid.
+
+Trigger Conditions: These can be used to set some additional behavior on alerts, such as how many events have to occur before an alert is triggered, if an alert should trigger once or once for each result, how much time should elapse before an alert can trigger again. 
