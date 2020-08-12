@@ -48,8 +48,8 @@ public class WebHookServiceImpl implements WebHookService {
             headers.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<String> request = new HttpEntity<>(postJson.toJson(postObj, Object.class), headers);
             RestTemplate restTemplate = new RestTemplate();
-            String response = restTemplate.postForObject(url, request   , String.class);
-            logger.info(response);
+            String response = restTemplate.postForObject(url, request, String.class);
+            logger.info("Success: {}", response);
         } catch (Exception e) {
             logger.error("Exception in post", e);
         }

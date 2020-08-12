@@ -24,9 +24,8 @@ public class NotificationController {
 
   Logger logger = LoggerFactory.getLogger(NotificationController.class);
 
-  @PostMapping(value = "generic/{token}/{routes}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(value = "generic/{token}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<String> alert(@PathVariable("token") String token,
-                                      @PathVariable("routes") String routes,
                                       @RequestBody NotificationBody notificationBody) {
     if (!notificationServiceProperties.getTokens().contains(token)) {
       logger.error("Token failed to validate");
