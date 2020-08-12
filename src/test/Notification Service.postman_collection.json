@@ -1,0 +1,194 @@
+{
+	"info": {
+		"_postman_id": "682f4164-c13c-41dc-a285-f3e4b9613e7c",
+		"name": "Notification Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Generic Post",
+			"item": [
+				{
+					"name": "Teams & RocketChat",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"webHookParams\": {\n\t  \"webHookUrls\": [\n\t    {\n\t    \"chatApp\": \"TEAMS\",\n\t    \"url\": \"{{teams_url}}\"\n\t    },\n\t    {\n\t    \"chatApp\": \"ROCKET_CHAT\",\n\t    \"url\": \"{{rocket_url}}\"\n\t    }\n\t  ]\n  },\n  \"notification\": {\n\t\"appName\": \"App name\",\n\t\"origin\": \"Origin\",\n\t\"owner\": \"Owner\",\n\t\"message\": \"Message\",\n\t\"returnUrl\": \"{{return_url}}\",\n\t\"otherInfo\": \"Other Info\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{notification_url}}/notification/generic/{{token}}",
+							"host": [
+								"{{notification_url}}"
+							],
+							"path": [
+								"notification",
+								"generic",
+								"{{token}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Teams",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"webHookParams\": {\n\t  \"webHookUrls\": [\n\t    {\n\t    \"chatApp\": \"TEAMS\",\n\t    \"url\": \"{{teams_url}}\"\n\t    }\n\t  ]\n  },\n  \"notification\": {\n\t\"appName\": \"App name\",\n\t\"origin\": \"Origin\",\n\t\"owner\": \"Owner\",\n\t\"message\": \"Message\",\n\t\"returnUrl\": \"{{return_url}}\",\n\t\"otherInfo\": \"Other Info\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{notification_url}}/notification/generic/{{token}}",
+							"host": [
+								"{{notification_url}}"
+							],
+							"path": [
+								"notification",
+								"generic",
+								"{{token}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RocketChat",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"webHookParams\": {\n\t  \"webHookUrls\": [\n\t    {\n\t    \"chatApp\": \"ROCKET_CHAT\",\n\t    \"url\": \"{{rocket_url}}\"\n\t    }\n\t  ]\n  },\n  \"notification\": {\n\t\"appName\": \"App name\",\n\t\"origin\": \"Origin\",\n\t\"owner\": \"Owner\",\n\t\"message\": \"Message\",\n\t\"returnUrl\": \"{{return_url}}\",\n\t\"otherInfo\": \"Other Info\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{notification_url}}/notification/generic/{{token}}",
+							"host": [
+								"{{notification_url}}"
+							],
+							"path": [
+								"notification",
+								"generic",
+								"{{token}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Splunk Post",
+			"item": [
+				{
+					"name": "Splunk Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"result\": {\n        \"message\" : \"mongod\",\n        \"source\": \"Postman\"\n    },\n    \"sid\" : \"scheduler_admin_search_W2_at_14232356_132\",\n    \"results_link\" : \"http://www.google.com\",\n    \"search_name\" : \"Testing Search\",\n    \"owner\" : \"admin\",\n    \"app\" : \"search\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://ntt-data-norification-service.canadacentral.azurecontainer.io:8080/notification/splunk/26199729-fb88-491c-ba90-462436923ec2/ewogICJ3ZWJIb29rVXJscyI6IFsKICAgIHsKICAgICJjaGF0QXBwIjogIlRFQU1TIiwKICAgICJ1cmwiOiAiaHR0cHM6Ly9vdXRsb29rLm9mZmljZS5jb20vd2ViaG9vay80NWFiNGU1OS1lNTFiLTRkODktOGE0MC02NDgzNzVmMTk3NjdANjVlNGUwNmYtZjI2My00YzFmLWJlY2ItOTBkZWI4YzJkOWZmL0luY29taW5nV2ViaG9vay9hMDEzNjNjZTg2MmU0ODkzOGM5MjNlNjAxMTA5NTNlYi83NTdkYzE0Yi1lOTY5LTQ4MGYtOTAyMy03NWFhNGMyZTdmMTUiCiAgICB9LAogICAgewogICAgImNoYXRBcHAiOiAiUk9DS0VUX0NIQVQiLAogICAgInVybCI6ICJodHRwczovL2NoYXQucGF0aGZpbmRlci5nb3YuYmMuY2EvaG9va3MvblJhYTlQYTc2bVJFd21NcDIvZ2dhdlk4dWI1TXRoS3cydGV1ajZ5UlpmQmIyU0dMalc4dktpOWt1WDVqQWZMUXBuIgogICAgfQogIF0KfQ",
+							"protocol": "http",
+							"host": [
+								"ntt-data-norification-service",
+								"canadacentral",
+								"azurecontainer",
+								"io"
+							],
+							"port": "8080",
+							"path": [
+								"notification",
+								"splunk",
+								"26199729-fb88-491c-ba90-462436923ec2",
+								"ewogICJ3ZWJIb29rVXJscyI6IFsKICAgIHsKICAgICJjaGF0QXBwIjogIlRFQU1TIiwKICAgICJ1cmwiOiAiaHR0cHM6Ly9vdXRsb29rLm9mZmljZS5jb20vd2ViaG9vay80NWFiNGU1OS1lNTFiLTRkODktOGE0MC02NDgzNzVmMTk3NjdANjVlNGUwNmYtZjI2My00YzFmLWJlY2ItOTBkZWI4YzJkOWZmL0luY29taW5nV2ViaG9vay9hMDEzNjNjZTg2MmU0ODkzOGM5MjNlNjAxMTA5NTNlYi83NTdkYzE0Yi1lOTY5LTQ4MGYtOTAyMy03NWFhNGMyZTdmMTUiCiAgICB9LAogICAgewogICAgImNoYXRBcHAiOiAiUk9DS0VUX0NIQVQiLAogICAgInVybCI6ICJodHRwczovL2NoYXQucGF0aGZpbmRlci5nb3YuYmMuY2EvaG9va3MvblJhYTlQYTc2bVJFd21NcDIvZ2dhdlk4dWI1TXRoS3cydGV1ajZ5UlpmQmIyU0dMalc4dktpOWt1WDVqQWZMUXBuIgogICAgfQogIF0KfQ"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Teams",
+			"item": [
+				{
+					"name": "Update Card",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"@type\": \"MessageCard\",\n  \"@context\": \"http://schema.org/extensions\",\n  \"themeColor\": \"0076D7\",\n  \"summary\": \"audittrail\",\n  \"webHookUrl\": \"{{teams_url}}\",\n  \"sections\": [\n    {\n      \"activityTitle\": \"audittrail\",\n      \"activitySubtitle\": \"From Splunk\",\n      \"activityImage\": \"https://user-images.githubusercontent.com/51387119/82707419-ddb1c600-9c30-11ea-8bfa-b3c624b23cdd.png\",\n      \"facts\": [\n        {\n          \"name\": \"App\",\n          \"value\": \"audittrail\"\n        },\n        {\n          \"name\": \"Search\",\n          \"value\": \"Splunk\"\n        },\n        {\n          \"name\": \"Owner\",\n          \"value\": \"admin\"\n        },\n        {\n          \"name\": \"dashboard\",\n          \"value\": \"http://www.google.com\"\n        },\n        {\n          \"name\": \"You_have\",\n          \"value\": \"Ben Thunder's truck\"\n        },\n        {\n          \"name\": \"info\",\n          \"value\": \"\"\n        },\n        {\n          \"name\": \"Message\",\n          \"value\": \"Message of something to do\"\n        },\n        {\n          \"name\": \"Status\",\n          \"value\": \"Open\"\n        }\n      ],\n      \"markdown\": true\n    }\n  ],\n  \"potentialAction\": [\n    {\n      \"@type\": \"ViewAction\",\n      \"name\": \"View in Splunk\",\n      \"target\": [\n        \"http://wk-caas-0e1852a9cfaa4ce593ece5b75b6180e4-33e3de390d58ee39e6773f:8000/app/search/@go?sid=scheduler__admin__search__RMD583b2cafa08e84cca_at_1591304280_35\"\n      ],\n      \"inputs\": [],\n      \"actions\": []\n    },\n    {\n      \"@type\": \"ActionCard\",\n      \"name\": \"Update Status\",\n      \"target\": [],\n      \"inputs\": [\n        {\n          \"@type\": \"MultichoiceInput\",\n          \"id\": \"statuslist\",\n          \"title\": \"Update Status\",\n          \"choices\": [\n            {\n              \"display\": \"In Progress\",\n              \"value\": \"1\"\n            },\n            {\n              \"display\": \"In Review\",\n              \"value\": \"2\"\n            },\n            {\n              \"display\": \"Closed\",\n              \"value\": \"3\"\n            }\n          ]\n        }\n      ],\n      \"actions\": [\n        {\n          \"@type\": \"HttpPOST\",\n          \"name\": \"OK\",\n          \"target\": \"https://webhook.site/8fb6cdc4-cc37-4dfa-9c8f-84edf7330d93\"\n        }\n      ]\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{notification_url}}/notification/update/{{token}}",
+							"host": [
+								"{{notification_url}}"
+							],
+							"path": [
+								"notification",
+								"update",
+								"{{token}}"
+							]
+						},
+						"description": "NOT WORKING YET"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{notification_url}}/notification/actuator/health",
+					"host": [
+						"{{notification_url}}"
+					],
+					"path": [
+						"notification",
+						"actuator",
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
