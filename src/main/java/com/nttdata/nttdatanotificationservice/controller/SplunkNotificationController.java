@@ -38,9 +38,7 @@ public class SplunkNotificationController {
         }
 
         Gson gson = new Gson();
-
-//        SplunkAlert splunkAlert = gson.fromJson(alertString, SplunkAlert.class);
-
+        
         Notification notification = splunkAlert.convertToAlert();
 
         byte[] decodedRoutesBytes = Base64.getUrlDecoder().decode(routes);
