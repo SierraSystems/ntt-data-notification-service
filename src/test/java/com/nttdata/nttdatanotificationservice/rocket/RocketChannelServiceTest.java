@@ -16,8 +16,7 @@ public class RocketChannelServiceTest {
       "\t\t\"message\" : \"message\",\n" +
       "\t\t\"other\" : \"other\",\n" +
       "\t\t\"_raw\" : \"_raw\",\n" +
-      "\t\t\"source\": \"source\",\n" +
-      "\t\t\"dashboard\": \"dashboard_link\"\n" +
+      "\t\t\"source\": \"source\"\n" +
       "\t},\n" +
       "\t\"sid\" : \"sid\",\n" +
       "\t\"results_link\" : \"result_links\",\n" +
@@ -29,7 +28,6 @@ public class RocketChannelServiceTest {
   private static final String rocketText = "App: source \n"
       + "Search: search_name \n"
       + "Owner: owner \n"
-      + "dashboard: dashboard_link \n"
       + "other: other \n"
       + "Message: message \n"
       + "Search Link: result_links \n";

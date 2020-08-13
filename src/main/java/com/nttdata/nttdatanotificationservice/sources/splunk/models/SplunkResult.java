@@ -7,7 +7,6 @@ import java.util.Map;
 public class SplunkResult {
     private String source;
     private String message;
-    private String dashboard;
 
     private Map<String, Object> details = new LinkedHashMap<>();
 
@@ -27,12 +26,4 @@ public class SplunkResult {
     public String getMessage() { return message; }
 
     public void setMessage(String message) { this.message = message; }
-
-    public String getDashboard() {
-        return dashboard;
-    }
-
-    public void setDashboard(String dashboard) {
-        this.dashboard = dashboard;
-    }
 }

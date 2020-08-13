@@ -57,16 +57,7 @@ public class Notification {
     return details;
   }
 
-  @JsonAnySetter
-  public void setDetails(String key, Object value) {
-    this.details.put(key, value);
-  }
-
   public void addDetails(Map<String, Object> details) {
     this.details.putAll(details);
-  }
-
-  public void addDetails(String key, Object value) {
-    this.details.put(key, value);
   }
 }

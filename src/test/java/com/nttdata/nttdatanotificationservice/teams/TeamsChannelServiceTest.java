@@ -1,5 +1,7 @@
 package com.nttdata.nttdatanotificationservice.teams;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.nttdata.nttdatanotificationservice.configuration.NotificationServiceProperties;
 import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
@@ -25,9 +27,7 @@ public class TeamsChannelServiceTest {
             "\t\"result\": {\n" +
             "\t\t\"message\" : \"message\",\n" +
             "\t\t\"other\" : \"other\",\n" +
-            "\t\t\"_raw\" : \"_raw\",\n" +
-            "\t\t\"source\": \"source\",\n" +
-            "\t\t\"dashboard\": \"dashboard_link\"\n" +
+            "\t\t\"source\": \"source\"\n" +
             "\t},\n" +
             "\t\"sid\" : \"sid\",\n" +
             "\t\"results_link\" : \"result_links\",\n" +
@@ -36,7 +36,7 @@ public class TeamsChannelServiceTest {
             "\t\"app\" : \"app\"\n" +
             "}";
 
-    private static final String teamsResult = "{\"webHookParams\":{\"webHookUrls\":[{\"chatApp\":\"TEAMS\",\"url\":\"TESTURL\"}]},\"notification\":{\"appName\":\"source\",\"origin\":\"search_name\",\"owner\":\"owner\",\"message\":\"message\",\"returnUrl\":\"result_links\",\"details\":{\"dashboard\":\"dashboard_link\",\"other\":\"other\"}},\"response\":\"{{statusList.value}}\"}";
+    private static final String teamsResult = "{\"webHookParams\":{\"webHookUrls\":[{\"chatApp\":\"TEAMS\",\"url\":\"TESTURL\"}]},\"notification\":{\"appName\":\"source\",\"origin\":\"search_name\",\"owner\":\"owner\",\"message\":\"message\",\"returnUrl\":\"result_links\",\"details\":{\"other\":\"other\"}},\"response\":\"{{statusList.value}}\"}";
 
     @BeforeAll
     public void setUp() {
@@ -47,11 +47,12 @@ public class TeamsChannelServiceTest {
 
     @Test
     @DisplayName("CASE 1: with valid splunk notification")
-    public void withValidSplunkNotificationShouldProduceTeamObject() {
+    public void withValidSplunkNotificationShouldProduceTeamObject()
+        throws JsonProcessingException {
 
         Gson gson = new Gson();
         SplunkAlert splunkAlert = gson.fromJson(splunkAlertJson, SplunkAlert.class);
-        //Work around to get other fields mapped. Gson wouldn't map.
+        // Work around to get other fields mapped. Gson wouldn't map.
         splunkAlert.getResult().setDetails("other","other");
 
         Notification notification = splunkAlert.convertToAlert();
@@ -106,7 +107,7 @@ public class TeamsChannelServiceTest {
         Assertions.assertEquals("https://user-images.githubusercontent.com/51387119/82707419-ddb1c600-9c30-11ea-8bfa-b3c624b23cdd.png", actual.getSections().get(0).getActivityImage());
         Assertions.assertEquals("From search_name", actual.getSections().get(0).getActivitySubtitle());
         Assertions.assertEquals("source", actual.getSections().get(0).getActivityTitle());
-        Assertions.assertEquals(7, actual.getSections().get(0).getFacts().size());
+        Assertions.assertEquals(6, actual.getSections().get(0).getFacts().size());
 
         Assertions.assertEquals("App", actual.getSections().get(0).getFacts().get(0).getName());
         Assertions.assertEquals("source", actual.getSections().get(0).getFacts().get(0).getValue());
@@ -114,14 +115,12 @@ public class TeamsChannelServiceTest {
         Assertions.assertEquals("search_name", actual.getSections().get(0).getFacts().get(1).getValue());
         Assertions.assertEquals("Owner", actual.getSections().get(0).getFacts().get(2).getName());
         Assertions.assertEquals("owner", actual.getSections().get(0).getFacts().get(2).getValue());
-        Assertions.assertEquals("dashboard", actual.getSections().get(0).getFacts().get(3).getName());
-        Assertions.assertEquals("dashboard_link", actual.getSections().get(0).getFacts().get(3).getValue());
-        Assertions.assertEquals("other", actual.getSections().get(0).getFacts().get(4).getName());
-        Assertions.assertEquals("other", actual.getSections().get(0).getFacts().get(4).getValue());
-        Assertions.assertEquals("Message", actual.getSections().get(0).getFacts().get(5).getName());
-        Assertions.assertEquals("message", actual.getSections().get(0).getFacts().get(5).getValue());
-        Assertions.assertEquals("Status", actual.getSections().get(0).getFacts().get(6).getName());
-        Assertions.assertEquals("Open", actual.getSections().get(0).getFacts().get(6).getValue());
+        Assertions.assertEquals("other", actual.getSections().get(0).getFacts().get(3).getName());
+        Assertions.assertEquals("other", actual.getSections().get(0).getFacts().get(3).getValue());
+        Assertions.assertEquals("Message", actual.getSections().get(0).getFacts().get(4).getName());
+        Assertions.assertEquals("message", actual.getSections().get(0).getFacts().get(4).getValue());
+        Assertions.assertEquals("Status", actual.getSections().get(0).getFacts().get(5).getName());
+        Assertions.assertEquals("Open", actual.getSections().get(0).getFacts().get(5).getValue());
 
         Assertions.assertEquals(true, actual.getSections().get(0).getMarkdown());
 

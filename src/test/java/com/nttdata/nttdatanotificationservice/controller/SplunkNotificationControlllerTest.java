@@ -1,7 +1,9 @@
 package com.nttdata.nttdatanotificationservice.controller;
 
+import com.google.gson.Gson;
 import com.nttdata.nttdatanotificationservice.configuration.NotificationServiceProperties;
 import com.nttdata.nttdatanotificationservice.service.WebHookService;
+import com.nttdata.nttdatanotificationservice.sources.splunk.models.SplunkAlert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +23,7 @@ import static org.mockito.Mockito.when;
 public class SplunkNotificationControlllerTest {
 
     private static final String FAILURE = "FAILURE";
-    private static final String TEST = "test";
+    private static final String TEST = "TEST";
 
     private static final String splunkAlertJson = "{\n" +
         "\t\"result\": {\n" +
@@ -50,13 +52,14 @@ public class SplunkNotificationControlllerTest {
     @BeforeEach
     void initialize() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         MockitoAnnotations.initMocks(this);
-        when(notificationServiceProperties.getTokens()).thenReturn(Arrays.asList("test","test2"));
+        when(notificationServiceProperties.getTokens()).thenReturn(Arrays.asList("TEST"));
     }
 
     @DisplayName("Success - SplunkNotificationController")
     @Test
     void testSuccess() {
-        String splunkAlert = splunkAlertJson;
+        Gson gson = new Gson();
+        SplunkAlert splunkAlert = gson.fromJson(splunkAlertJson, SplunkAlert.class);
 
         when(webHookService.postMessage(any(), any())).thenReturn(new ResponseEntity<>(
                 "Success", HttpStatus.OK));
@@ -68,9 +71,11 @@ public class SplunkNotificationControlllerTest {
     @DisplayName("Unauthorized - SplunkNotificationController")
     @Test
     void testUnauthorized() {
-        String splunkAlert = "";
+        Gson gson = new Gson();
+        SplunkAlert splunkAlert = gson.fromJson(splunkAlertJson, SplunkAlert.class);
+
         when(webHookService.postMessage(any(), any())).thenReturn(new ResponseEntity<>(
-                "We good", HttpStatus.OK));
+                "Success", HttpStatus.OK));
         ResponseEntity<String> result = splunkNotificationController.alert(FAILURE, "", splunkAlert);
 
         Assertions.assertEquals(HttpStatus.UNAUTHORIZED, result.getStatusCode());
