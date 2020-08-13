@@ -48,14 +48,14 @@ public class NotificationControllerTest {
         notificationBody.setWebHookParams(new WebHookParams());
         when(webHookService.postMessage(any(), any())).thenReturn(new ResponseEntity<>(
                 "We good", HttpStatus.OK));
-        ResponseEntity<String> result = notificationController.alert("test", "", notificationBody);
+        ResponseEntity<String> result = notificationController.alert("test", notificationBody);
 
         Assertions.assertEquals(HttpStatus.OK, result.getStatusCode());
     }
     @DisplayName("Unauthorized - NotificationController")
     @Test
     void testUnauth() {
-        ResponseEntity<String> result = notificationController.alert("TEST", "URL", new NotificationBody());
+        ResponseEntity<String> result = notificationController.alert("TEST", new NotificationBody());
         Assertions.assertEquals(HttpStatus.UNAUTHORIZED, result.getStatusCode());
     }
 }
