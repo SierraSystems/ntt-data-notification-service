@@ -16,7 +16,7 @@ In order to use this application, a client requires a token (set in the applicat
 
 ### URL Generation
 
-Once a token has been added/provided, navigate to the notification service (if running locally via docker `http://localhost:6000/alert`)
+Once a token has been added/provided, navigate to the notification service (if running locally via docker `http://localhost:7080/alert`)
 
 ![ntt](https://user-images.githubusercontent.com/28017034/83478036-a8378480-a449-11ea-96fb-83a4e58c5004.PNG)
 
@@ -65,7 +65,7 @@ Add to Triggered Alerts
 To run the application locally with Docker, a `.env` file will need to be created. See the `.env.example` file for variables used by this application.
 
 ```bash
-docker-compose up --build ntt-data-notification-service
+docker-compose up --build
 ```
 
 This should spin up the ntt-data-notification-service and the latest docker image of Splunk locally.
@@ -110,3 +110,19 @@ Cron Expression: Cron expressions are used for more fine-tuned alert scheduling.
 Expires: This refers to how long an alert is displayed if it triggered, and not how long the alert itself is valid.
 
 Trigger Conditions: These can be used to set some additional behavior on alerts, such as how many events have to occur before an alert is triggered, if an alert should trigger once or once for each result, how much time should elapse before an alert can trigger again. 
+
+## Debugging
+
+Useful tools for testing implementation and debugging issues.
+
+### Postman
+
+There is a postman collection and environment included in the test folder. This collection can be used to test and confirm the implementation of the notification service.
+
+### Splunk webHooks
+
+The following search can be used to check the Splunk webHook logs for connection issues with the Notification Service
+
+```bash
+index=_internal sourcetype=splunkd component=sendmodalert action="webhook"
+```
