@@ -1,6 +1,5 @@
 package com.nttdata.nttdatanotificationservice.service;
 
-import com.google.gson.Gson;
 import com.nttdata.nttdatanotificationservice.rocket.RocketChannelService;
 import com.nttdata.nttdatanotificationservice.sources.notification.models.Notification;
 import com.nttdata.nttdatanotificationservice.sources.splunk.models.SplunkAlert;
@@ -19,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Base64;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -75,8 +73,6 @@ public class WebHookServiceImplTest {
 
         WebHookParams webHookParams = new WebHookParams();
         webHookParams.setWebHookUrls(webHookUrls);
-        Gson gson = new Gson();
-        String encodedString = Base64.getUrlEncoder().encodeToString(gson.toJson(webHookParams).getBytes());
 
         SplunkResult splunkResult = new SplunkResult();
         splunkResult.setMessage("AMESSAGE");
@@ -106,8 +102,6 @@ public class WebHookServiceImplTest {
 
         WebHookParams webHookParams = new WebHookParams();
         webHookParams.setWebHookUrls(webHookUrls);
-        Gson gson = new Gson();
-        String encodedString = Base64.getUrlEncoder().encodeToString(gson.toJson(webHookParams).getBytes());
 
         SplunkResult splunkResult = new SplunkResult();
         splunkResult.setMessage("AMESSAGE");
@@ -137,8 +131,6 @@ public class WebHookServiceImplTest {
 
         WebHookParams webHookParams = new WebHookParams();
         webHookParams.setWebHookUrls(webHookUrls);
-        Gson gson = new Gson();
-        String encodedString = Base64.getUrlEncoder().encodeToString(gson.toJson(webHookParams).getBytes());
 
         SplunkResult splunkResult = new SplunkResult();
         splunkResult.setMessage("AMESSAGE");
@@ -168,8 +160,6 @@ public class WebHookServiceImplTest {
 
         WebHookParams webHookParams = new WebHookParams();
         webHookParams.setWebHookUrls(webHookUrls);
-        Gson gson = new Gson();
-        String encodedString = Base64.getUrlEncoder().encodeToString(gson.toJson(webHookParams).getBytes());
 
         SplunkResult splunkResult = new SplunkResult();
         splunkResult.setMessage("AMESSAGE");
