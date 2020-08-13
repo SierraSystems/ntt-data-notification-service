@@ -119,7 +119,7 @@ Useful tools for testing implementation and debugging issues.
 
 There is a postman collection and environment included in the test folder. This collection can be used to test and confirm the implementation of the notification service.
 
-### Splunk webHooks
+### Splunk webHook Logs
 
 The following search can be used to check the Splunk webHook logs for connection issues with the Notification Service
 
