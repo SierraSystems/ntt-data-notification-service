@@ -9,7 +9,10 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -41,9 +44,12 @@ public class WebHookServiceImpl implements WebHookService {
             Gson postJson = new Gson();
 
             logger.info("{}", postJson.toJson(postObj, Object.class));
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<String> request = new HttpEntity<>(postJson.toJson(postObj, Object.class), headers);
             RestTemplate restTemplate = new RestTemplate();
-            restTemplate.postForObject(url, postJson.toJson(postObj, Object.class), String.class);
-            logger.info("Success");
+            String response = restTemplate.postForObject(url, request, String.class);
+            logger.info("Success: {}", response);
         } catch (Exception e) {
             logger.error("Exception in post", e);
         }
