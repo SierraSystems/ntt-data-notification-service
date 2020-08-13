@@ -78,16 +78,10 @@ public class WebHookServiceImplTest {
         Gson gson = new Gson();
         String encodedString = Base64.getUrlEncoder().encodeToString(gson.toJson(webHookParams).getBytes());
 
-        SplunkAlert splunkAlert = new SplunkAlert();
-        splunkAlert.setOwner("TEST");
         SplunkResult splunkResult = new SplunkResult();
         splunkResult.setMessage("AMESSAGE");
         splunkResult.setSource("ASOURCE");
-        splunkResult.setDashboard("TEST");
-        splunkAlert.setResult(splunkResult);
-        splunkAlert.setResultsLink("TEST");
-        splunkAlert.setSid("TEST");
-        splunkAlert.setSearchName("");
+        SplunkAlert splunkAlert = new SplunkAlert("SID", "RESULTS_LINK", "SEARCH_NAME", "OWNER", splunkResult);
 
         Notification notification = splunkAlert.convertToAlert();
 
@@ -115,15 +109,10 @@ public class WebHookServiceImplTest {
         Gson gson = new Gson();
         String encodedString = Base64.getUrlEncoder().encodeToString(gson.toJson(webHookParams).getBytes());
 
-        SplunkAlert splunkAlert = new SplunkAlert();
-        splunkAlert.setOwner("TEST");
         SplunkResult splunkResult = new SplunkResult();
         splunkResult.setMessage("AMESSAGE");
         splunkResult.setSource("ASOURCE");
-        splunkResult.setDashboard("TEST");
-        splunkAlert.setResult(splunkResult);
-        splunkAlert.setResultsLink("TEST");
-        splunkAlert.setSid("TEST");
+        SplunkAlert splunkAlert = new SplunkAlert("SID", "RESULTS_LINK", "SEARCH_NAME", "OWNER", splunkResult);
 
         Notification notification = splunkAlert.convertToAlert();
 
@@ -151,16 +140,10 @@ public class WebHookServiceImplTest {
         Gson gson = new Gson();
         String encodedString = Base64.getUrlEncoder().encodeToString(gson.toJson(webHookParams).getBytes());
 
-        SplunkAlert splunkAlert = new SplunkAlert();
-        splunkAlert.setOwner("TEST");
         SplunkResult splunkResult = new SplunkResult();
         splunkResult.setMessage("AMESSAGE");
         splunkResult.setSource("ASOURCE");
-        splunkResult.setDashboard("TEST");
-        splunkAlert.setResult(splunkResult);
-        splunkAlert.setResultsLink("TEST");
-        splunkAlert.setSid("TEST");
-        splunkAlert.setSearchName("");
+        SplunkAlert splunkAlert = new SplunkAlert("SID", "RESULTS_LINK", "SEARCH_NAME", "OWNER", splunkResult);
 
         Notification notification = splunkAlert.convertToAlert();
 
@@ -188,15 +171,10 @@ public class WebHookServiceImplTest {
         Gson gson = new Gson();
         String encodedString = Base64.getUrlEncoder().encodeToString(gson.toJson(webHookParams).getBytes());
 
-        SplunkAlert splunkAlert = new SplunkAlert();
-        splunkAlert.setOwner("TEST");
         SplunkResult splunkResult = new SplunkResult();
         splunkResult.setMessage("AMESSAGE");
         splunkResult.setSource("ASOURCE");
-        splunkResult.setDashboard("TEST");
-        splunkAlert.setResult(splunkResult);
-        splunkAlert.setResultsLink("TEST");
-        splunkAlert.setSid("TEST");
+        SplunkAlert splunkAlert = new SplunkAlert("SID", "RESULTS_LINK", "SEARCH_NAME", "OWNER", splunkResult);
 
         Notification notification = splunkAlert.convertToAlert();
 

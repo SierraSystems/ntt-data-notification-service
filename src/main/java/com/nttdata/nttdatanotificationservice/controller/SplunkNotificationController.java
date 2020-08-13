@@ -31,7 +31,7 @@ public class SplunkNotificationController {
     @PostMapping(value = "splunk/{token}/{routes}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> alert(@PathVariable("token") String token,
                                         @PathVariable("routes") String routes,
-                                        @RequestBody String alertString) {
+                                        @RequestBody SplunkAlert splunkAlert) {
         if (!notificationServiceProperties.getTokens().contains(token)) {
             logger.error("Token failed to validate");
             return new ResponseEntity<>("Token validation failed", HttpStatus.UNAUTHORIZED);
@@ -39,7 +39,7 @@ public class SplunkNotificationController {
 
         Gson gson = new Gson();
 
-        SplunkAlert splunkAlert = gson.fromJson(alertString, SplunkAlert.class);
+//        SplunkAlert splunkAlert = gson.fromJson(alertString, SplunkAlert.class);
 
         Notification notification = splunkAlert.convertToAlert();
 

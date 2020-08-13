@@ -13,6 +13,15 @@ public class SplunkAlert implements AlertModel {
     private String owner;
     private SplunkResult result;
 
+    public SplunkAlert(String sid, String results_link, String search_name, String owner,
+        SplunkResult result) {
+        this.sid = sid;
+        this.resultsLink = results_link;
+        this.searchName = search_name;
+        this.owner = owner;
+        this.result = result;
+    }
+
     public String getSid() {return sid;}
 
     public void setSid(String sid) {this.sid = sid;}
@@ -43,7 +52,6 @@ public class SplunkAlert implements AlertModel {
         notification.setMessage(this.getResult().getMessage());
         notification.setReturnUrl(this.getResultsLink());
 
-        notification.addDetails("dashboard", this.getResult().getDashboard());
         notification.addDetails(this.getResult().getDetails());
 
         return notification;
