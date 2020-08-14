@@ -117,7 +117,7 @@ Useful tools for testing implementation and debugging issues.
 
 ### Postman
 
-There is a postman collection and environment included in the test folder. This collection can be used to test and confirm the implementation of the notification service.
+There is a postman collection and environment included in the [test folder](https://github.com/SierraSystems/ntt-data-notification-service/tree/master/src/test/postman). This collection can be used to test and confirm the implementation of the notification service.
 
 ### Splunk webHook Logs
 
