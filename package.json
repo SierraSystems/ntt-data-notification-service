@@ -11,7 +11,7 @@
     "devDependencies": {
         "chai": "^4.2.0",
         "chai-jquery": "^2.1.0",
-        "jquery": "^3.5.1",
+        "jquery": "^3.6.3",
         "jsdom": "^16.4.0",
         "jsdom-global": "^3.0.2",
         "mocha": "^8.1.3",
